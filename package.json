@@ -4,15 +4,14 @@
   "description": "react webpack lesson",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
-    "hot": "node server_hot.js",
+    "dev": "node server_hot.js",
+    "hot": "node server.js",
     "build": "webpack --config webpack.config.build.js --progress --colors --watch -p"
   },
   "repository": {
     "type": "github",
     "url": "https://github.com/ZengTianShengZ/react-lesson"
   },
-  "proxy": "http://m.test321.hongcai.com",
   "author": "",
   "license": "ISC",
   "bugs": {

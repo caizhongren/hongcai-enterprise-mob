@@ -5,9 +5,9 @@ import template from './common/template'
 import Loading from './Loading'
 
 /*=================
-  Page2.jsx 子组件
+  About.jsx 子组件
 ==================*/
-class Page2 extends Component{
+class About extends Component{
     constructor(){
         super();
     }
@@ -15,7 +15,6 @@ class Page2 extends Component{
         const {fData} = this.props;
         let items;
         if(fData.data.data){
-             console.log(fData);
              items = (fData.data.data.stories.map((item,index)=>{
                   return <ListItem key={index} {...item} index = {item}/>
              }))
@@ -59,7 +58,7 @@ class ListItem extends Component{
 }
 export default template({
   id:'',
-  url:'/getData',
+  url:'/about',
   subscribeData:['fData','increaseData','decreaseData'],
-  component:Page2
+  component:About
 })

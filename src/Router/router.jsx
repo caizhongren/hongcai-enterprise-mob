@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
-import Index from '../Component/index';
-import Footer from '../Component/FooterView';
+import Index from '../Component/Index.jsx';
 /*=================
    router.jsx 组件
   专门用来管理路由的
@@ -14,19 +13,16 @@ const page2 = (location, cb) => {
         cb(null, require('../Component/Page2').default)
     },'page2')
 }
-const page1 = (location, cb) => {
+const about = (location, cb) => {
     require.ensure([], require => {
-        cb(null, require('../Component/Page1').default)
-    },'page1')
+        cb(null, require('../Component/About').default)
+    },'about')
 }
-
 const RouteConfig =(
   <Router history={browserHistory}>
-    <Route path="/" component={Footer}>
-        <IndexRoute component={Index}/>
-        <Route path='/page1' getComponent={page1}/>
-        <Route path='/page2' getComponent={page2}/>
-    </Route>
+     <Route path='/' component={Index}/>
+     <Route path='/page2' getComponent={page2}/>
+     <Route path='/about' getComponent={about}/>
   </Router>
 )
 export default RouteConfig

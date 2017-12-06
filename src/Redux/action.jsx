@@ -30,14 +30,13 @@ export const fetchData = (url ,data) => {
               throw new Error("Bad response from server");
           }
           return response.json();
-          console.log(response.json())
       })
       .then(function(data){
           // 这里延时只是为了演示效果，实际开发中需要把延时去掉
-          // setTimeout(function(){
+          setTimeout(function(){
               // 数据请求成功 再派发一个 getData  action
               return dispatch(dispathData('getData',data));
-          // },3000);
+          },3000);
        })
       .catch(function(error) {
           console.log('Request failed', error)

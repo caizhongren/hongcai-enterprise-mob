@@ -1,9 +1,9 @@
-import React, {Component, PropTypes} from 'react';
-import { Link, IndexLink } from 'react-router';
+ import React, {Component, PropTypes} from 'react';
+ import {IndexLink, Link } from 'react-router';
 import {connect} from 'react-redux';
 import {get, is, fromJS} from 'immutable';
-import  * as action from '../../Redux/action.js'
-import '../../Style/style.scss'
+import  * as action from '../../Redux/action.jsx'
+import '../../Style/comm.scss'
 /*=================
     template.jsx
     所有组件的父组件
@@ -16,7 +16,8 @@ const Main = mySetting => {
      url:'',
      data:{},
      subscribeData:[],
-     component:<div></div>
+     component:<div><head>hhhhhhhhhhh</head></div>,
+     common: <div>hhdsfhsfhjd</div>
    }
    // 初始化 setting
    for(let key in mySetting){
@@ -33,16 +34,16 @@ const Main = mySetting => {
        // 将数据传递给子组件
        //...this.props 是 mapStateToProps 返回过来的数据
        return (
-         <div>
-           <this.props.setting.component {...this.props}  />
-           <div className="footer">
+          <div>
+            <this.props.setting.component {...this.props}  />
+            <div className="footer">
               <ul role="nav" className="nav">
                 <li><IndexLink to="/" activeClassName="active">账户总览</IndexLink></li>
-                <li><Link to="/page1" activeClassName="active">借款企业</Link></li>
+                <li><Link to="/about" activeClassName="active">借款企业</Link></li>
               </ul>
-            </div>
-         </div>
-       )
+          </div>
+          </div>
+        )
      }
      componentDidMount(){
        // 如果组件初次加载有请求数据，在这里 派发 Action 请求数据

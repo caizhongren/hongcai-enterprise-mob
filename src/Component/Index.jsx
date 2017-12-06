@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {History, Link } from 'react-router';
+// import {connect} from 'react-redux';
 import template from './common/template'
 import BottonView from './BottonView'
+import Loading from './Loading'
+
 /*=================
   index.jsx 子组件
 ==================*/
@@ -18,14 +19,16 @@ class Index extends Component{
         // 拿到 this.props 参数
         const {increaseData,decreaseData, increase, decrease} = this.props;
         let inc_count = increaseData.get('count');
+        // console.log(inc_count)
         let dec_count = decreaseData.get('count');
         return(
             <div id='IndexView'>
+                {/* <Loading/> */}
+                <p>header</p>
                 <p className="lesson-3">React lesson-3</p>
                 <p>
                     ---------------------------------
                 </p>
-                <Link className='link_page2' to='/test'>link to test11111</Link>
                 <div className="count">
                     <div>计数 +：{inc_count}次</div>
                     <div>计数 -：{dec_count}次</div>
@@ -38,8 +41,6 @@ class Index extends Component{
         )
     }
     shouldComponentUpdate(nextProps, nextState){
-      console.log('index component::::');
-      console.log(nextProps);
        return true;
     }
 }

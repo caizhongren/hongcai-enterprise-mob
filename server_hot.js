@@ -4,7 +4,6 @@ var config = require('./webpack.config.hot');
 var dataJson = require('./dataJson.json');
 var app = express();
 var compiler = webpack(config);
-
 var proxy = require('http-proxy-middleware');
 
 app.use(require('webpack-dev-middleware')(compiler, {
@@ -15,16 +14,11 @@ app.use(require('webpack-dev-middleware')(compiler, {
 	progress: true,
 	stats: {
 	colors: true,
-	// target: 'http://m.test321.hongcai.com.com',
-	// changeOrigin: true,
 	}
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
-
-app.use('/hongcai', proxy({target: 'http://m.test321.hongcai.com', changeOrigin: true}));
-
-
+app.use('/hongcai', proxy({target: 'http://m.test321.hongcai.com', changeOrigin: true}))
 /**
 * get： 请求
 * url： http://127.0.0.1:8088/getData
