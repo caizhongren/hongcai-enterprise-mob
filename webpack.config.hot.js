@@ -47,7 +47,7 @@ module.exports = {
             loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader',
             include: [APP_PATH]
         }, {
-            test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/,
+            test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
             exclude: /^node_modules$/,
             loader: 'file-loader?name=[name].[ext]',
             include: [APP_PATH]
@@ -75,6 +75,7 @@ module.exports = {
         new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML
             filename: '../index.html', //生成的html存放路径，相对于 path
             template: './src/template/index.html', //html模板路径
+            favicon: './favicon.ico',
             hash: false,
         }),
         new webpack.HotModuleReplacementPlugin(),
