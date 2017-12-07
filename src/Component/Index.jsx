@@ -4,6 +4,7 @@ import template from './common/template'
 import BottonView from './BottonView'
 import Loading from './Loading'
 import Toasting from './Toasting'
+import Footer from './common/footer'
 
 /*=================
   index.jsx 子组件
@@ -44,6 +45,7 @@ class Index extends Component{
                 <div className='botton-img'></div>
                 <BottonView/>
                 <Toasting errMsg="错误提示"/>
+                <Footer/>
             </div>
         )
     }

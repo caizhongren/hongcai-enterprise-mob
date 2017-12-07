@@ -2,18 +2,21 @@ import React, {Component, PropTypes} from 'react';
 import {History, Link } from 'react-router';
 import {connect} from 'react-redux';
 import template from './common/template'
-import Loading from './Loading'
-import Footer from './common/footer'
+import Toasting from './Toasting'
 
 /*=================
-  About.jsx 子组件
+  Login.jsx 子组件
 ==================*/
 class About extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+    }
+    componentDidMount () {
+       this.props.hideFooter()
     }
     render(){
         const {fData} = this.props;
+        // const {footerData} = this.props;
         let items;
         if(fData.data.data){
              items = (fData.data.data.stories.map((item,index)=>{
@@ -21,21 +24,12 @@ class About extends Component{
              }))
          }
         return(
-            <div id='Page2'>
-                <Loading />
-                <div className='page-head'>
-                  <p className="lesson-3">page2 component</p>
-                  <div className='test-data'>
-                    <p>来着index页面的 </p>
-                    <span>加数据:{this.props.increaseData.get('count')}</span>
-                    <span>减数据:{this.props.decreaseData.get('count')}</span>
-                  </div>
-                  <Link className='link_page2' to='/'>link to index</Link>
-                </div>
-                {
-                  items
-                }
-                <Footer/>
+            <div id='login'>
+                <form action="">
+                    <input type="number" placeholder="请输入您的手机号"/>
+                    <input type="text" placeholder="请输入您的密码"/>
+                </form>
+                <Toasting/>
             </div>
         )
     }
@@ -61,6 +55,6 @@ class ListItem extends Component{
 export default template({
   id:'',
   url:'/getData',
-  subscribeData:['fData','increaseData','decreaseData'],
+  subscribeData:['fData','increaseData','decreaseData', 'footerData'],
   component:About
 })

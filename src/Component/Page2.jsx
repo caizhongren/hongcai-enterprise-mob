@@ -5,6 +5,7 @@ import template from './common/template'
 import Loading from './Loading'
 import BottonView from './BottonView'
 import fetch from 'isomorphic-fetch'
+import Footer from './common/footer'
 
 /*=================
   Page2.jsx 子组件
@@ -37,6 +38,7 @@ class Page2 extends Component{
                 {
                   items
                 }
+                <Footer/>
             </div>
         )
     }

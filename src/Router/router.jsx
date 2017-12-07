@@ -18,11 +18,17 @@ const about = (location, cb) => {
         cb(null, require('../Component/About').default)
     },'about')
 }
+const login = (location, cb) => {
+    require.ensure([], require => {
+        cb(null, require('../Component/Login').default)
+    },'login')
+}
 const RouteConfig =(
   <Router history={browserHistory}>
      <Route path='/' component={Index}/>
      <Route path='/page2' getComponent={page2}/>
      <Route path='/about' getComponent={about}/>
+     <Route path='/login' getComponent={login}/>
   </Router>
 )
 export default RouteConfig
