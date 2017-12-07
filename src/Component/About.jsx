@@ -58,7 +58,7 @@ class ListItem extends Component{
 }
 export default template({
   id:'',
-  url:'/about',
+  url:'/getData',
   subscribeData:['fData','increaseData','decreaseData'],
   component:About
 })

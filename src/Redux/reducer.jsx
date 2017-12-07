@@ -32,3 +32,18 @@ export const fData = (state = {data:{},loading:false}, action={}) => {
       default: return state;
   }
 }
+export const toastData = (state = {data:{},toast:false}, action={}) => {
+  switch (action.type){
+            case 'SHOW':
+              return {
+                data:{},
+                toast:true
+              };
+            case 'HIDE':
+              return {
+                data: action.json,
+                toast:false
+              };
+      default: return state;
+  }
+}

@@ -17,7 +17,7 @@ const dispathData = (path,json) => {
     json:json
   }
 }
-export const fetchData = (url ,data) => {
+export const fetchData = (url, data) => {
    return dispatch =>{
      // 先派发一个 LOADING action
      dispatch({type:'LOADING'});
@@ -43,3 +43,14 @@ export const fetchData = (url ,data) => {
       });
    }
 }
+export const showToast = (data) => {
+  return dispatch =>{
+    // 先派发一个 LOADING action
+    dispatch({type:'SHOW'});
+    setTimeout(function(){
+      // 数据请求成功 再派发一个 getData  action
+      return dispatch({type: 'HIDE'});
+    },3000);
+  }
+ }
+

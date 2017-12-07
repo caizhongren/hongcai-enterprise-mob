@@ -102,9 +102,9 @@ h1,p{
   margin: 0;
   padding: 0;
  }
- .active{
-  color: #FFF;
-  background-color: #FF260E;
+ .nav li a.active{
+  color: #39c;
+  background-color: #dbeef8;
  }
  
  .list{
@@ -130,6 +130,28 @@ h1,p{
    list-style: none;
    text-align: center;
    line-height: 50px;
-    border: 1px solid #ddd;
+   border: 1px solid #dbeef8;
+    a {
+      width: 100%;
+      display: inline-block;
+      color: #888188;
+      background: #fff;
+    }
   }
  }
+
+//  ToastView
+#ToastView {
+  position: fixed;
+  top: 40%;
+  left: 20%;
+  padding: .14rem 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: .2rem;
+  text-align: center;
+  font-size: .23rem;
+  color: #fff;
+  z-index: 10000000;
+  width: 60%;
+  height: .65rem;
+}

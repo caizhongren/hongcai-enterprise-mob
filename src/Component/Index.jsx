@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import template from './common/template'
 import BottonView from './BottonView'
 import Loading from './Loading'
+import Toasting from './Toasting'
 
 /*=================
   index.jsx 子组件
@@ -14,6 +15,11 @@ class Index extends Component{
          };
         this.state = {
         }
+    }
+    
+    componentDidMount(){
+      // this.props.fetchData()
+      true ? this.props.showToast() : null
     }
     render(){
         // 拿到 this.props 参数
@@ -37,6 +43,7 @@ class Index extends Component{
                 </div>
                 <div className='botton-img'></div>
                 <BottonView/>
+                <Toasting errMsg="错误提示"/>
             </div>
         )
     }
