@@ -40,7 +40,7 @@ const Main = mySetting => {
                 <li><IndexLink to="/" activeClassName="active">账户总览</IndexLink></li>
                 <li><Link to="/about" activeClassName="active">借款企业</Link></li>
               </ul>
-          </div>
+            </div>
           </div>
         )
      }
