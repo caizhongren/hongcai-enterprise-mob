@@ -1,5 +1,5 @@
- import React, {Component, PropTypes} from 'react';
- import {IndexLink, Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {IndexLink, Link } from 'react-router';
 import {connect} from 'react-redux';
 import {get, is, fromJS} from 'immutable';
 import  * as action from '../../Redux/action.jsx'
@@ -16,8 +16,7 @@ const Main = mySetting => {
      url:'',
      data:{},
      subscribeData:[],
-     component:<div><head>hhhhhhhhhhh</head></div>,
-     common: <div>hhdsfhsfhjd</div>
+     component:<div></div>
    }
    // 初始化 setting
    for(let key in mySetting){
@@ -41,7 +40,7 @@ const Main = mySetting => {
                 <li><IndexLink to="/" activeClassName="active">账户总览</IndexLink></li>
                 <li><Link to="/about" activeClassName="active">借款企业</Link></li>
               </ul>
-          </div>
+            </div>
           </div>
         )
      }
