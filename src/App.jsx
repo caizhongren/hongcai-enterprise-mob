@@ -1,18 +1,31 @@
-import React,{Component,PropTypes} from 'react';
-import {Provider,connect} from 'react-redux';
+import React, {Component, PropTypes} from 'react';
 import ReactDOM, {render} from 'react-dom';
-import store from './Redux/store'
-import router from './Router/router'
+import {Provider} from 'react-redux';
+import route from './Router/Route'; //路由配置
+import store from './Redux/Store/Store';
+import './Config/Config.js';//引入默认配置
 
-import './Style/comm.scss'
+import './Style/common.less';
+import './Style/head.less';
+import './Style/footer.less';
+import './Style/index.less';
+import './Style/chooseProducts.less';
+import './Style/helpCenter.less';
+import './Style/saleRecord.less';
+import './Style/allDeposit.less';
+import './Style/applyDeposit.less';
+import './Style/applyRecord.less';
 
-store.subscribe(() => {
 
+
+store.subscribe(() => { //监听state变化
+    //console.log(store.getState())
 });
 
 render(
     <Provider store={store}>
-      {router}
+        {route}
     </Provider>,
-    document.getElementById('root')
+    document.body.appendChild(document.createElement('div'))
 );
+

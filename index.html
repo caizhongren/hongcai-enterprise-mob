@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <meta name="renderer" content="webkit">
@@ -13,29 +14,13 @@
     <meta name="wap-font-scale" content="no">
     <meta name="x5-orientation" content="portrait">
     <title>宏财企业平台</title>
-    <link href="/build/static/app.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/build/static/favicon.ico">
-    <script>
-      window.onload = function(){
-            function setRem() {
-                (document.documentElement.style.fontSize = (document.documentElement.clientWidth > 640 ? 100 : 100 * document.documentElement.clientWidth / 640) + "px")
-                window.addEventListener && (document.addEventListener("DOMContentLoaded",
-                    function() {
-                        setRem()
-                    }), window.addEventListener("load",
-                    function() {
-                        setTimeout(setRem, 300)
-                    }), window.addEventListener("resize",
-                    function() {
-                        setTimeout(setRem, 300)
-                    }))
-            }
-            setRem();
-        }()
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="text/javascript" src="/build/static/app.js"></script>
-  </body>
+    <script type="text/javascript" src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+    <link href="/build/dist/app.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/build/dist/favicon.ico">
+</head>
+
+<body>
+    <script type="text/javascript" src="/build/dist/app.js"></script>
+</body>
+
 </html>
