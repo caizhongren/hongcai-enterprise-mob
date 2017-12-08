@@ -18,8 +18,8 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 //代理服务器
-app.use('/shopro', proxyMiddleware({
-    target: 'http://cangdu.org',
+app.use('/enterprise', proxyMiddleware({
+    target: 'http://biz.test321.hongcai.com',
     changeOrigin: true,
 }))
 
