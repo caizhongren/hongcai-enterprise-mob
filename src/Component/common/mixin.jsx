@@ -128,3 +128,48 @@ export class Header extends Component {  //头部标题
        return  true;
     }
 }
+
+/**
+ * 注册、登录 公共头部
+ *
+ * @export
+ * @class HongcaiHeader
+ * @extends {Component}
+ */
+export class HongcaiHeader extends Component { 
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(
+            <div className='hongcai-header'></div>
+        )
+    }
+    shouldComponentUpdate(nextProps, nextState){
+       return  true;
+    }
+}
+
+/**
+ * 注册、登录 公共底部
+ *
+ * @export
+ * @class HongcaiFooter
+ * @extends {Component}
+ */
+export class HongcaiFooter extends Component { 
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(
+            <div className="hongcai-footer">
+                <p>国企战略投资A轮1亿元</p>
+                <p>海口联合农商银行正式存管</p>
+            </div>
+        )
+    }
+    shouldComponentUpdate(nextProps, nextState){
+       return  true;
+    }
+}

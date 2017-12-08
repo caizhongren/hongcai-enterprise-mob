@@ -15,11 +15,6 @@ body,div,span,header,footer,nav,section,aside,article,ul, li, a, p, h1, h2, h3, 
     }
 }
 
-
-body{
-    background-color: #ebebeb;
-}
-
 .clear:after{
     content: '';
     display: block;
@@ -230,7 +225,7 @@ input:-webkit-autofill {
 }
 
 .component_container{
-    margin-bottom: .5rem;
+    margin-bottom: 3.5rem;
 }
 
 #alertTip{
@@ -243,19 +238,18 @@ input:-webkit-autofill {
     display: none;
 }
 #alertText{
-    width: 14.0rem;
+    width: 80%;
     position: absolute;
-    left: 50%;
-    top: 9.6rem;
-    margin-left: -7rem;
-    padding: 1.25rem 0.25rem;
+    left: 10%;
+    top: 60%;
+    padding: .15rem 0.25rem;
     line-height: 1.5rem;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-align: center;
     background-color: #000;
     opacity: 0.8;
     color: #fff;
-    border-radius: 0.25rem;
+    border-radius: 1rem;
     .alert_bottom{
         font-size: 0.65rem;
         line-height: 1.4rem;
@@ -263,3 +257,40 @@ input:-webkit-autofill {
     }
 }
 
+.hongcai-header {
+  width: 100%;
+  height: 1.6rem;
+  background: url('../images/login.png') no-repeat center center;
+  background-size: contain;
+  margin: 1.5rem auto;
+}
+.hongcai-footer {
+  position: fixed;
+  bottom: 2rem;
+  font-size: .5rem;
+  color: #666;
+  width: 100%;
+  padding: 0 .6rem;
+  p {
+    float: left;
+    text-align: left;
+    padding-left: .65rem;
+  }
+  p:nth-child(1) {
+    background: url('../images/hongcai-icon1.png') no-repeat 0.0rem 0.13rem;
+    background-size: 9.5%;
+  }
+  p:nth-child(2) {
+    background: url('../images/hongcai-icon2.png') no-repeat 0.1rem 0.1rem;
+    background-size: 6.5%;
+    float: right;
+  }
+}
+
+// button
+.btn_blue {
+  background-color: #39c;
+}
+.btn_blue_disabled {
+  background-color: #63aed5;
+}
