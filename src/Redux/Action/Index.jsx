@@ -109,12 +109,13 @@ const getDataSuccess = (path, json, success, name) => {
 
 
 //手动调用获取数据的aciton
-export const getData = (path, postData, success, name) => {
+export const getData = (path, postData, success, name, method) => {
+    let type = method ? method : 'GET'
     let url = target + path + Tool.paramType(postData);
     return dispatch => {
         dispatch(getDataStart(postData))
         return fetch(url,{
-            method: 'GET',
+            method: type,
             headers: {
                 'Content-Type': 'application/json',
             },
