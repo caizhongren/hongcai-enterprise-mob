@@ -127,10 +127,7 @@ class Main extends Component {
     }
     componentDidMount() {
         this.refreshCode()
-        console.log(this.state.phone)
-        this.setState({
-            disable: !this.state.mobilePattern.test(this.state.phone) || !this.state.picCaptcha || !this.state.mobCaptcha || this.state.password.length < 6
-        })
+        document.title = '注册'
     }
 
     shouldComponentUpdate(nextProps, nextState) {
