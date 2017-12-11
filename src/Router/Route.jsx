@@ -6,8 +6,16 @@ import index from '../Component/index'; //销售录入
 class Roots extends Component {
     render() {
         return (
-            <div>{this.props.children}</div>
+            <div>
+                {this.props.children}
+            </div>
         );
+    }
+    componentDidMount (props) {
+        document.title = this.props.routes[1].title === undefined ? '宏财企业平台' : this.props.routes[1].title
+    }
+    componentWillUpdate (nextProps) {
+        document.title = nextProps.routes[1].title === undefined ? '宏财企业平台' : nextProps.routes[1].title
     }
 }
 
@@ -28,18 +36,18 @@ const registerAgree = (location, cb) => {require.ensure([], require => {cb(null,
 const RouteConfig = (
     <Router history={browserHistory}>
         <Route path="/" component={Roots}>
-            <IndexRoute component={index} />//首页
+            <IndexRoute component={index} /> //首页
             <Route path="index" component={index} />
-            <Route path="helpCenter" getComponent={helpCenter} />//帮助中心
-            <Route path="saleRecord" getComponent={saleRecord} />//销售记录
-            <Route path="chooseProducts" getComponent={chooseProducts} />//选择商品
-            <Route path="allDeposit" getComponent={allDeposit} />//余额
-            <Route path="applyDeposit" getComponent={applyDeposit} />//申请提现
-            <Route path="applyRecord" getComponent={applyRecord} /> //提现记录
+            <Route path="helpCenter" getComponent={helpCenter}  title='帮助中心'/>//帮助中心
+            <Route path="saleRecord" getComponent={saleRecord}  title='销售记录'/>//销售记录
+            <Route path="chooseProducts" getComponent={chooseProducts}  title='选择商品'/>//选择商品
+            <Route path="allDeposit" getComponent={allDeposit}  title='余额'/>//余额
+            <Route path="applyDeposit" getComponent={applyDeposit}  title='申请提现'/>//申请提现
+            <Route path="applyRecord" getComponent={applyRecord}  title='提现记录'/> //提现记录
             <Route path="register" getComponent={register} title='注册'/> //注册
-            <Route path="login" getComponent={login} title='登录'/> //登录
-            <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录'/> //注册
-            <Route path="registerAgree" getComponent={registerAgree} title='注册服务协议'/> //注册服务协议
+            <Route path="login" getComponent={login}  title='登录'/> //注册
+            <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
+            <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
             <Redirect from='*' to='/'  />
         </Route>
     </Router>

@@ -11,7 +11,6 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
-      document.title = this.props.route.title
     }
 
     shouldComponentUpdate(nextProps, nextState) {

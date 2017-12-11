@@ -57,7 +57,6 @@ class Main extends Component {
     }
     componentDidMount() {
       console.log(this.state.phone)
-      document.title = this.props.route.title
     }
 
     shouldComponentUpdate(nextProps, nextState) {
