@@ -127,7 +127,7 @@ class Main extends Component {
     }
     componentDidMount() {
         this.refreshCode()
-        document.title = '注册'
+        // document.title = '注册'
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -164,7 +164,7 @@ class Main extends Component {
                 </div>
               </form>
               <div className={`btu_next ${!this.state.mobilePattern.test(this.state.phone) || !this.state.picCaptcha || !this.state.mobCaptcha || this.state.password.length < 6 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.register}>注册</div>
-              <p className="to_register display-bl">注册即表示您同意《<span className="ft-blue">宏财网注册协议</span>》</p>
+              <p className="to_register display-bl">注册即表示您同意《<Link className="ft-blue" to="/registerAgree">宏财网注册协议</Link>》</p>
               <Link to="/login" className="to_login display-inb">已有账号，<span className="under-line">去登录</span></Link>
             </div> 
           <HongcaiFooter />

@@ -14,6 +14,9 @@ class Roots extends Component {
     componentDidMount (props) {
         document.title = this.props.routes[1].title === undefined ? '宏财企业平台' : this.props.routes[1].title
     }
+    componentWillUpdate (nextProps) {
+        document.title = nextProps.routes[1].title === undefined ? '宏财企业平台' : nextProps.routes[1].title
+    }
 }
 
 // const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
@@ -28,6 +31,7 @@ const applyDeposit = (location, cb) => {require.ensure([], require => {cb(null, 
 const login = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/login').default)},'login')}
 const register = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/register').default)},'register')}
 const loginPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/loginPassword').default)},'login')}
+const registerAgree = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/registerAgree').default)},'registerAgree')}
 
 const RouteConfig = (
     <Router history={browserHistory}>
@@ -43,6 +47,7 @@ const RouteConfig = (
             <Route path="register" getComponent={register} title='注册'/> //注册
             <Route path="login" getComponent={login}  title='登录'/> //注册
             <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
+            <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
             <Redirect from='*' to='/'  />
         </Route>
     </Router>
