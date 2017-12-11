@@ -64,7 +64,11 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production') //定义生产环境
+                NODE_ENV: JSON.stringify('production'), //定义生产环境
+                baseFileUrl: JSON.stringify("https://biz.hongcai.com/uploads/"),
+                domain: JSON.stringify("https://biz.hongcai.com"),
+                WEB_DEFAULT_DOMAIN: JSON.stringify("/enterprise/api/v1"),
+                RESTFUL_DOMAIN: JSON.stringify("/enterprise/rest")
             }
         }),
         new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML
