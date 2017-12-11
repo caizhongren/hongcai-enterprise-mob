@@ -3,6 +3,10 @@ import * as config from './Config';
 
 const {target} = config;
 export const Tool = {};
+export const Count = {
+    second: 60,
+    canGetMobileCapcha: true
+};
 
 Tool.paramType = data => {
     let paramArr = []; 
@@ -132,4 +136,26 @@ Tool.nextPage = (dom,currentPage,totalPage,callback,shouldUpdata) => { //分页
         }
     }
 
+}
+Count.countDown = ($mobilecode) => {
+    // 如果秒数还是大于0，则表示倒计时还没结束
+    if (Count.second > 0) {
+        // 倒计时不结束按钮不可点
+        Count.canGetMobileCapcha = false
+        $mobilecode.innerHTML = null
+        $mobilecode.innerHTML = Count.second + 's'
+        // $mobilecode.className = ''
+        // 时间减一
+        Count.second -= 1
+        // 一秒后重复执行
+        setTimeout(function () {
+          Count.countDown($mobilecode)
+        }, 1000)
+        // 否则，按钮重置为初始状态,可点击
+    } else {
+        Count.canGetMobileCapcha = true
+        // $mobilecode.className += ' send'
+        $mobilecode.innerHTML = '重新获取'
+        Count.second = 60
+    }
 }
