@@ -30,12 +30,20 @@ Tool.ajax = url => {
 let alertText = document.createElement('div');
 alertText.setAttribute('id','alertText');
 
+let successText = document.createElement('div');
+successText.setAttribute('id','successText');
+
 
 let alertDom = document.createElement('div');
 alertDom.setAttribute('id','alertTip');
 alertDom.appendChild(alertText);
 
+let successDom = document.createElement('div');
+successDom.setAttribute('id','successTip');
+successDom.appendChild(successText);
+
 document.body.appendChild(alertDom);
+document.body.appendChild(successDom);
 let timer = null;
 Tool.alert =  (msg,msg2) => {
     clearTimeout(timer);
@@ -53,6 +61,20 @@ Tool.alert =  (msg,msg2) => {
        alertDom.style.display = 'none';
        clearTimeout(timer);
     },3000)
+}
+
+Tool.success =  (msg) => {
+    clearTimeout(timer);
+    successText.innerHTML = msg;
+    successDom.style.display = 'block';
+    successDom.onclick = () => {
+        clearTimeout(timer);
+        successDom.style.display = 'none';
+    }
+    timer = setTimeout( () => {
+       successDom.style.display = 'none';
+       clearTimeout(timer);
+    },2000)
 }
 
 Tool.getStyle =  (obj,attr) => { 

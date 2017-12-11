@@ -6,7 +6,7 @@ import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
 import {template, HongcaiHeader, HongcaiFooter} from './common/mixin';
 import '../Style/login.less'
-import md5 from 'md5';
+import {MD5} from '../Config/MD5'
 
 class Main extends Component {
     constructor(props) {
@@ -38,10 +38,10 @@ class Main extends Component {
             return;
           }
           this.state.preventMountSubmit == false;
-          this.props.getData('/enterprise/api/v1/siteUser/login',{account:this.state.phone,password:md5(this.state.password),type:1,userType:1},(res) => {
+          this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/login',{account:this.state.phone,password:MD5(this.state.password),type:1,userType:1},(res) => {
             console.log(res)
               if (res.ret === -1) {
-                  Tool.alert('请输入正确的登录密码！');
+                  Tool.alert(res.msg);
                   this.setState({
                       preventMountSubmit:true
                   })
