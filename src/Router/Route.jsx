@@ -22,6 +22,7 @@ const applyRecord = (location, cb) => {require.ensure([], require => {cb(null, r
 const applyDeposit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/applyDeposit').default)},'applyDeposit')}
 const login = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/login').default)},'login')}
 const register = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/register').default)},'register')}
+const loginPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/loginPassword').default)},'login')}
 
 const RouteConfig = (
     <Router history={browserHistory}>
@@ -34,8 +35,9 @@ const RouteConfig = (
             <Route path="allDeposit" getComponent={allDeposit} />//余额
             <Route path="applyDeposit" getComponent={applyDeposit} />//申请提现
             <Route path="applyRecord" getComponent={applyRecord} /> //提现记录
-            <Route path="login" getComponent={login} /> //登录
             <Route path="register" getComponent={register} /> //注册
+            <Route path="login" getComponent={login} /> //注册
+            <Route path="loginPassword/:mobile" getComponent={loginPassword} /> //注册
             <Redirect from='*' to='/'  />
         </Route>
     </Router>
