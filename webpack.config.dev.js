@@ -3,7 +3,6 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html
 
-
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，以此类推
 var APP_FILE = path.resolve(APP_PATH, 'App.jsx'); //根目录文件app.jsx地址
@@ -62,7 +61,11 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('development') //定义编译环境
+                NODE_ENV: JSON.stringify('development'), //定义编译环境
+                baseFileUrl: JSON.stringify("http://biz.test321.hongcai.com/uploads/"),
+                domain: JSON.stringify("http://biz.test321.hongcai.com"),
+                WEB_DEFAULT_DOMAIN: JSON.stringify("/enterprise/api/v1"),
+                RESTFUL_DOMAIN: JSON.stringify("/enterprise/rest")
             }
         }),
         new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML
