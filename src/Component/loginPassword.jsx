@@ -59,10 +59,12 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        let params = this.props.routeParams;
-        this.state.phone = params.mobile||'';
+        
     }
     componentDidMount() {
+      let params = this.props.routeParams;
+      this.state.phone = params.mobile||'';
+      document.title = this.props.route.title
     }
 
     shouldComponentUpdate(nextProps, nextState) {

@@ -30,6 +30,16 @@ Tool.ajax = url => {
   } )
 }
 
+Tool.isAndroid = data => {
+    let userAgent = navigator.userAgent || navigator.vendor || window.opera
+    return /android/i.test(userAgent) && !/windows phone/i.test(userAgent)
+}
+
+Tool.isIos = data =>  {
+    let userAgent = navigator.userAgent || navigator.vendor || window.opera
+    return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
+}
+
 
 let alertText = document.createElement('div');
 alertText.setAttribute('id','alertText');

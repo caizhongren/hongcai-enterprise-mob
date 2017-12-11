@@ -1,12 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import pureRender from 'pure-render-decorator';
-import {browserHistory, Link } from 'react-router';
-import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool} from '../Config/Tool';
-import {template, HongcaiHeader, HongcaiFooter} from './common/mixin';
+import {template} from './common/mixin';
 import '../Style/login.less'
-import {MD5} from '../Config/MD5'
 
 class Main extends Component {
     constructor(props) {
@@ -16,6 +11,7 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
+      document.title = this.props.route.title
     }
 
     shouldComponentUpdate(nextProps, nextState) {

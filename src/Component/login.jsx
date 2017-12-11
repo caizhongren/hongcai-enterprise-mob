@@ -44,11 +44,7 @@ class Main extends Component {
                         preventMountSubmit:true
                     })
                 }else{
-                  console.log(this.props)
                   browserHistory.push('/loginPassword/' + this.state.phone)
-                  this.setState({
-                    phone: '',
-                  });
                 }
             },'input', 'POST')
           }
@@ -61,6 +57,7 @@ class Main extends Component {
     }
     componentDidMount() {
       console.log(this.state.phone)
+      document.title = this.props.route.title
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -78,7 +75,6 @@ class Main extends Component {
       // const {increase} = this.props;
       return (
         <div className="component_container login">
-          {/* <Header nav saleRecord title='登录'/> */}
           <HongcaiHeader />
           <div>
               <form className='form_style'>

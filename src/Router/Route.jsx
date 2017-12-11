@@ -36,10 +36,10 @@ const RouteConfig = (
             <Route path="allDeposit" getComponent={allDeposit} />//余额
             <Route path="applyDeposit" getComponent={applyDeposit} />//申请提现
             <Route path="applyRecord" getComponent={applyRecord} /> //提现记录
-            <Route path="register" getComponent={register} /> //注册
-            <Route path="login" getComponent={login} /> //注册
-            <Route path="loginPassword/:mobile" getComponent={loginPassword} /> //注册
-            <Route path="registerAgree" getComponent={registerAgree} /> //注册
+            <Route path="register" getComponent={register} title='注册'/> //注册
+            <Route path="login" getComponent={login} title='登录'/> //登录
+            <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录'/> //注册
+            <Route path="registerAgree" getComponent={registerAgree} title='注册服务协议'/> //注册服务协议
             <Redirect from='*' to='/'  />
         </Route>
     </Router>
