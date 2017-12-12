@@ -26,15 +26,10 @@ class Main extends Component {
           this.setState({
             password:pwd
           })
-          if (pwd.length < 6) {
-            this.setState({disable: true})
-          } else {
-            this.setState({disable: false})
-          }
         }
 
         this.postPwd = () => {
-          if (this.state.disable) {
+          if (this.state.password.length < 6) {
             return;
           }
           this.state.preventMountSubmit == false;
@@ -80,7 +75,6 @@ class Main extends Component {
     render() {
       return (
         <div className="component_container login">
-          {/* <Header nav saleRecord title='登录'/> */}
           <HongcaiHeader />
           <div>
             <form className='form_style'>
@@ -89,7 +83,7 @@ class Main extends Component {
                 <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
               </div>
             </form>
-            <div className={`btu_next ${!this.state.disable ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPwd}>登录</div>
+            <div className={`btu_next ${this.state.password.length >= 6 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPwd}>登录</div>
             <div className="text-center">
               <Link to="/register" className="to_register display-inb">注册账号</Link>
               <span className="line">|</span>
