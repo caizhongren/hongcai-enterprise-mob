@@ -5,169 +5,61 @@ import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
 import {Header, Footer, template} from './common/mixin';
+import '../Style/main.less'
 
 
 class Main extends Component {
     constructor() {
-        super();
-        this.state = {
-            saleMoney:'',  //销售金额
-            name:'',   //姓名
-            phone:'',   //电话
-            products:[],    //销售商品
-            postProduct:[], //上传的商品信息
-            serverId:'',   // 图片id
-            picSrc:'',     //图片src
-            saleOldvalue:'',    //金额上次input值
-            preventMountSubmit:true,//防止重复提交
-        }
+      super();
+      this.state = {
+        userAuth: {
+          authStatus: 0,
+        },
+        balance: 0, // 账户余额
+        loanAmount: 0, // 借款金额
+        payableAmount: 0, //应还金额 
+        returnedAmount: 0, // 已还金额
+        unpaidAmount: 0, // 待还金额
+      }
 
-        this.changeValue = (type,event) => {
-            if (type === 'money') {
-                let value = event.target.value;
-                if((/^\d*?\.?\d{0,2}?$/gi).test(value)){
-                    if ((/^0+[1-9]+/).test(value)) {
-                        value = value.replace(/^0+/,'');
-                    }
-                    if ((/^0+0\./).test(value)) {
-                        value = value.replace(/^0+/,'0');
-                    }
-                    value = value.replace(/^\./gi,'0.');
-                    this.state.saleOldvalue = value;
-                    this.state.inputLength = value.length;
-                }else{
-                      value = this.state.saleOldvalue;
-                }
-                this.setState({
-                    saleMoney:value
-                })
-            }else if (type === 'name') {
-                this.setState({
-                    name:event.target.value
-                })
-            }else if(type === 'phone'){
-                let value = event.target.value.replace(/\D/gi,'')
-                this.setState({
-                    phone:value
-                })
-            }
-        }
+      this.getEnterpriseUserInfo = () => {
+        this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/enterpriseUser/getEnterpriseUserInfo',{},(res) => {
+          if (res.ret === -1) {
+            Tool.alert(res.msg);
+          }else{
+            let account = res.data.account;
+            let enterpriseCapitalVo = res.data.enterpriseCapitalVo;
+            this.setState({
+              balance: account.balance, // 账户余额
+              loanAmount: enterpriseCapitalVo.totalFundRaising, // 借款金额
+              payableAmount: enterpriseCapitalVo.totalFundRaising + enterpriseCapitalVo.accruedInterest, //应还金额 = 已还金额 + 待还金额
+              returnedAmount: (enterpriseCapitalVo.totalFundRaising - enterpriseCapitalVo.unPrincipal) + (enterpriseCapitalVo.accruedInterest - enterpriseCapitalVo.unInterest), // 已还金额
+              unpaidAmount: enterpriseCapitalVo.unInterest + enterpriseCapitalVo.unPrincipal, 
+            })
+          }
+        },'')
+      }
 
-        this.chooseImage = () => {
-            Tool.alert('测试环境无法获取微信签名');
-            let self = this;
-            wx.chooseImage({
-                count: 1, // 默认9
-                sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                success: res => {
-                    let localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                    self.setState({picSrc:localIds});
-                    self.uploadImage(localIds)
-                }
-            });
-
-        }
-
-        this.uploadImage = (localIds) => {
-            let self = this;
-            localIds = localIds.toString()
-            wx.uploadImage({
-                localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
-                isShowProgressTips: 1, // 默认为1，显示进度提示
-                success: res => {
-                    let serverId = res.serverId; // 返回图片的服务器端ID
-                    self.setState({serverId:serverId});
-                }
-            });
-        }
-
-        this.postInform = () => {
-            if (this.state.saleMoney == '') {
-                Tool.alert('请输入订单金额');
-            }else if (this.state.name == '') {
-                Tool.alert('请输入客户姓名');
-            }else if (this.state.phone == ''||!/^1\d{10}$/.test(this.state.phone)) {
-                Tool.alert('请输入正确的电话号码');
-            }else if (this.state.postProduct.length == 0) {
-                Tool.alert('请选择销售的产品');
-            }else if (this.state.picSrc !== ''&&this.state.serverId == '') {
-                Tool.alert('图片上传失败，请重新上传图片');
-            }else if (this.state.serverId == '') {
-                Tool.alert('请上传售卖发票凭证');
-            }else{
-                if (this.state.postProduct instanceof Object) {
-                    this.state.postProduct = JSON.stringify(this.state.postProduct);
-                }
-                if (this.state.preventMountSubmit) {
-                    this.state.preventMountSubmit == false;
-                    this.props.getData('/sales/sales/input',{sales_money:this.state.saleMoney,customers_name :this.state.name,customers_phone :this.state.phone,products :this.state.postProduct,invoice_ids :this.state.serverId},(res) => {
-                        if (res.http_code == 200) {
-                            Tool.alert(res.data.msg);
-                            this.setState({
-                                saleMoney:'',
-                                name:'',
-                                phone:'',
-                                products:[],
-                                serverId:'',
-                                picSrc:'',
-                                postProduct:[],
-                                preventMountSubmit:true
-                            })
-                        }else{
-                            this.state.preventMountSubmit = true;
-                            Tool.alert(res.msg)
-                        }
-                    },'input')
-                }
-            }
-        }
-
-        this.deleteImg = () => {
-            this.setState({picSrc:'',serverId:''})
-        }  
-        
+      this.userSecurityInfo = () => {
+        this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/userSecurityInfo',{},(res) => {
+          if (res.ret === -1) {
+            Tool.alert(res.msg);
+          }else{
+            this.setState({
+              userAuth: res.data.userAuth
+            })
+          }
+        },'')
+      }
     }
 
     componentWillMount() {
         let params = this.props.location.query;
-        if (this.props.producRecord.productList&&this.props.location.search!=='') {
-            let {productList} = this.props.producRecord;
-            let num = 0;
-            productList.forEach((item,index) => {
-                if (item.chooseState&&item.num>0) {
-                    this.state.products[num] = [item.productName,item.num.toString()];
-                    this.state.postProduct[num] = {};
-                    this.state.postProduct[num]['id'] = item.id;
-                    this.state.postProduct[num]['quantity'] = item.num;
-                    num++;
-                }
-            })
-        }
-        this.state.saleMoney = params.saleMoney||'';
-        this.state.name = params.name||'';
-        this.state.phone = params.phone||'';
-        this.state.picSrc = params.picSrc||'';
-        this.state.serverId = params.serverId||'';
     }
     componentDidMount() {
-        const url = window.location.href.split('#')[0];
-        const successFun = (res) => {
-            wx.config({
-                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                appId: res.appId, // 必填，公众号的唯一标识
-                timestamp: res.timestamp, // 必填，生成签名的时间戳
-                nonceStr: res.nonceStr, // 必填，生成签名的随机串
-                signature: res.signature, // 必填，签名，见附录1
-                jsApiList: ['chooseImage','uploadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-            });
-        }
-
-        //this.props.getData('core/wx/jssdkNotLogin', {url: url}, successFun, 'jssdk');
-        //获取微信签名，demo不需要
-        wx.ready(() => {
-            wx.hideOptionMenu();
-        })    
+      this.getEnterpriseUserInfo();
+      this.userSecurityInfo();
+      this.setState({height: window.innerHeight + 'px'})
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -182,67 +74,55 @@ class Main extends Component {
     }
    
     render() {
-        let products = this.state.products;
-        return (
-            <div className="component_container index_module">
-                
-                <Header nav saleRecord title='销售录入'/>
-                <div className='index_tip'>
-                    <span className='tip_text'>请录入您的销售业绩</span>
-                </div>
-
-                <form className='form_style'>
-                    <div className='input_container'>
-                        <span className='input_descript'>销售金额：</span>
-                        <input type="text" value={this.state.saleMoney} placeholder='请输入订单金额' onChange={this.changeValue.bind(this,'money')}/>
-                    </div>
-                    <div className='input_container'>
-                        <span className='input_descript'>客户姓名：</span>
-                        <input type="text" value={this.state.name} placeholder='请输入客户姓名' onChange={this.changeValue.bind(this,'name')}/>
-                    </div>
-                    <div className='input_container'>
-                        <span className='input_descript'>客户电话：</span>
-                        <input type="text" maxLength='11' value={this.state.phone} placeholder='请输入客户电话' onChange={this.changeValue.bind(this,'phone')}/>
-                    </div>
-                </form>
-
-                <div className='index_tip'>
-                    <span className='tip_text'>请选择销售的产品</span>
-                </div>
-
-                <div className='choose_product'>
-                    <Link to={'/chooseProducts?saleMoney='+this.state.saleMoney+'&name='+this.state.name+'&phone='+this.state.phone+'&picSrc='+this.state.picSrc+'&serverId='+this.state.serverId} className={products.length > 0 ? 'showIcon':'link_choose'}>{products.length > 0 ? '':'请选择销售的产品'}</Link>
-                    <ul  className={`choosed_ul clear ${products.length > 0 ? 'show':'hide'}`}>
-                        {
-                            products.length > 0 ?products.map((item,index) => {
-                                return <li key={index} className='product_li left'>
-                                    <span className='product_style product_name ellips' style={{maxWidth:`${4.8-item[1].length*0.6}rem`}}>{item[0]}</span>
-                                    <span className='product_style'>x</span>
-                                    <span className='product_style'>{item[1]}</span>
-                                </li>
-                            }):null
-                        }
-                    </ul>
-                </div>
-
-                <div className='index_tip'>
-                    <span className='tip_text'>请上传售卖发票凭证</span>
-                </div>
-                {
-                    this.state.picSrc !== ''?<div className='img_container'>
-                        <span className='delet_img' onClick={this.deleteImg}></span>
-                        <img src={this.state.picSrc} className='chooseImg'/>
-                    </div>:<div className='choosePic' onClick={this.chooseImage}>
-                    <span className='choose_button'>请点击上传凭证</span>
-                </div>
-                }
-                
-                <div className='submit' onClick={this.postInform}>
-                    提交
-                </div>
-                <Footer />
+      // let products = this.state.products;
+      return (
+        <div className="main" style={{height: this.state.height}}>
+          <Link className="setting" to='/userCenter/securitySettings'></Link>
+          <div className="part1">
+            <div className="account">
+              <div className="balance">
+                <img src={require('../images/balance.png')} alt=""/>
+                账户余额(元): <span>{this.state.balance.toFixed(2)}</span>
+              </div>
+              <div className="loanAmount">
+                <img src={require('../images/jiekuan.png')} alt=""/>
+                借款金额(元): <span>{this.state.loanAmount.toFixed(2)}</span>
+              </div>
             </div>
-        )
+            <ul className="statistics">
+              <li>
+                <span></span>
+                <p>应还金额(元)</p>
+                <p>{this.state.payableAmount.toFixed(2)}</p>
+              </li>
+              <li>
+                <span></span>
+                <p>已还金额(元)</p>
+                <p>{this.state.returnedAmount.toFixed(2)}</p>
+              </li>
+              <li>
+                <span></span>
+                <p>待还金额(元)</p>
+                <p>{this.state.unpaidAmount.toFixed(2)}</p>
+              </li>
+            </ul>
+            <div className="btns">
+              { this.state.userAuth && this.state.userAuth.authStatus === 2 ? 
+              <ul>
+                <Link to='/userCenter/recharge'><div className="fl">充值</div></Link>
+                <Link to='/userCenter/withdraw'><div className="fr">提现</div></Link>
+              </ul>
+              : <div className="toRealNameAuth">开通银行资金存管</div>
+              }
+            </div>
+          </div>
+          <div className="part2">
+            <Link to='/userCenter/recharge'><p>资金流水</p></Link>
+            <Link to='/userCenter/recharge'><p className="border-none">银行卡管理</p></Link>
+          </div>
+          <Footer />
+        </div>
+      )
     }
     
     componentWillUnmount() {

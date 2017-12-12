@@ -1,40 +1,40 @@
 .footer {
-  .nav {
-    li {
-      a.active{
-        color: #39c;
-        background-color: #dbeef8;
-      }
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
+  font-size: .7rem;
+  height: 2.5rem;
+  line-height: 2.8rem;
+  border-top-left-radius: .8rem;
+  border-top-right-radius: .8rem;
+  li {
+    width: 50%;
+    float: left;
+    text-align: center;
+    a {
+      color: #666;
+      padding-left: 1.5rem;
+    }
+  } 
+  li:nth-child(1) {
+    a{
+      background: url('../images/tabbar.png') no-repeat -0rem 0;
+      background-size: contain;
+    }
+    a.active{
+      background: url('../images/tabbar1.png') no-repeat -0rem 0;
+      background-size: contain;
     }
   }
-}
-.footer {
-  .nav{
-    overflow: hidden;
-    clear: both;
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    li {
-      float: left;
-      width: 50%;
-      height: 50px;
-      box-sizing: border-box;
-      background-color: #fff;
-      color: red;
-      list-style: none;
-      text-align: center;
-      line-height: 50px;
-      border: 1px solid #dbeef8;
-      a {
-        width: 100%;
-        display: inline-block;
-        color: #888188;
-        background: #fff;
-      }
+  li:nth-child(2) {
+    a {
+      background: url('../images/tabbar0.png') no-repeat 0 0;
+      background-size: contain;
+    }
+    a.active {
+      background: url('../images/tabbar2.png') no-repeat 0 0;
+      background-size: contain;
     }
   }
 }

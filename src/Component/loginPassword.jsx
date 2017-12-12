@@ -34,7 +34,6 @@ class Main extends Component {
           }
           this.state.preventMountSubmit == false;
           this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/login',{account:this.state.phone,password:MD5(this.state.password),type:1,userType:1},(res) => {
-            console.log(res)
               if (res.ret === -1) {
                   Tool.alert(res.msg);
                   this.setState({

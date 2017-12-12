@@ -1,0 +1,116 @@
+.main {
+  background: #efeef4;
+  .setting {
+    width: 3rem;
+    height: 3rem;
+    background: url('../images/setting.png') no-repeat right 0;
+    background-size: contain;
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
+  .part1 {
+    background: #fff;
+  }
+  .account {
+    letter-spacing: 1.5px;
+    text-align: left;
+    color: #666666;
+    padding: 1rem;
+    .balance, .loanAmount {
+      height: 1rem;
+      line-height: 1rem;
+      font-size: .7rem;
+      color: #666666;
+      margin-bottom: 1rem;
+      img {
+        width: 6%;
+        margin-right: .35rem;
+        vertical-align: sub;
+      }
+      span {
+        font-size: .9rem;
+        color: #39c;
+        font-family: Arial;
+        letter-spacing: 0.2px;
+        vertical-align: bottom;
+      }
+    }
+    .loanAmount {
+      margin-bottom: 0;
+      span {
+        color: #444444;
+      }
+    }
+  }
+  .statistics {
+    li {
+      height: 2.2rem;
+      line-height: 2.2rem;
+      border-top: 1px solid #f6f6f6;
+      span {
+        float: left;
+        width: 0.25rem;
+        height: 100%;
+        background: #f0ad32;
+      }
+      p {
+        letter-spacing: 0.2px;
+      }
+      p:nth-child(2) {
+        color: #666666;
+        font-size: .7rem;
+        float: left;
+        margin-left: .8rem;
+      }
+      p:nth-child(3) {
+        color: #444444;
+        font-size: .9rem;
+        float: right;
+        margin-right: .8rem;
+        font-family: Arial;
+      }
+    }
+    li:nth-child(2) {
+      span{
+        background: #6abd5a;
+      }
+    }
+    li:nth-child(3) {
+      span{
+        background: #7b67e0;
+      }
+    }
+  }
+  .btns {
+    overflow: hidden;
+    clear: both;
+    padding: .8rem 1.8rem 1.2rem;
+    div, .toRealNameAuth {
+      width: 39%;
+      height: 1.8rem;
+      background: #39c;
+      color: #fff;
+      border-radius: 1rem;
+      font-size: .7rem;
+      text-align: center;
+      line-height: 1.8rem;
+      margin: 0 auto;
+    }
+    .toRealNameAuth {
+      width: 80%;
+    }
+  }
+  .part2 {
+    margin-top: .8rem;
+    background: #fff;
+    p {
+      border-bottom: 1px solid #f6f6f6;
+      height: 2.2rem;
+      line-height: 2.2rem;
+      color: #666;
+      font-size: .7rem;
+      padding: 0 1rem;
+    }
+  }
+}

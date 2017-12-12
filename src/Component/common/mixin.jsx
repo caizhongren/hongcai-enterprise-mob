@@ -116,12 +116,11 @@ export class Header extends Component {  //头部标题
     }
     render(){
         return(
-          <div className="footer">
-            <ul role="nav" className="nav">
-              <li><IndexLink to="/" activeClassName="active">账户总览</IndexLink></li>
-              <li><Link to="/applyRecord" activeClassName="active">借款企业</Link></li>
-            </ul>
-          </div>
+        <ul role="nav" className="footer">
+            {/* <li><IndexLink to="/" activeClassName="active"><img src={require('../../images/tabbar1.png')}/>账户总览</IndexLink></li> */}
+            <li><IndexLink to="/" activeClassName="active">账户总览</IndexLink></li>
+            <li><Link to="/applyRecord" activeClassName="active">我的借款</Link></li>
+        </ul>
         )
     }
     shouldComponentUpdate(nextProps, nextState){

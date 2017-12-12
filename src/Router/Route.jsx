@@ -32,12 +32,17 @@ const login = (location, cb) => {require.ensure([], require => {cb(null, require
 const register = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/register').default)},'register')}
 const loginPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/loginPassword').default)},'login')}
 const registerAgree = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/registerAgree').default)},'registerAgree')}
+const recharge = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/recharge').default)},'recharge')}
+const withdraw = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/withdraw').default)},'withdraw')}
+const transactionRecord = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/transactionRecord').default)},'transactionRecord')}
+const bankcardManagement = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardManagement').default)},'bankcardManagement')}
+const securitySettings = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/securitySettings').default)},'securitySettings')}
 
 const RouteConfig = (
     <Router history={browserHistory}>
         <Route path="/" component={Roots}>
-            <IndexRoute component={index} /> //首页
-            <Route path="index" component={index} />
+            <IndexRoute component={index} title='账户总览'/> //首页
+            <Route path="index" component={index} title='账户总览' />
             <Route path="helpCenter" getComponent={helpCenter}  title='帮助中心'/>//帮助中心
             <Route path="saleRecord" getComponent={saleRecord}  title='销售记录'/>//销售记录
             <Route path="chooseProducts" getComponent={chooseProducts}  title='选择商品'/>//选择商品
@@ -48,6 +53,11 @@ const RouteConfig = (
             <Route path="login" getComponent={login}  title='登录'/> //注册
             <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
             <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
+            <Route path="userCenter/recharge" getComponent={recharge}  title='充值'/>
+            <Route path="userCenter/withdraw" getComponent={withdraw}  title='提现'/>
+            <Route path="userCenter/transactionRecord" getComponent={transactionRecord}  title='资金流水'/>
+            <Route path="userCenter/bankcardManagement" getComponent={bankcardManagement}  title='银行卡管理'/>
+            <Route path="userCenter/securitySettings" getComponent={securitySettings}  title='账户设置'/>
             <Redirect from='*' to='/'  />
         </Route>
     </Router>
