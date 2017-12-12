@@ -48,7 +48,7 @@ const RouteConfig = (
             <Route path="login" getComponent={login}  title='登录'/> //注册
             <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
             <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
-            <Redirect from='*' to='/'  />
+            <Redirect from='*' to='/' title='宏财企业平台' />
         </Route>
     </Router>
 );

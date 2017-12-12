@@ -119,7 +119,8 @@ export const getData = (path, postData, success, name, method) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            mode: 'cors'
+            mode: 'cors',
+            credentials: 'same-origin'
         })
         .then(response => response.json())
         .then(json => dispatch(getDataSuccess(path, json, success, name)))

@@ -173,3 +173,24 @@ export class HongcaiFooter extends Component {
        return  true;
     }
 }
+/**
+ * loading
+ *
+ * @export
+ * @class Loading
+ * @extends {Component}
+ */
+import '../../Style/loading' 
+export class Loading extends Component {
+    render () {
+        return (
+            <div>
+                <div className="weui-mask_transparent"></div>
+                <div className="weui-toast">
+                    <i className="weui-loading weui-icon_toast"></i>
+                    <p className="weui-toast__content">数据加载中...</p>
+                </div>
+            </div>
+        )
+    }
+}
