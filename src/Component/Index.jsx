@@ -1,11 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import pureRender from 'pure-render-decorator';
 import {History, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
-import {Header, Footer, template} from './common/mixin';
 import {RealNameAuth} from './common/realNameAuth';
+import {Header, Footer, template, Loading} from './common/mixin';
 import '../Style/main.less'
 
 
@@ -21,11 +20,13 @@ class Main extends Component {
         payableAmount: 0, //应还金额 
         returnedAmount: 0, // 已还金额
         unpaidAmount: 0, // 待还金额
-        showRealNameMask: false // 控制实名认证弹窗
+        showRealNameMask: false, // 控制实名认证弹窗
+        loading: false,
       }
 
       this.getEnterpriseUserInfo = () => {
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/enterpriseUser/getEnterpriseUserInfo',{},(res) => {
+          this.setState({loading: false})
           if (res.ret === -1) {
             Tool.alert(res.msg);
           }else{
@@ -44,6 +45,7 @@ class Main extends Component {
 
       this.userSecurityInfo = () => {
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/userSecurityInfo',{},(res) => {
+          this.setState({loading: false})
           if (res.ret === -1) {
             Tool.alert(res.msg);
           }else{
@@ -65,6 +67,10 @@ class Main extends Component {
         let params = this.props.location.query;
     }
     componentDidMount() {
+      this.setState({loading: true})
+      setTimeout(() => {
+        this.setState({loading: false})
+      }, 5000)
       this.getEnterpriseUserInfo();
       this.userSecurityInfo();
       this.setState({height: window.innerHeight + 'px'})
@@ -86,6 +92,7 @@ class Main extends Component {
       return (
         <div className="main" style={{height: this.state.height}}>
           {this.state.showRealNameMask ? <RealNameAuth getData={this.props.getData} closeRealNameMask={this.closeRealNameMask} showRealNameMask={this.state.showRealNameMask}/> : null }
+          {this.state.loading && <Loading />}
           <Link className="setting" to='/userCenter/securitySettings'></Link>
           <div className="part1">
             <div className="account">

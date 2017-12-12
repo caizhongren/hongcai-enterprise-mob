@@ -155,8 +155,6 @@ class Main extends Component {
 
     componentWillMount() {
         // let params = this.props.location.query;
-        // this.state.phone = params.phone||'';
-        // console.log(this.props)
     }
     componentDidMount() {
         this.refreshCode()

@@ -228,7 +228,7 @@ input:-webkit-autofill {
     margin-bottom: 3.5rem;
 }
 
-#alertTip, #successTip{
+#alertTip {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -246,8 +246,7 @@ input:-webkit-autofill {
     line-height: 1.5rem;
     font-size: 0.7rem;
     text-align: center;
-    background-color: #000;
-    opacity: 0.8;
+    background-color: rgba(40, 40, 40, 0.75);
     color: #fff;
     border-radius: 1rem;
     .alert_bottom{
@@ -258,19 +257,21 @@ input:-webkit-autofill {
 }
 
 /* 公共成功弹窗样式 */
-#successText {
-  width: 28%;
-  height: 4rem;
-  position: absolute;
-  left: 37%;
-  top: 47%;
-  line-height: 4rem;
-  font-size: 0.7rem;
+#successTip {
+  position: fixed;
+  z-index: 5000;
+  width: 7em;
+  line-height: 7em;
+  min-height: 7em;
+  line-height: 7em;
+  top: 35%;
+  left: 38%;
+  background: rgba(40, 40, 40, 0.75);
   text-align: center;
-  background-color: #000;
-  opacity: 0.8;
-  color: #fff;
-  border-radius: 1rem;
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-size: .7rem;
+  display: none;
 }
 
 /* 登录、注册页 公共头部底部 */

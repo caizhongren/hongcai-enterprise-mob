@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import pureRender from 'pure-render-decorator';
 import {Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
@@ -75,7 +74,6 @@ class Main extends Component {
             <div className={`btu_next ${this.state.phone.length === 11 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPhone}>下一步</div>
             <Link to="/register" className="to_register display-bl">注册账号</Link>
           </div>
-          
           <HongcaiFooter />
         </div>
       )

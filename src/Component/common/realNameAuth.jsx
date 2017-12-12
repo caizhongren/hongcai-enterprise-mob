@@ -30,7 +30,6 @@ export class RealNameAuth extends Component {
         }
   
         this.toRealName = () => {
-            console.log(this.props)
             if (!this.state.preventMountSubmit) {
                 return
             }
