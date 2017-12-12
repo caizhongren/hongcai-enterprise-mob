@@ -132,8 +132,8 @@ class Main extends Component {
             </div>
           </div>
           <div className="part2">
-            <Link to='/userCenter/recharge'><p>资金流水</p></Link>
-            <Link to='/userCenter/recharge'><p className="border-none">银行卡管理</p></Link>
+            <Link to='/userCenter/transactionRecord'><p>资金流水</p></Link>
+            <Link to='/userCenter/bankcardManagement'><p className="border-none">银行卡管理</p></Link>
           </div>
           <Footer />
         </div>
