@@ -44,17 +44,12 @@ Tool.isIos = data =>  {
 let alertText = document.createElement('div');
 alertText.setAttribute('id','alertText');
 
-let successText = document.createElement('div');
-successText.setAttribute('id','successText');
-
-
 let alertDom = document.createElement('div');
 alertDom.setAttribute('id','alertTip');
 alertDom.appendChild(alertText);
 
 let successDom = document.createElement('div');
 successDom.setAttribute('id','successTip');
-successDom.appendChild(successText);
 
 document.body.appendChild(alertDom);
 document.body.appendChild(successDom);
@@ -79,7 +74,7 @@ Tool.alert =  (msg,msg2) => {
 
 Tool.success =  (msg) => {
     clearTimeout(timer);
-    successText.innerHTML = msg;
+    successDom.innerHTML = msg;
     successDom.style.display = 'block';
     successDom.onclick = () => {
         clearTimeout(timer);

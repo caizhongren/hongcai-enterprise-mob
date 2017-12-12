@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import pureRender from 'pure-render-decorator';
 import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
-import {template, HongcaiHeader, HongcaiFooter} from './common/mixin';
+import {template, HongcaiHeader, HongcaiFooter, Loading} from './common/mixin';
 import '../Style/login.less'
 import {MD5} from '../Config/MD5'
 
@@ -16,6 +15,7 @@ class Main extends Component {
             preventMountSubmit:true,//防止重复提交
             pwdHide: true,
             password: '',
+            loading: false,
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -33,21 +33,26 @@ class Main extends Component {
             return;
           }
           this.state.preventMountSubmit == false;
+          this.setState({loading: true})
           this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/login',{account:this.state.phone,password:MD5(this.state.password),type:1,userType:1},(res) => {
-              if (res.ret === -1) {
-                  Tool.alert(res.msg);
-                  this.setState({
-                      preventMountSubmit:true
-                  })
+            this.setState({loading: false}) 
+            if (res.ret === -1) {
+              Tool.alert(res.msg);
+              this.setState({
+                  preventMountSubmit:true
+              })
               }else{
-                  this.state.preventMountSubmit = true;
-                  Tool.success('登录成功')
-                  let timer = setTimeout( () => {
-                    browserHistory.push('/')
-                    clearTimeout(timer);
-                 },2000)
+                this.state.preventMountSubmit = true;
+                Tool.success('登录成功')
+                let timer = setTimeout( () => {
+                  browserHistory.push('/')
+                  clearTimeout(timer);
+                },2000)
               }
           },'input', 'POST')
+          setTimeout(() => {
+            this.setState({loading: false})
+          }, 5000)
         }
         
     }
@@ -75,6 +80,7 @@ class Main extends Component {
       return (
         <div className="component_container login">
           <HongcaiHeader />
+          {this.state.loading && <Loading />}
           <div>
             <form className='form_style'>
               <div className='input_container'>
