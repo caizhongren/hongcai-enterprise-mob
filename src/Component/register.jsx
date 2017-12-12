@@ -101,7 +101,8 @@ class Main extends Component {
                 return
             }
             that.setState({busy: true})
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 0}, (res) => {
+            let guestId = Tool.guestId(32, 16)
+            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 0, guestId: guestId}, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
                     setTimeout(() => {
@@ -126,14 +127,14 @@ class Main extends Component {
                 Tool.alert('密码6-16位，需包含字母和数字')
                 return
             }
-            that.setState({canRegister: true})
+            that.setState({canRegister: false})
             that.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/register', {
                 mobile: that.state.phone,
                 captcha: that.state.mobCaptcha,
                 password: MD5(that.state.password)
             }, (res) => {
                 setTimeout(() => {
-                    that.setState({canRegister: false})
+                    that.setState({canRegister: true})
                 }, 1000);
                 if (res && res.ret === -1) {
                     if (res.ret === -1 && res.code === -1007) {
@@ -143,7 +144,9 @@ class Main extends Component {
                     }
                 } else {
                     Tool.success('注册成功')
-                    browserHistory.push('/login')
+                    setTimeout(() => {
+                        browserHistory.push('/login')
+                    }, 1000);
                 }
             }, '', 'POST')
         }
@@ -188,7 +191,7 @@ class Main extends Component {
                 </div>
                 <span id="get_captcha" className="fr" onClick={this.sendMobCaptcha}>获取短信验证码</span>                
                 <div className='input_container'>
-                    <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.password} placeholder='请输入登录密码' onChange={this.changeValue.bind(this,'password')} required />
+                    <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.password} placeholder='密码由6-16位数字、字母组合而成' onChange={this.changeValue.bind(this,'password')} required />
                     <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
                 </div>
               </form>

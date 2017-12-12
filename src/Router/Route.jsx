@@ -30,6 +30,8 @@ const applyRecord = (location, cb) => {require.ensure([], require => {cb(null, r
 const applyDeposit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/applyDeposit').default)},'applyDeposit')}
 const login = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/login').default)},'login')}
 const register = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/register').default)},'register')}
+const forgetPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/forgetPassword').default)},'forget')}
+const resetPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/resetPassword').default)},'forget')}
 const loginPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/loginPassword').default)},'login')}
 const registerAgree = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/registerAgree').default)},'registerAgree')}
 const recharge = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/recharge').default)},'recharge')}
@@ -51,6 +53,8 @@ const RouteConfig = (
             <Route path="applyRecord" getComponent={applyRecord}  title='提现记录'/> //提现记录
             <Route path="register" getComponent={register} title='注册'/> //注册
             <Route path="login" getComponent={login}  title='登录'/> //注册
+            <Route path="forgetPassword/:mobile" getComponent={forgetPassword} title='忘记密码'/>
+            <Route path="resetPassword" getComponent={resetPassword} title='重置密码'/>
             <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
             <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
             <Route path="userCenter/recharge" getComponent={recharge}  title='充值'/>

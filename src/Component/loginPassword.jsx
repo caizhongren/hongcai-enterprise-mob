@@ -10,7 +10,6 @@ import {MD5} from '../Config/MD5'
 class Main extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props)
         this.state = {
             preventMountSubmit:true,//防止重复提交
             pwdHide: true,
@@ -54,7 +53,10 @@ class Main extends Component {
             this.setState({loading: false})
           }, 5000)
         }
-        
+
+        this.goForgetPassword = () => {
+          browserHistory.push('/forgetPassword/' + this.state.phone)
+        }        
     }
 
     componentWillMount() {
@@ -92,7 +94,7 @@ class Main extends Component {
             <div className="text-center">
               <Link to="/register" className="to_register display-inb">注册账号</Link>
               <span className="line">|</span>
-              <Link to="/getPwd1" className="to_getPwd display-inb">忘记密码</Link>  
+              <p className="to_getPwd display-inb" onClick={this.goForgetPassword}>忘记密码</p>  
             </div>
           </div>
           <HongcaiFooter />
