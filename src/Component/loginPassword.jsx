@@ -46,12 +46,12 @@ class Main extends Component {
                 let timer = setTimeout( () => {
                   browserHistory.push('/')
                   clearTimeout(timer);
-                },2000)
+                },1000)
               }
           },'input', 'POST')
-          setTimeout(() => {
+          this.state.loading ? setTimeout(() => {
             this.setState({loading: false})
-          }, 5000)
+          }, 5000) : null
         }
 
         this.goForgetPassword = () => {

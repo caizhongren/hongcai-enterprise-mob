@@ -80,7 +80,6 @@ class Main extends Component {
     }
    
     render() {
-      // let products = this.state.products;
       return (
         <div className="main" style={{height: this.state.height}}>
           {this.state.loading && <Loading />}
