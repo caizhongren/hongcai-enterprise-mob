@@ -20,11 +20,6 @@ class Main extends Component {
         this.setState({
             phone:value
         })
-        if (event.target.value.length === 11) {
-          this.setState({ disable: true})
-        } else {
-          this.setState({disable: false})
-        }
       }
 
       this.postPhone = () => {
@@ -52,11 +47,8 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        // let params = this.props.location.query;
-        // this.state.phone = params.phone||'';
     }
     componentDidMount() {
-      console.log(this.state.phone)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -81,7 +73,7 @@ class Main extends Component {
                 <input type="text" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} required autoFocus/>
               </div>
             </form>
-            <div className={`btu_next ${this.state.disable ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPhone}>下一步</div>
+            <div className={`btu_next ${this.state.phone.length === 11 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPhone}>下一步</div>
             <Link to="/register" className="to_register display-bl">注册账号</Link>
           </div>
           
