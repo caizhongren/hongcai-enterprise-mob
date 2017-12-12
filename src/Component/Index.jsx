@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
 import {Header, Footer, template} from './common/mixin';
+import {RealNameAuth} from './common/realNameAuth';
 import '../Style/main.less'
 
 
@@ -20,6 +21,7 @@ class Main extends Component {
         payableAmount: 0, //应还金额 
         returnedAmount: 0, // 已还金额
         unpaidAmount: 0, // 待还金额
+        showRealNameMask: false // 控制实名认证弹窗
       }
 
       this.getEnterpriseUserInfo = () => {
@@ -51,6 +53,12 @@ class Main extends Component {
           }
         },'')
       }
+      this.toRealName = () => {
+        this.setState({showRealNameMask: true})
+      }
+      this.closeRealNameMask = () => {
+        this.setState({showRealNameMask: false})
+      }
     }
 
     componentWillMount() {
@@ -77,6 +85,7 @@ class Main extends Component {
       // let products = this.state.products;
       return (
         <div className="main" style={{height: this.state.height}}>
+          {this.state.showRealNameMask ? <RealNameAuth getData={this.props.getData} closeRealNameMask={this.closeRealNameMask} showRealNameMask={this.state.showRealNameMask}/> : null }
           <Link className="setting" to='/userCenter/securitySettings'></Link>
           <div className="part1">
             <div className="account">
@@ -112,7 +121,7 @@ class Main extends Component {
                 <Link to='/userCenter/recharge'><div className="fl">充值</div></Link>
                 <Link to='/userCenter/withdraw'><div className="fr">提现</div></Link>
               </ul>
-              : <div className="toRealNameAuth">开通银行资金存管</div>
+              : <div className="toRealNameAuth" onClick={this.toRealName}>开通银行资金存管</div>
               }
             </div>
           </div>
