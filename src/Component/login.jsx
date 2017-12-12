@@ -32,7 +32,6 @@ class Main extends Component {
           } else if (this.state.preventMountSubmit) {
             this.state.preventMountSubmit == false;
             this.props.getData(process.env.RESTFUL_DOMAIN + '/users/isUnique',{account:this.state.phone, userType:1},(res) => {
-              console.log(res)
                 if (res.ret === 1) {
                     Tool.alert('该手机号尚未注册，请先注册哦~');
                     this.setState({
@@ -70,7 +69,7 @@ class Main extends Component {
           <div>
               <form className='form_style'>
               <div className='input_container'>
-                <input type="text" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} required autoFocus/>
+                <input type="text" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} required/>
               </div>
             </form>
             <div className={`btu_next ${this.state.phone.length === 11 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPhone}>下一步</div>

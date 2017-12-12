@@ -18,11 +18,13 @@ class Main extends Component {
             mobCaptcha: '', // 短信验证码
             password: '', // 密码
             busy: false,//防止重复提交
+            canRegister: true,//防止重复提交
             disable: true,
             nextPart: true,
             pwdHide: true,
+            isUnique: 0,
             mobilePattern: /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/,
-            codeSrc: process.env.domain + process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
+            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -31,6 +33,9 @@ class Main extends Component {
         this.changeValue = (type, event) => {
             if(type === 'phone'){
               let value = event.target.value.replace(/\D/gi,'')
+              if (value.length === 11) {
+                 this.checkIsUnique(value)
+              }
               this.setState({
                   phone:value
               })
@@ -57,6 +62,23 @@ class Main extends Component {
             let $code = document.getElementById('get_captcha')
             Count.countDown($code)
         }
+        this.checkIsUnique = (mobile) => {
+            var that = this
+            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/isUniqueMobile', {
+                mobile: mobile,
+                userType: 1
+            }, (res) => {
+                if (res.ret === 1) {
+                    if (res.data.isUnique === 0) { // 未注册
+                        that.setState({isUnique: 0})
+                    } else { // 已注册
+                        that.setState({isUnique: 1})
+                    }
+                } else {
+                    Tool('请重试')
+                }
+            }, '', 'POST')
+        } 
         this.sendMobCaptcha = () => {
             if (this.state.busy) {
                 return
@@ -74,21 +96,25 @@ class Main extends Component {
                 return
             }
             var that = this
-            that.state.busy = true
+            if (that.state.isUnique === 1) {
+                Tool.alert('手机号已注册，请直接登录哦～')
+                return
+            }
+            that.setState({busy: true})
             that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 0}, (res) => {
-                setTimeout(() => {
-                    that.state.busy = false
-                }, 1000);
-                if (res.ret && res.ret !== -1) {
-                    Tool.alert('短信验证码发送成功，请查收')
+                if (res && res.ret !== -1) {
                     that.countDown()
+                    setTimeout(() => {
+                        that.setState({busy: false})
+                    }, 61000);
                 } else {
                     Tool.alert(res.msg)
+                    that.setState({busy: false})
                 }
             })
         }
         this.register = () => {
-            if (this.state.busy) {
+            if (!this.state.canRegister) {
                 return
             }
             let that = this
@@ -100,20 +126,24 @@ class Main extends Component {
                 Tool.alert('密码6-16位，需包含字母和数字')
                 return
             }
-            that.state.busy = true
+            that.setState({canRegister: true})
             that.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/register', {
                 mobile: that.state.phone,
                 captcha: that.state.mobCaptcha,
                 password: MD5(that.state.password)
             }, (res) => {
                 setTimeout(() => {
-                    that.state.busy = false
+                    that.setState({canRegister: false})
                 }, 1000);
                 if (res && res.ret === -1) {
-                    Tool.alert(res.msg)
+                    if (res.ret === -1 && res.code === -1007) {
+                        Tool.alert('手机号已注册，请直接登录哦～')
+                    } else {
+                        Tool.alert(res.msg)
+                    }
                 } else {
+                    Tool.success('注册成功')
                     browserHistory.push('/login')
-                    Tool.alert('注册成功')
                 }
             }, '', 'POST')
         }
@@ -127,7 +157,6 @@ class Main extends Component {
     }
     componentDidMount() {
         this.refreshCode()
-        // document.title = '注册'
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -164,7 +193,7 @@ class Main extends Component {
                 </div>
               </form>
               <div className={`btu_next ${!this.state.mobilePattern.test(this.state.phone) || !this.state.picCaptcha || !this.state.mobCaptcha || this.state.password.length < 6 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.register}>注册</div>
-              <p className="to_register display-bl">注册即表示您同意《<Link className="ft-blue" to="/registerAgree">宏财网注册协议</Link>》</p>
+              <p className="to_register display-bl">注册即表示您同意<Link className="ft-blue" to="/registerAgree">《宏财网注册协议》</Link></p>
               <Link to="/login" className="to_login display-inb">已有账号，<span className="under-line">去登录</span></Link>
             </div> 
           <HongcaiFooter />

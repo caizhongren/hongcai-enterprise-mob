@@ -58,7 +58,7 @@ const RouteConfig = (
             <Route path="userCenter/transactionRecord" getComponent={transactionRecord}  title='资金流水'/>
             <Route path="userCenter/bankcardManagement" getComponent={bankcardManagement}  title='银行卡管理'/>
             <Route path="userCenter/securitySettings" getComponent={securitySettings}  title='账户设置'/>
-            <Redirect from='*' to='/'  />
+            <Redirect from='*' to='/' title='宏财企业平台' />
         </Route>
     </Router>
 );
