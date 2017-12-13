@@ -3,6 +3,7 @@ import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../../Config/Tool';
+import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
 import '../../Style/recharge.less'
 
@@ -14,23 +15,29 @@ class Main extends Component {
             rechargeAmount: '',
             loading: false,
             userBalance: 0, 
-            unpaidAmount: 2990,
-            bankCardName: '建设银行',
-            bankCardNo: '***********6543',
+            unpaidAmount: 0,
+            bankCardName: '',
+            bankCode: '',
+            bankCardNo: '0000',
             monthLimit: '不限',
-            dayLimit: '50万',
-            singleLimit: 50000,
+            dayLimit: '',
+            singleLimit: 0,
+            userType: 1,
         }
 
         this.changeValue = (event) => {
-          let amount = event.target.value.replace(/\D/gi,'');
+          let amount = event.target.value.replace(/[^\d.]/g, "").
+          //只允许一个小数点              
+          replace(/^\./g, "").replace(/\.{2,}/g, ".").
+          //只能输入小数点后两位
+          replace(".", "$#$").replace(/\./g, "").replace("$#$", ".").replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
           this.setState({
-            rechargeAmount:amount
+            rechargeAmount: amount
           })
         }
 
         this.getUserBalance = () => {
-          this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteAccount/getUserBalance',{},(res) => {
+          this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteAccount/getUserBalance',null,(res) => {
             this.setState({loading: false})
             if (res.ret === -1) {
               Tool.alert(res.msg);
@@ -40,38 +47,69 @@ class Main extends Component {
               })
             }
           },'')
+
+          this.props.getData(process.env.RESTFUL_DOMAIN + '/bankcard/rechargeRemainLimit', null, (res) => {
+            if (res.ret && res.ret === -1) {
+              Tool.alert(res.msg);
+            } else {
+              this.setState({
+                bankCardName: res.bankName,
+                bankCardNo: res.bankNo,
+                monthLimit: res.monthLimit,
+                dayLimit: res.dayLimit,
+                singleLimit: res.singleLimit,
+                bankCardSrc: require('../../images/bankcardImg/' + res.bankCode + '.png')
+              })
+            }
+          }, '')
+
+          // 获取账户类型  // 1 对私；2 对公
+          this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/userSecurityInfo',null, (res) => {
+            if (res.ret === -1) {
+              Tool.alert(res.msg)
+            } else {
+              this.setState({userType: res.data.user.type})
+            }
+          })
+
         }
 
         this.recharge = () => {
-          if (this.state.rechargeAmount < 3) {
+          if (!this.state.preventMountSubmit || !this.state.rechargeAmount) {
+            return
+          }
+          if (this.state.userType !== 1) {
+            Tool.alert('该卡不支持快捷充值方式，请在电脑端登录www.biz.hongcai.com，使用网银充值。')
+            return;
+          } else if (this.state.rechargeAmount < 3) {
             Tool.alert('充值金额必须大于等于3元！')
             return;
-          }
-          if (this.state.rechargeAmount > this.state.singleLimit) {
-            Tool.alert('该卡本次最多充值' + this.state.singleLimit / 10000 + '万')
+          } else if (this.state.singleLimit > 0 && this.state.rechargeAmount > this.state.singleLimit) {
+            let singLimit = this.state.singleLimit%10000 !== 0 ? this.state.singleLimit : this.state.singleLimit/10000
+            Tool.alert('该卡本次最多充值' + singLimit + '万元，建议您分多次充值，或在电脑端登录www.biz.hongcai.com，使用网银充值。')
             return;
           }
-          this.state.preventMountSubmit == false;
-          this.setState({loading: true})
-          this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/login',{account:this.state.phone,rechargeAmount:MD5(this.state.rechargeAmount),type:1,userType:1},(res) => {
-            this.setState({loading: false}) 
-            if (res.ret === -1) {
-              Tool.alert(res.msg);
-              this.setState({
-                  preventMountSubmit:true
-              })
-              }else{
-                this.state.preventMountSubmit = true;
-                Tool.success('登录成功')
-                let timer = setTimeout( () => {
-                  browserHistory.push('/')
-                  clearTimeout(timer);
-                },1000)
-              }
+          this.setState({
+            preventMountSubmit: false,
+            loading: true,
+          })
+          this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/recharge',{
+            'amount': this.state.rechargeAmount,
+            'rechargeWay': 'SWIFT',
+            'expectPayCompany': '',
+            'from': 5,
+            'device': 1
+          },(res) => {
+            if (res && res.ret !== -1) {
+              PayUtils.redToTrusteeship('toRecharge', res)
+            }else{
+              Tool.alert(res.msg)
+            }
+            this.setState({
+              preventMountSubmit:true,
+              loading: false,
+            })
           },'input', 'POST')
-          setTimeout(() => {
-            this.setState({loading: false})
-          }, 5000)
         }     
     }
 
@@ -94,25 +132,29 @@ class Main extends Component {
     }
    
     render() {
+      let dayLimit = this.state.dayLimit < 0 ? '不限' : this.state.dayLimit%10000 !== 0 ? this.state.dayLimit : this.state.dayLimit/10000 + '万'
+      let monthLimit = this.state.monthLimit < 0 ? '不限' : this.state.monthLimit%10000 !== 0 ? this.state.monthLimit : this.state.monthLimit/10000 + '万'
+      let singleLimit = this.state.singleLimit < 0 ? `不限` : this.state.singleLimit%10000 !== 0 ? this.state.singleLimit : this.state.singleLimit/10000 + '万'
       return (
         <div className="component_container recharge">
           {this.state.loading && <Loading />}
           <div className="userBalance">
-            <p className="balance">账户余额 : <span>{this.state.userBalance.toFixed(2)}元</span></p>
+            <p className="balance">{this.state.bankCode}账户余额 : <span>{this.state.userBalance.toFixed(2)}元</span></p>
             <p>当期待还金额 : <span>{this.state.unpaidAmount.toFixed(2)}元</span></p>
             <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0' : this.state.unpaidAmount - this.state.userBalance }元</span></p>
           </div>
           <div className="AmountInput">
-            <img src={require('../../images/add.png')} className="fl"/>
+            <img src={this.state.bankCardSrc} className="fl"/>
             <ul>
               <li>{this.state.bankCardName}</li>
-              <li>{this.state.bankCardNo}</li>
+              <li>**** **** **** {this.state.bankCardNo}</li>
             </ul>
           </div>
-          <div className="bankLimit">单日{this.state.dayLimit}，单月{this.state.monthLimit}</div>
+          <div className="bankLimit">单日{dayLimit}，单月{monthLimit}
+          </div>
           <form className='form_style'>
             <span>充值金额</span>
-            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${this.state.singleLimit/10000} 万`} onChange={this.changeValue.bind(this)} required autoFocus/>
+            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <div className="btnAndTips">
             <div className={`rechargeBtn ${this.state.rechargeAmount.length >= 1 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.recharge}>立即充值</div>
