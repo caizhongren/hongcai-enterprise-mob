@@ -65,7 +65,8 @@ module.exports = {
                 baseFileUrl: JSON.stringify("http://biz.test321.hongcai.com/uploads/"),
                 domain: JSON.stringify("http://biz.test321.hongcai.com"),
                 WEB_DEFAULT_DOMAIN: JSON.stringify("/enterprise/api/v1"),
-                RESTFUL_DOMAIN: JSON.stringify("/enterprise/rest")
+                RESTFUL_DOMAIN: JSON.stringify("/enterprise/rest"),
+                CGT_ADDRESS: JSON.stringify("http://101.200.54.92/bha-neo-app/lanmaotech/gateway")
             }
         }),
         new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML

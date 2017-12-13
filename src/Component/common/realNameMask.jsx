@@ -3,12 +3,12 @@ import { Link, IndexLink } from 'react-router';
 import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Tool } from '../../Config/Tool';
-import { redToTrusteeship } from '../../Config/payUtils';
+import { PayUtils } from '../../Config/payUtils';
 import template from './template';
 export {template}
 import '../../Style/realName'
 
-export class RealNameAuth extends Component {
+export class RealNameMask extends Component {
     constructor() {
         super();
         this.state = {
@@ -49,11 +49,12 @@ export class RealNameAuth extends Component {
             this.setState({preventMountSubmit: false})
             this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/yeepayRegister',{
                 realName: this.state.name,
-                idCardNo: this.state.idCard
+                idCardNo: this.state.idCard,
+                from: 5
             },(res) => {
-                if (res.ret === 1) {
+                if (res && res.ret !== -1) {
                     this.props.closeRealNameMask()
-                    redToTrusteeship('toRegister', res)
+                    PayUtils.redToTrusteeship('toRegister', res)
                     this.setState({
                         preventMountSubmit:true
                     })
