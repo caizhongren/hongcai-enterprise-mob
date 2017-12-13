@@ -3,7 +3,7 @@ import {History, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
-import {RealNameAuth} from './common/realNameAuth';
+import {RealNameMask} from './common/realNameMask';
 import {Header, Footer, template, Loading} from './common/mixin';
 import '../Style/main.less'
 
@@ -90,7 +90,7 @@ class Main extends Component {
     render() {
       return (
         <div className="main" style={{height: this.state.height}}>
-          {this.state.showRealNameMask ? <RealNameAuth getData={this.props.getData} closeRealNameMask={this.closeRealNameMask} showRealNameMask={this.state.showRealNameMask}/> : null }
+          {this.state.showRealNameMask ? <RealNameMask getData={this.props.getData} closeRealNameMask={this.closeRealNameMask} showRealNameMask={this.state.showRealNameMask}/> : null }
           {this.state.loading && <Loading />}
           <Link className="setting" to='/userCenter/securitySettings'></Link>
           <div className="part1">

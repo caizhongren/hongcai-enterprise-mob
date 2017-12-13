@@ -8,7 +8,7 @@ import template from './template';
 export {template}
 import '../../Style/realName'
 
-export class RealNameAuth extends Component {
+export class RealNameMask extends Component {
     constructor() {
         super();
         this.state = {
@@ -49,7 +49,8 @@ export class RealNameAuth extends Component {
             this.setState({preventMountSubmit: false})
             this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/yeepayRegister',{
                 realName: this.state.name,
-                idCardNo: this.state.idCard
+                idCardNo: this.state.idCard,
+                from: 5
             },(res) => {
                 if (res && res.ret !== -1) {
                     this.props.closeRealNameMask()
