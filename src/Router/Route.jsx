@@ -35,6 +35,7 @@ const resetPassword = (location, cb) => {require.ensure([], require => {cb(null,
 const loginPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/loginPassword').default)},'login')}
 const registerAgree = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/registerAgree').default)},'registerAgree')}
 const yeepayCallback = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/callback').default)},'yeepayCallback')}
+const realName = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/realName').default)},'realNameAuth')}
 const recharge = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/recharge').default)},'recharge')}
 const withdraw = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/withdraw').default)},'withdraw')}
 const transactionRecord = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/transactionRecord').default)},'transactionRecord')}
@@ -58,6 +59,7 @@ const RouteConfig = (
             <Route path="resetPassword" getComponent={resetPassword} title='重置密码'/>
             <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
             <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
+            <Route path="realName" getComponent={realName}  title='开通银行资金存管账户'/>
             <Route path="yeepayCallback/:business/:yeepayStatus" getComponent={yeepayCallback}  title='跳转中···'/> 
             <Route path="userCenter/recharge" getComponent={recharge}  title='充值'/>
             <Route path="userCenter/withdraw" getComponent={withdraw}  title='提现'/>

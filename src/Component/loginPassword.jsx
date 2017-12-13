@@ -59,9 +59,6 @@ class Main extends Component {
         }        
     }
 
-    componentWillMount() {
-        
-    }
     componentDidMount() {
       let params = this.props.routeParams;
       this.state.phone = params.mobile||'';
