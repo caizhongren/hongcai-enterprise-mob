@@ -3,7 +3,7 @@ import { Link, IndexLink } from 'react-router';
 import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
 import { Tool } from '../../Config/Tool';
-import { redToTrusteeship } from '../../Config/payUtils';
+import { PayUtils } from '../../Config/payUtils';
 import template from './template';
 export {template}
 import '../../Style/realName'
@@ -51,9 +51,9 @@ export class RealNameAuth extends Component {
                 realName: this.state.name,
                 idCardNo: this.state.idCard
             },(res) => {
-                if (res.ret === 1) {
+                if (res && res.ret !== -1) {
                     this.props.closeRealNameMask()
-                    redToTrusteeship('toRegister', res)
+                    PayUtils.redToTrusteeship('toRegister', res)
                     this.setState({
                         preventMountSubmit:true
                     })
