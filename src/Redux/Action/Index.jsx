@@ -41,6 +41,7 @@ export const fetchPosts = (path, postData) => {
         return fetch(url,{
             mode: 'cors',
             "Content-Type": "application/json",
+            credentials: 'same-origin'
         })
         .then(response => {
             if (response.ok) {
