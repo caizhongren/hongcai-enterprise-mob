@@ -46,6 +46,7 @@ class Main extends Component {
                 browserHistory.replace('/')
                 msg = '还款成功！'
             }
+            Tool.success(msg)
         }
     }
     

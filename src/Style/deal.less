@@ -1,0 +1,105 @@
+//资金流水
+.deal {
+  width: 100%;
+  max-width: 640px;
+  .ft-666 {
+    color: #666;
+  }
+  .ft-39c {
+    color: #39c;
+  }
+  .ft-green {
+    color: #96c86b;
+  }
+  .ft-red {
+    color: #fc4145;
+  }
+  .dealType {
+    padding: 0 .6rem;
+    background: #f5f5f5;
+    color: #39c;
+    font-size: .7rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    .deal-angle-down, .deal-angle-up {
+      display: inline-block;
+      width: .8rem;
+      height: .8rem;
+      vertical-align: middle;
+    }
+    .deal-angle-down {
+      background: url('../images/userCenter/deal-angle-down.png') no-repeat;
+      background-size: contain;
+    }
+    .deal-angle-up {
+      background: url('../images/userCenter/deal-angle-up.png') no-repeat;
+      background-size: contain;
+    }
+  }
+  .mask-type {
+    position: fixed;
+    z-index: 999999;
+    background: rgba(0,0,0,.5);
+    width: 100%;
+    margin-top: 0rem;
+    min-height: 800px;
+    max-width: 640px;
+  }
+  .allType {
+    clear: both;
+    margin-bottom: 0;
+    li {
+      width: 100%;
+      padding: .5rem 0;
+      text-align: center;
+      font-size: .6rem;
+      margin-bottom: 0;
+    } 
+    li:nth-child(odd){
+      background: #fff;
+    }
+    li:nth-child(even){
+      background: #f8f9fb;
+    }
+  }
+  .dealList {
+    margin-bottom: .5rem;
+    li {
+      padding: .8rem 1rem;
+      font-size: .7rem;
+      color: #999;
+      .title {
+        overflow: hidden;
+        margin-bottom: .3rem;
+        font-size: .8rem;
+        .amount {
+          font-size: .7rem;
+        }
+      }
+      .dateBalance {
+        overflow: hidden;
+        font-size: .65rem;
+      }
+    }
+    li:nth-child(odd){
+      background: #fff;
+    }
+    li:nth-child(even){
+      background: #f8f9fb;
+    }
+  }
+  .noDeal {
+    text-align: center;
+    padding: 2.5rem 0;
+    color: #666;
+    font-size: .8rem;
+    p {
+      margin-top: .5rem;
+    }
+  }
+  .loadMore {
+    color: #666;
+    font-size: .7rem;
+    text-align: center;
+  }
+}

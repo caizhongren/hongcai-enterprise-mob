@@ -48,6 +48,7 @@ class Main extends Component {
             }
           },'')
 
+          // 获取银行卡限额
           this.props.getData(process.env.RESTFUL_DOMAIN + '/bankcard/rechargeRemainLimit', null, (res) => {
             if (res.ret && res.ret === -1) {
               Tool.alert(res.msg);
