@@ -26,9 +26,13 @@ class Main extends Component {
         }
 
         this.changeValue = (event) => {
-          let amount = event.target.value.replace(/\D/gi,'');
+          let amount = event.target.value.replace(/[^\d.]/g, "").
+          //只允许一个小数点              
+          replace(/^\./g, "").replace(/\.{2,}/g, ".").
+          //只能输入小数点后两位
+          replace(".", "$#$").replace(/\./g, "").replace("$#$", ".").replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
           this.setState({
-            rechargeAmount:amount
+            rechargeAmount: amount
           })
         }
 
@@ -71,14 +75,13 @@ class Main extends Component {
         }
 
         this.recharge = () => {
-          if (!this.state.preventMountSubmit) {
+          if (!this.state.preventMountSubmit || !this.state.rechargeAmount) {
             return
           }
           if (this.state.userType !== 1) {
             Tool.alert('该卡不支持快捷充值方式，请在电脑端登录www.biz.hongcai.com，使用网银充值。')
             return;
-          }
-          if (this.state.rechargeAmount < 3) {
+          } else if (this.state.rechargeAmount < 3) {
             Tool.alert('充值金额必须大于等于3元！')
             return;
           } else if (this.state.singleLimit > 0 && this.state.rechargeAmount > this.state.singleLimit) {
@@ -86,8 +89,10 @@ class Main extends Component {
             Tool.alert('该卡本次最多充值' + singLimit + '万元，建议您分多次充值，或在电脑端登录www.biz.hongcai.com，使用网银充值。')
             return;
           }
-          this.setState({preventMountSubmit: false})
-          this.setState({loading: true})
+          this.setState({
+            preventMountSubmit: false,
+            loading: true,
+          })
           this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/recharge',{
             'amount': this.state.rechargeAmount,
             'rechargeWay': 'SWIFT',
@@ -97,15 +102,14 @@ class Main extends Component {
           },(res) => {
             if (res && res.ret !== -1) {
               PayUtils.redToTrusteeship('toRecharge', res)
-              this.setState({preventMountSubmit:true})
             }else{
               Tool.alert(res.msg)
             }
+            this.setState({
+              preventMountSubmit:true,
+              loading: false,
+            })
           },'input', 'POST')
-          this.setState({
-            preventMountSubmit:true
-          })
-          this.setState({loading: false})
         }     
     }
 
@@ -150,7 +154,7 @@ class Main extends Component {
           </div>
           <form className='form_style'>
             <span>充值金额</span>
-            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required autoFocus/>
+            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <div className="btnAndTips">
             <div className={`rechargeBtn ${this.state.rechargeAmount.length >= 1 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.recharge}>立即充值</div>
