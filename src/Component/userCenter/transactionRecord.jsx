@@ -2,7 +2,9 @@ import React, {Component, PropTypes} from 'react';
 import pureRender from 'pure-render-decorator';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import { Header,template} from '../common/mixin';
+import { template, Loading} from '../common/mixin';
+import {Tool} from '../../Config/Tool'
+import {date} from '../../filters/costom'
 import '../../Style/deal.less'
 
 
@@ -18,14 +20,14 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          aside:null, // 右侧列表的对象
+          aside:null,
           dealType: [
             {
               'type': '全部',
               'no': '',
             },{
               'type': '放款',  //包含：项目正常回款、债权转让回款
-              'no': '4,16'
+              'no': '6'
             },{
               'type': '充值',
               'no': '1'
@@ -34,53 +36,59 @@ class Main extends Component {
               'no': '2'
             },{
               'type': '还款',  
-              'no': '18,20,27,28,29,30'
+              'no': '7,3,5'
             },{
-              'type': '其他',  //包含：提现手续费、债权转让手续费
-              'no': '8,15'
+              'type': '其他',  
+              'no': '4,5,8,9,10,25,26'
             }
           ],
           selected: '全部',
           showHide: 'none',
+          disableScroll: '',
           dealList: [],
           page: 1,
           pageSize: 3,
           totalPage: 1,
+          type: '',
+          loading: false,
         }
-        this.toggleSelect = (deal) => {  //确定当前选中的商品
-          console.log(deal)
+        this.toggleSelect = (deal) => {
           this.setState({
-            selected: deal.type
+            dealList: [],
+            selected: deal.type,
+            page: 1,
+            pageSize: 3,
+            type: deal.no
+          }, () => {
+            this.getDealList(this.state.page, this.state.pageSize, deal.no);
+            this.select();
           })
-          this.select()
         }
 
         this.select = () => {
+          this.state.showHide === 'none' ? this.setState({disableScroll: 'fixed'}) : this.setState({disableScroll: 'relative'})
           this.state.showHide === 'none' ? this.setState({showHide: 'block'}) : this.setState({showHide: 'none'})
         }
-        this.getDealList = (page, pageSize) => {
-          this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getDealListByUser',{
+        this.getDealList = (page, pageSize, type) => {
+          this.setState({loading: true})
+          this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/deals',{
             page: page,
-            pageSize: pageSize
+            pageSize: pageSize,
+            types: type,
           },(res) => {
             if (res && res.ret !== -1) {
-              for (var i = 0; i < res.data.dealList.length; i++) {
-                this.state.dealList.push(res.data.dealList[i]);
-                
-              }
-
-
-              console.log(this.state.dealList)
+              this.setState({loading: false})
+              let dealList = this.state.dealList.concat(res.data)
+              this.setState({
+                dealList: dealList,
+                totalPage: res.totalPage,
+              })
             }else{
               Tool.alert(res.msg)
             }
             this.setState({
               preventMountSubmit:true,
               loading: false,
-            })
-            this.setState({
-              dealList: this.state.dealList,
-              totalPage: Math.ceil(res.data.count / pageSize),
             })
           },'')
         }
@@ -89,12 +97,31 @@ class Main extends Component {
           this.setState({
           page: (this.state.page + 1),
         })
-          this.getDealList(this.state.page + 1, this.state.pageSize-1)
-          
+          this.getDealList(this.state.page + 1, this.state.pageSize, this.state.type) 
+        }
+
+        this.getAllTypes = () => {
+          let otherTypes = []
+          this.props.getData(process.env.RESTFUL_DOMAIN + '/deals/types', {}, (res) => {
+            if (res && res.ret !== -1) {
+              for(var key in res){
+                key == 1 || key == 2 || key == 6 || key == 7 ? null : otherTypes.push(key)
+              }
+              console.log(otherTypes.toString())
+
+            } else {
+            }
+          }, '')
         }
     }
+
     componentDidMount () {
-      this.getDealList(this.state.page, this.state.pageSize)
+      this.setState({loading: true})
+      setTimeout(() => {
+        this.setState({loading: false})
+      }, 5000)
+      this.getAllTypes()
+      this.getDealList(this.state.page, this.state.pageSize, this.state.type)
     }
     componentWillUpdate(nextProps, nextState) {
     }
@@ -115,8 +142,9 @@ class Main extends Component {
       </aside>)
         return (
             <div className="deal">
+              {this.state.loading && <Loading />}
               <div className="column dealType" onClick={this.select}>
-                <span className="txt-left fl">{this.state.selected}{this.state.totalPage}</span>
+                <span className="txt-left fl">{this.state.selected}</span>
                 <div className="txt-right fr">
                   <span className={`deal-angle-down ${this.state.showHide === 'block' ? 'deal-angle-up' : ''}`}></span>
                 </div>
@@ -125,16 +153,16 @@ class Main extends Component {
               {
                 this.state.dealList.length > 0 ?
                 <div>
-                  <ul className="dealList">
+                  <ul className="dealList" style={{position:this.state.disableScroll}}>
                     {
                       this.state.dealList.map((item , index) => {
                         return <li key={index}>
                         <div className="title">
                           <p className="fl">{item.description}</p>
-                          <p className={`amount fr ${item.getAmount>0 ? 'ft-red' : 'ft-green'}`}>{item.getAmount>0 ? '+' + item.getAmount : '-' + item.payAmount}</p>
+                          <p className={`amount fr ${item.getAmount>0 ? 'ft-red' : 'ft-green'}`}>{item.getAmount>0 ? '+' + item.getAmount : '-' + item.payAmount}元</p>
                         </div>
                         <div className="dateBalance">
-                          <p className="fl">{item.createTime}</p>
+                          <p className="fl">{date(item.createTime)}</p>
                           <p className="fr">余额 : {item.balance}元</p>
                         </div>
                       </li>
