@@ -158,7 +158,7 @@ class Main extends Component {
                 } else {
                   Tool.alert('手机号修改成功')
                     setTimeout(() => {
-                        browserHistory.push('userCenter/securitySettings')
+                        browserHistory.push('/userCenter/securitySettings')
                     }, 500);
                 }
             },'', 'POST')

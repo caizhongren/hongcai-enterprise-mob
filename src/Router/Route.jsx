@@ -34,6 +34,7 @@ const forgetPassword = (location, cb) => {require.ensure([], require => {cb(null
 const resetPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/resetPassword').default)},'forget')}
 const resetMobile = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/resetMobile').default)},'resetMobile')}
 const bindMobile = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/bindMobile').default)},'resetMobile')}
+const modifyPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/modifyPassword').default)},'modifyPassword')}
 const loginPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/loginPassword').default)},'login')}
 const registerAgree = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/registerAgree').default)},'registerAgree')}
 const yeepayCallback = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/callback').default)},'yeepayCallback')}
@@ -62,6 +63,7 @@ const RouteConfig = (
             <Route path="bindMobile" getComponent={bindMobile} title='绑定新手机号'/>
             <Route path="forgetPassword/:mobile" getComponent={forgetPassword} title='忘记密码'/>
             <Route path="resetPassword" getComponent={resetPassword} title='重置密码'/>
+            <Route path="modifyPassword" getComponent={modifyPassword} title='修改密码'/>
             <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
             <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
             <Route path="realName" getComponent={realName}  title='开通银行资金存管账户'/>
