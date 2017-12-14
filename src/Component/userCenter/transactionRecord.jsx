@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import { template, Loading} from '../common/mixin';
 import {Tool} from '../../Config/Tool'
-import {date} from '../../filters/costom'
+import {date} from '../../filters/custom'
 import '../../Style/deal.less'
 
 

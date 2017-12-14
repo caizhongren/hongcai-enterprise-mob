@@ -3,11 +3,36 @@ import * as config from './Config';
 
 const {target} = config;
 export const Tool = {};
+export const Utils = {};
 export const Count = {
     second: 60,
     canGetMobileCapcha: true
 };
 
+Utils.deviceCode = () => {
+    /**
+    * 获取和后端对应的deviceCode
+    */
+    var deviceCode = 0;
+
+    if(Tool.isAndroid()){
+    deviceCode = 2;
+    }
+
+    if(Tool.isWeixin() && Tool.isAndroid()){
+    deviceCode = 3;
+    }
+
+    if(Tool.isIos()){
+    deviceCode = 5;
+    }
+
+    if(Tool.isWeixin() && Tool.isIos()){
+    deviceCode = 6;
+    }
+
+    return deviceCode;
+},
 Tool.paramType = data => {
     let paramArr = []; 
     let paramStr = ''; 
@@ -38,6 +63,11 @@ Tool.isAndroid = data => {
 Tool.isIos = data =>  {
     let userAgent = navigator.userAgent || navigator.vendor || window.opera
     return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
+}
+
+Tool.isWeixin = data =>  {
+    let ua = navigator.userAgent.toLowerCase();
+    return ua.match(/MicroMessenger/i)=="micromessenger";
 }
 
 
