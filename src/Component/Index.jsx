@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {History, Link } from 'react-router';
+import {History, Link, browserHistory} from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
@@ -60,6 +60,13 @@ class Main extends Component {
       }
       this.closeRealNameMask = () => {
         this.setState({showRealNameMask: false})
+      }
+      this.toBankManagement = () => {
+        if (this.state.userAuth && this.state.userAuth.authStatus === 2) {
+          browserHistory.push('/userCenter/bankcardManagement?amount='+this.state.unpaidAmount)
+        } else {
+          this.setState({showRealNameMask: true})
+        }
       }
     }
 
@@ -133,7 +140,7 @@ class Main extends Component {
           </div>
           <div className="part2">
             <Link to='/userCenter/transactionRecord'><p>资金流水</p></Link>
-            <Link to='/userCenter/bankcardManagement'><p className="border-none">银行卡管理</p></Link>
+            <div onClick={this.toBankManagement}><p className="border-none">银行卡管理</p></div>
           </div>
           <Footer />
         </div>

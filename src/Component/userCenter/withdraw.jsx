@@ -43,14 +43,14 @@ class Main extends Component {
                 }
             },'')
 
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/bankcard/rechargeRemainLimit', null, (res) => {
+            this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/bank/getUserBankCard', null, (res) => {
                 if (res.ret && res.ret === -1) {
                     Tool.alert(res.msg);
                 } else {
                     this.setState({
-                        bankCardName: res.bankName,
-                        bankCardNo: res.bankNo,
-                        bankCardSrc: require('../../images/bankcardImg/' + res.bankCode + '.png')
+                        bankCardName: res.data.card.openBank,
+                        bankCardNo: res.data.card.cardNo.slice(-4),
+                        bankCardSrc: require('../../images/bankcardImg/' + res.data.card.bankCode + '.png')
                     })
                 }
             }, '')

@@ -52,12 +52,12 @@ export class RealNameMask extends Component {
                 idCardNo: this.state.idCard,
                 from: 5
             },(res) => {
+                this.setState({
+                    preventMountSubmit:true
+                })
                 if (res && res.ret !== -1) {
                     this.props.closeRealNameMask()
                     PayUtils.redToTrusteeship('toRegister', res)
-                    this.setState({
-                        preventMountSubmit:true
-                    })
                 }else{
                     Tool.alert(res.msg)
                 }
