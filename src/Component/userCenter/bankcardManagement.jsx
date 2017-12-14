@@ -12,17 +12,15 @@ class Main extends Component {
         this.state = {
             preventMountSubmit:true,//防止重复提交
             withdrawAmount: '',
-            loading: false,
-            userBalance: 0, 
-            unpaidAmount: 0,
+            loading: false, 
+            unpaidAmount: Number(this.props.location.query),
             bankCardName: '',
             bankCardNo: '0000',
             isVerifying: false,
             haveCard: false,
             isAuth: false,
             unbindBankCardApply: false,
-            bindMobile: '',
-            addIcon: require('../../images/main/add_bankcard.png')
+            bindMobile: ''
         }
         // 查询是否可解绑卡
         this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/unbindBankCardApply', null, (res) => {
@@ -44,7 +42,6 @@ class Main extends Component {
             withdrawAmount: amount
           })
         }
-
         this.getUserBankCard = () => {
             this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/bank/getUserBankCard',null,(res) => {
                 this.setState({loading: false})
@@ -73,6 +70,10 @@ class Main extends Component {
 
         this.manageBankCard = (type) => {
             if (type === 1) { // 解绑
+                if (this.state.unpaidAmount > 0) {
+                    Tool.alert('尊敬的用户，检测到您当前有借款尚未偿还，请联系客服进行人工解绑。客服热线：400-990-7626')
+                    return
+                }
                 if (this.state.unbindBankCardApply === 1) {
                     this.props.getData(process.env.WEB_DEFAULT_DOMAIN + 'yeepay/cgtUnbindBankCard', null, (res) => {
                         if (res.ret && res.ret === -1) {
@@ -82,16 +83,20 @@ class Main extends Component {
                         }
                     }, '')
                 } else {
-                    Tool.alert('尊敬的用户，检测到您当前有待偿款项尚未清偿，请联系客服进行人工解绑。客服热线：400-990-7626')
+                    Tool.alert('尊敬的用户，检测到您您的账户总资产大于2元，为了您的资金安全，请联系客服进行人工解绑。客服热线：400-990-7626')
                 }
             } else { // 绑卡
-                this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/yeepay/bindBankCard', {from:5}, (res) => {
-                    if (res.ret && res.ret === -1) {
-                        Tool.alert(res.msg);
-                    } else {
-                        PayUtils.redToTrusteeship('toBindBankCard', response)
-                    }
-                }, '')
+                if (this.state.isAuth) {
+                    this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/yeepay/bindBankCard', {from:5}, (res) => {
+                        if (res.ret && res.ret === -1) {
+                            Tool.alert(res.msg);
+                        } else {
+                            PayUtils.redToTrusteeship('toBindBankCard', response)
+                        }
+                    }, '')
+                } else {
+                    this.setState({showRealNameMask: true})
+                }
             }
         }   
     }
@@ -111,7 +116,6 @@ class Main extends Component {
     }
    
     render() {
-        var imgSrc = require('../../images/main/add_bankcard.png')
       return (
         <div className="component_container recharge bank_manage">
           {this.state.loading && <Loading />}
@@ -135,7 +139,7 @@ class Main extends Component {
             </div> :
             <div>
                 <div className="form_style" onClick={this.manageBankCard.bind(this,0)}>
-                    <img src={this.state.addIcon} width="10%" className="margin-auto" alt=""/>
+                    <div className="margin-auto">+</div>
                     <p className="add">添加银行卡</p>
                 </div>
             </div>
