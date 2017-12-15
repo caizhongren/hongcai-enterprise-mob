@@ -3,7 +3,7 @@ import {Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../../Config/Tool';
-import {template} from '../common/mixin';
+import {template, Loading} from '../common/mixin';
 import {date} from '../../filters/custom';
 import '../../Style/projectDeatil.less';
 
@@ -21,14 +21,15 @@ class Main extends Component {
           LoanTime: '',
           repaymentDate: '',
           loanState: Number
-        }
+        },
+        loading: Boolean,
       }
 
       this.getProjectDetail =(projectId) => {
         let that = this
         that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + this.state.projectId+ '/detail',{},(res) => {
           if (res && res.ret !== -1) {
-            that.setState({loading: false})
+            that.setState({loading: true})
             that.setState({
               projects: {
                 name: res.name,
@@ -43,13 +44,12 @@ class Main extends Component {
           }
           that.setState({
             preventMountSubmit:true,
-            loading: false,
           })
         },'')
 
         that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + this.state.projectId+ '/info',{},(res) => {
           if (res && res.ret !== -1) {
-            that.setState({loading: false})
+            that.setState({loading: true})
             that.setState({
               payAmount: res.projectBackTotal, 
             })
@@ -58,7 +58,6 @@ class Main extends Component {
           }
           that.setState({
             preventMountSubmit:true,
-            loading: false,
           })
         },'')
       }
@@ -67,7 +66,7 @@ class Main extends Component {
         let that = this
         that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + that.state.projectNum+ '/projectBills',{},(res) => {
           if (res && res.ret !== -1) {
-            that.setState({loading: false})
+            that.setState({loading: true})
             let projectBills = that.state.projectBills.concat(res)
             that.setState({
               projectBills: res,
@@ -79,7 +78,6 @@ class Main extends Component {
           }
           that.setState({
             preventMountSubmit:true,
-            loading: false,
           })
         })
       }
@@ -109,6 +107,7 @@ class Main extends Component {
     render() {
       return (
         <div className="projectDeatil">
+          {!this.state.loading && <Loading />}
           <ul className="header">
             <div className="title">{this.state.projects.name}</div>
             <li>
