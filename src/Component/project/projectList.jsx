@@ -88,8 +88,8 @@ class Main extends Component {
             })
             
         }
-        this.toProjectDetai = (number) => {
-            browserHistory.push('/project/projectDetail/' + number)
+        this.toProjectDetai = (number, projectId) => {
+            browserHistory.push('/project/projectDetail/' + number + '/' + projectId)
         }
     }
 
@@ -157,7 +157,7 @@ class Main extends Component {
                                 </div>
                                 <div className="project-btns clear">
                                     <div className="btns-son">
-                                        <span className="left one" onClick={this.toProjectDetai.bind(this, project.project.number)}>查看详情</span>
+                                        <span className="left one" onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)}>查看详情</span>
                                     </div>
                                 </div>
                             </li>

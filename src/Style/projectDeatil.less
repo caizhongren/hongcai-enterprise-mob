@@ -1,0 +1,86 @@
+.projectDeatil {
+  background: #efeef4;
+  .header {
+    overflow: hidden;
+    background: #d9edf7;
+    color: #31708f;
+    font-size: .65rem;
+    padding: 1.2rem 0;
+    margin-bottom: .8rem;
+    .title {
+      text-align: center;
+      margin: .5rem auto 1.2rem;
+      font-size: .8rem;
+    }
+    li {
+      float: left;
+      width: 50%;
+      text-align: center;
+      p:nth-child(1) {
+        font-size: .75rem;
+      }
+    }
+  }
+  .creditRight {
+    background: #fff;
+    padding: 2rem 0rem;
+    .hidden {
+      opacity: 0;
+    }
+    .column1, .column2, .column3{
+      display: inline-block;
+    }
+    .each-line {
+      font-size: .6rem;
+      color: #999;
+      .column1{
+        width: 35%;
+        text-align: right;
+        vertical-align: top;
+        span.ed {
+          opacity: 0;
+        }
+      }
+      .column2{
+        width: 20%;
+        margin-top: .1rem;
+        .ed.circle {
+          background-color: #ddd;
+          box-shadow: 0 2px 16px #ddd, 0 0 2px #ddd, 0 0 2px #ddd;
+         }
+        .circle {
+          width: 0.4rem;
+          height: .4rem;
+          border-radius: 50%;
+          background-color: #d9edf7;
+          box-shadow: 0 2px 16px #d9edf7, 0 0 2px #d9edf7, 0 0 2px #d9edf7;
+          display: block;
+          margin: 0 auto;
+        }
+        .ed.vertical-line {
+          background-color: #ddd;
+        }    
+        .vertical-line {
+          height: 1.98rem;
+          width: 1px;
+          background-color: #d9edf7;
+          display: block;
+          margin: 0.25rem auto 0;
+        }
+      }
+      .column3 {
+        text-align: left;
+        vertical-align: top;
+        span {
+          display: none;
+        }
+        span.ed {
+          display: block;
+        }
+      }
+      .no-record {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
