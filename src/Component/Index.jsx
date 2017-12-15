@@ -61,9 +61,13 @@ class Main extends Component {
       this.closeRealNameMask = () => {
         this.setState({showRealNameMask: false})
       }
-      this.toBankManagement = () => {
+      this.toBankManagement = (page) => {
         if (this.state.userAuth && this.state.userAuth.authStatus === 2) {
-          browserHistory.push('/userCenter/bankcardManagement?amount='+this.state.unpaidAmount)
+          if (page === 'record') {
+            browserHistory.push('/userCenter/transactionRecord')
+          } else {
+            browserHistory.push('/userCenter/bankcardManagement?amount='+this.state.unpaidAmount)
+          }
         } else {
           this.setState({showRealNameMask: true})
         }
@@ -139,7 +143,7 @@ class Main extends Component {
             </div>
           </div>
           <div className="part2">
-            <Link to='/userCenter/transactionRecord'><p>资金流水</p></Link>
+            <p onClick={this.toBankManagement.bind(this, 'record')}>资金流水</p>
             <div onClick={this.toBankManagement}><p className="border-none">银行卡管理</p></div>
           </div>
           <Footer />
