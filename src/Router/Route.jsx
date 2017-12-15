@@ -45,6 +45,7 @@ const transactionRecord = (location, cb) => {require.ensure([], require => {cb(n
 const bankcardManagement = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardManagement').default)},'bankcardManagement')}
 const securitySettings = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/securitySettings').default)},'securitySettings')}
 const bankcardLimit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardLimit').default)},'bankcardLimit')}
+const projectList = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/project/projectList').default)},'projectList')}
 
 const RouteConfig = (
     <Router history={browserHistory}>
@@ -74,6 +75,7 @@ const RouteConfig = (
             <Route path="userCenter/bankcardManagement" getComponent={bankcardManagement}  title='银行卡管理'/>
             <Route path="userCenter/securitySettings" getComponent={securitySettings}  title='账户设置'/>
             <Route path="userCenter/bankcardLimit" getComponent={bankcardLimit}  title='银行卡限额'/>
+            <Route path="project/projectList" getComponent={projectList}  title='借款项目'/>
             <Redirect from='*' to='/' title='宏财企业平台' />
         </Route>
     </Router>

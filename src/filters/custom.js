@@ -20,6 +20,15 @@ let date = value => {
   month + '-' +
   (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
 }
+let dates = (value, type) => {
+  // 时间格式 ‘yyyy.MM.dd’
+  if (!value) { return }
+  var now = new Date(value)
+  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
+  return now.getFullYear() + type +
+  month + type +
+  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
+}
 
 let dateCharacter = value => {
   // 时间格式 ‘yyyy年MM月dd日’
@@ -84,6 +93,7 @@ let number = number => {
 
 export { date }
 export { number }
+export { dates }
 export {dateTime}
 export {monthDay}
 export {monthDotDay}

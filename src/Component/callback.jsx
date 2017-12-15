@@ -43,7 +43,7 @@ class Main extends Component {
                 browserHistory.replace('/userCenter/securitySettings')
                 msg = '开通成功！'
             } else if (this.state.business === 'REPAYMENT'){
-                browserHistory.replace('/')
+                browserHistory.replace('/project/projectList')
                 msg = '还款成功！'
             }
             Tool.success(msg)
