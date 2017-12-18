@@ -45,7 +45,7 @@ class Main extends Component {
             } else if (this.state.activeTab === 1 && status === 9) {
                 this.setState({activeTab: 0, projectStatus: status})
             }
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status, token: '825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'}, (res) => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status}, (res) => {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
                     let dataList = this.state.data.concat(res.data)
