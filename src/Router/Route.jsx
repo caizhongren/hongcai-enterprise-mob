@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
 
-import index from '../Component/index'; //销售录入
+import index from '../Component/Index'; //销售录入
 
 class Roots extends Component {
     render() {
