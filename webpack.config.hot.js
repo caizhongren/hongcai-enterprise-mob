@@ -28,39 +28,34 @@ module.exports = {
         loaders: [{
             test: /\.js$/,
             exclude: /^node_modules$/,
-            loaders: ['react-hot', 'babel'],
-            include: [APP_PATH]
+            loader: 'babel-loader'
         }, {
             test: /\.css$/,
             exclude: /^node_modules$/,
-            loaders: ['style', 'css', 'autoprefixer'],
-            include: [APP_PATH]
+            use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: ["css-loader", "postcss-loader"]
+            })
         }, {
             test: /\.less$/,
             exclude: /^node_modules$/,
-            loaders: ['style', 'css', 'autoprefixer', 'less'],
-            include: [APP_PATH]
-        }, {
-            test: /\.scss$/,
-            exclude: /^node_modules$/,
-            loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader',
-            include: [APP_PATH]
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: ["css-loader", "less-loader", "postcss-loader"]
+            })
         }, {
             test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/,
             exclude: /^node_modules$/,
-            loader: 'file-loader?name=[name].[ext]',
-            include: [APP_PATH]
+            loader: 'file-loader?name=[name].[ext]'
         }, {
             test: /\.(png|jpg|gif)$/,
             exclude: /^node_modules$/,
             loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]',
-            //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
-            include: [APP_PATH]
+            //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图
         }, {
             test: /\.jsx$/,
             exclude: /^node_modules$/,
-            loaders: ['react-hot', 'jsx', 'babel'],
-            include: [APP_PATH]
+            loaders: ['jsx-loader', 'babel-loader']
         }]
     },
     plugins: [
@@ -76,6 +71,7 @@ module.exports = {
                 CGT_ADDRESS: JSON.stringify("http://101.200.54.92/bha-neo-app/lanmaotech/gateway")
             }
         }),
+        new ExtractTextPlugin("[name].css"),
         new HtmlWebpackPlugin({  //根据模板插入css/js等生成最终HTML
             filename: '../index.html', //生成的html存放路径，相对于 path
             template: './src/template/index.html', //html模板路径
@@ -83,9 +79,9 @@ module.exports = {
             favicon: './favicon.ico'
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin()
     ],
     resolve: {
-        extensions: ['', '.js', '.jsx', '.less', '.scss', '.css'], //后缀名自动补全
+        extensions: ['.js', '.jsx', '.less', '.scss', '.css'], //后缀名自动补全
     }
 };
