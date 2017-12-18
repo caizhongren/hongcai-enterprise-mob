@@ -99,7 +99,7 @@ class Main extends Component {
             'rechargeWay': 'SWIFT',
             'expectPayCompany': '',
             'from': 5,
-            'device': Utils.deviceCode
+            'device': Utils.deviceCode()
           },(res) => {
             if (res && res.ret !== -1) {
               PayUtils.redToTrusteeship('toRecharge', res)
