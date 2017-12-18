@@ -50,7 +50,10 @@ class Main extends Component {
             this.setState({showRealNameMask:true})
         }
         this.resetPayPwd = () => {
-            this.toRealName()
+            if (!this.state.haveTrusteeshipAccount) {
+                this.setState({showRealNameMask:true})
+                return
+            }
             this.props.getData(process.env.RESTFUL_DOMAIN + '/userAuths/resetPayPassword', {from:5}, (res)=>{
                 if (res && res.ret !== -1) {
                     PayUtils.redToTrusteeship('resetPayPassword', res);
