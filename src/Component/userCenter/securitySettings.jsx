@@ -25,10 +25,10 @@ class Main extends Component {
             }else{
                 this.setState({
                     user: res.data.user,
-                    openAutoRepayment: res.data.userAuth.openAutoRepayment
+                    openAutoRepayment: res.data.userAuth.autoRepayment
                 })
                 if (res.data.userAuth && res.data.userAuth.authStatus === 2) {
-                    this.setState({haveTrusteeshipAccount: true})
+                    this.setState({haveTrusteeshipAccount: true,openTrustReservation:es.data.userAuth.autoTransfer})
                 } else {
                     this.setState({haveTrusteeshipAccount: false})
                 }
@@ -49,14 +49,21 @@ class Main extends Component {
             }
             this.setState({showRealNameMask:true})
         }
+        this.resetPayPwd = () => {
+            this.toRealName()
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/userAuths/resetPayPassword', {from:5}, (res)=>{
+                if (res && res.ret !== -1) {
+                    PayUtils.redToTrusteeship('resetPayPassword', res);
+                }
+            }, '', 'POST')
+        }
         this.goToAutoRepayment = () => {
             if (!this.state.haveTrusteeshipAccount) {
                 this.setState({showRealNameMask:true})
                 return
             }
             this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/autoRepayment', {
-                from: 5,
-                token: '825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'
+                from: 5
             }, (res)=> {
                 if (res && res.ret !== -1) {
                     PayUtils.redToTrusteeship('AUTOREPAYMENT', res);
@@ -116,7 +123,7 @@ class Main extends Component {
                     <span className="fl">交易密码</span>
                     <div className="fr">
                         <img  className="fr" src={icon} alt="" width="10%"/> 
-                        <span className="fr">修改</span>
+                        <span className="fr" onClick={this.resetPayPwd}>{this.state.haveTrusteeshipAccount? '修改':'去设置'}</span>
                     </div>
                 </div>
             </div>

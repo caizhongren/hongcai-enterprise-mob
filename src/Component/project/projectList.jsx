@@ -76,8 +76,7 @@ class Main extends Component {
             this.props.getData(process.env.WEB_DEFAULT_DOMAIN+ '/enterpriseYeepay/repayment', {
                 projectId: projectId,
                 repaymentNo: repaymentNo,
-                from: 5,
-                token: '825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'
+                from: 5
             }, (res) => {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
