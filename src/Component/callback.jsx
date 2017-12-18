@@ -45,6 +45,9 @@ class Main extends Component {
             } else if (this.state.business === 'REPAYMENT'){
                 browserHistory.replace('/project/projectList')
                 msg = '还款成功！'
+            } else if (this.state.business === 'RESET_PASSWORD') {
+                browserHistory.replace('userCenter/securitySettings')
+                msg = '修改成功！'
             }
             Tool.success(msg)
         }
