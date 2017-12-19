@@ -75,6 +75,7 @@ class Main extends Component {
               <form className='form_style'>
               <div className='input_container'>
                 <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} onPaste={this.beforepasteHandler} required/>
+                <input type="text" className="hide"/>
               </div>
             </form>
             <div className={`btu_next ${this.state.phone.length === 11 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPhone}>下一步</div>

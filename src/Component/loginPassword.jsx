@@ -90,6 +90,7 @@ class Main extends Component {
               <div className='input_container'>
                 <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.password} placeholder='请输入登录密码' onChange={this.changeValue.bind(this)} required autoFocus/>
                 <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
+                <input type="text" className="hide"/>
               </div>
             </form>
             <div className={`btu_next ${this.state.password.length >= 6 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPwd}>登录</div>

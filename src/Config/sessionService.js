@@ -29,7 +29,6 @@ SessionService.destory = () => {
   sessionStorage.removeItem('user');
   sessionStorage.removeItem('userAuth');
 
-  $rootScope.isLogged = false;
   return true;
 }
 SessionService.removeUserAuth = () => {

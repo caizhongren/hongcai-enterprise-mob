@@ -169,6 +169,7 @@ class Main extends Component {
           </div>
           <form className='form_style'>
             <span>充值金额</span>
+            <input type="text" className="hide"/>
             <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <div className="btnAndTips">
