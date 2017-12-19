@@ -75,7 +75,7 @@ class Main extends Component {
                     return
                 }
                 if (this.state.unbindBankCardApply === 1) {
-                    this.props.getData(process.env.WEB_DEFAULT_DOMAIN + 'yeepay/cgtUnbindBankCard', null, (res) => {
+                    this.props.getData(process.env.WEB_DEFAULT_DOMAIN + 'yeepay/cgtUnbindBankCard', {from:5}, (res) => {
                         if (res.ret && res.ret === -1) {
                             Tool.alert(res.msg);
                         } else {
@@ -104,6 +104,10 @@ class Main extends Component {
                 from: 5,
                 device: Utils.deviceCode()
             }, (res) => {
+                if (!res || res.ret === -1) {
+                    Tool.alert(res.msg)
+                    return
+                }
                 PayUtils.redToTrusteeship('restMobile', res)
             }, '', 'PUT')
         }  
