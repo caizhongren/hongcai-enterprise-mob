@@ -16,20 +16,22 @@ class Main extends Component {
             picCaptcha: '', // 图形验证码
             mobCaptcha: '', // 短信验证码
             busy: false,//防止重复提交
+            canGoNext: true,
             isUnique: 0,
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
         }
         this.changeValue = (type, event) => {
             if (type === 'picCaptcha') {
-                if (event.target.value.length > 3) {
-                    this.checkPicCaptcha(event.target.value)
+                let value = event.target.value.replace(/[/W]/g,'')
+                if (value.length > 3) {
+                    this.checkPicCaptcha(value)
                 }
                 this.setState({
-                    picCaptcha: event.target.value
+                    picCaptcha: value
                 })
             } else {
                 this.setState({
-                    mobCaptcha: event.target.value
+                    mobCaptcha: event.target.value.replace(/\D/g,'')
                 })
             }
         }
@@ -93,7 +95,7 @@ class Main extends Component {
         }
         this.goNextPage = () => {
             let that = this
-            if (!that.state.busy) {
+            if (!that.state.canGoNext) {
                 return
             }
             if (!that.state.picCaptcha || !that.state.mobCaptcha) {
@@ -103,14 +105,14 @@ class Main extends Component {
                 Tool.alert('请输入正确的图形验证码！')
                 return
             }
-            that.setState({busy: false})
+            that.setState({canGoNext: false})
             that.props.getData(process.env.RESTFUL_DOMAIN + '/users/checkMobileCaptcha', {
                 mobile: that.state.phone,
                 captcha: that.state.mobCaptcha,
                 business: 4
             }, (res) => {
                 setTimeout(() => {
-                    that.setState({busy: true})
+                    that.setState({canGoNext: true})
                 }, 500);
                 if (res && res.ret === -1) {
                     Tool.alert(res.msg)
