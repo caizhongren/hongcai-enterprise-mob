@@ -43,7 +43,7 @@ class Main extends Component {
             let $code = document.getElementById('get_captcha')
             Count.countDown($code)
         }
-        this.checkPicCaptcha = (picCaptcha) => {  //
+        this.checkPicCaptcha = (picCaptcha) => {
             if (this.state.picCaptcha.length === 0) {
                 return
             }
@@ -68,7 +68,6 @@ class Main extends Component {
                 Tool.alert('请输入图形验证码！')
                 return
             }
-            console.log(this.state.isUnique)
             if(this.state.picCaptcha.length !== 4 || this.state.isUnique === 0) {
                 Tool.alert('请输入正确的图形验证码！')
                 return

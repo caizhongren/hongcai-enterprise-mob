@@ -28,7 +28,6 @@ class Main extends Component {
         }
 
         this.postPwd = () => {
-            console.log(this.props.routeParams)
             let passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9])[\da-zA-Z~!@#$%^&*]{6,16}$/;
             if (this.state.password.length < 6 || !passwordPattern.test(this.state.password)) {
                 Tool.alert('密码6-16位，需包含字母和数字')

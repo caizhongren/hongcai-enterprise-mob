@@ -28,7 +28,7 @@ class Main extends Component {
                     openAutoRepayment: res.data.userAuth.autoRepayment
                 })
                 if (res.data.userAuth && res.data.userAuth.authStatus === 2) {
-                    this.setState({haveTrusteeshipAccount: true,openTrustReservation:es.data.userAuth.autoTransfer})
+                    this.setState({haveTrusteeshipAccount: true, openTrustReservation:res.data.userAuth.autoTransfer})
                 } else {
                     this.setState({haveTrusteeshipAccount: false})
                 }
