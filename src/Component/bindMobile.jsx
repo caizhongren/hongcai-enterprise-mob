@@ -16,7 +16,6 @@ class Main extends Component {
             picCaptcha: '', // 图形验证码
             mobCaptcha: '', // 短信验证码
             busy: false,//防止重复提交
-            canGoNext: true,//防止重复提交
             isUnique: 0, //图形验证码是否正确
             isUniqueMobile: 0, //手机号是否注册
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
@@ -89,7 +88,6 @@ class Main extends Component {
               Tool.alert('请输入图形验证码！')
               return
             }
-            console.log(this.state.isUnique)
             if(this.state.picCaptcha.length !== 4 || this.state.isUnique === 0) {
                 Tool.alert('请输入正确的图形验证码！')
                 return
@@ -101,7 +99,13 @@ class Main extends Component {
             var that = this
             that.setState({busy: true})
             let guestId = Tool.guestId(32, 16)
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 2, guestId: guestId}, (res) => {
+            that.props.getData(process.env.RESTFUL_DOMAIN + '/users/mobileCaptcha', {
+                mobile: that.state.phone, 
+                picCaptcha: that.state.picCaptcha, 
+                business: 2, 
+                guestId: guestId,
+                userType: 1,
+            }, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
                     setTimeout(() => {
@@ -111,7 +115,7 @@ class Main extends Component {
                     Tool.alert(res.msg)
                     that.setState({busy: false})
                 }
-            })
+            },'', 'POST')
         }
         this.checkIsUnique = (mobile) => {
           var that = this
@@ -132,7 +136,7 @@ class Main extends Component {
         }
         this.bindMobile = () => {
             let that = this
-            if (!that.state.canGoNext) {
+            if (!that.state.busy) {
                 return
             }
             if (!that.state.picCaptcha || !that.state.mobCaptcha || !this.state.phone) {
@@ -146,7 +150,7 @@ class Main extends Component {
                 Tool.alert('请输入正确的图形验证码！')
                 return
             }
-            that.setState({canGoNext: false})
+            that.setState({busy: false})
             that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/bindMobile', {
                 mobile: that.state.phone,
                 captcha: that.state.mobCaptcha,
@@ -187,7 +191,7 @@ class Main extends Component {
         return (
             <div className="component_container login forget">
                 <div>
-                <form className='form_style' autoComplete="on">
+                <form className='form_style' autoComplete="off">
                     <div className='input_container'>
                     <input id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this,'phone')} required autoFocus/>
                     </div>
