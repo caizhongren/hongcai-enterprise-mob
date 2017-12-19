@@ -16,7 +16,6 @@ class Main extends Component {
             picCaptcha: '', // 图形验证码
             mobCaptcha: '', // 短信验证码
             busy: false,//防止重复提交
-            canGoNext: true,//防止重复提交
             isUnique: 0,
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
         }
@@ -62,24 +61,25 @@ class Main extends Component {
         this.sendMobCaptcha = () => {
             if (this.state.busy) {
                 return
-            }
-            if (!this.state.picCaptcha) {
+            } else if (!this.state.picCaptcha) {
                 Tool.alert('请输入图形验证码！')
                 return
-            }
-            console.log(this.state.isUnique)
-            if(this.state.picCaptcha.length !== 4 || this.state.isUnique === 0) {
+            } else if(this.state.picCaptcha.length !== 4 || this.state.isUnique === 0) {
                 Tool.alert('请输入正确的图形验证码！')
                 return
-            }
-            if (this.state.isUnique === 2) {
+            } else if (this.state.isUnique === 2) {
                 Tool.alert(this.state.msg)
                 return
             }
             var that = this
             that.setState({busy: true})
             let guestId = Tool.guestId(32, 16)
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 2, guestId: guestId}, (res) => {
+            that.props.getData(process.env.RESTFUL_DOMAIN + '/users/mobileCaptcha', {
+                mobile: that.state.phone, 
+                picCaptcha: that.state.picCaptcha, 
+                business: 4, 
+                guestId: guestId
+            }, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
                     setTimeout(() => {
@@ -89,11 +89,11 @@ class Main extends Component {
                     Tool.alert(res.msg)
                     that.setState({busy: false})
                 }
-            })
+            },'', 'POST')
         }
         this.goNextPage = () => {
             let that = this
-            if (!that.state.canGoNext) {
+            if (!that.state.busy) {
                 return
             }
             if (!that.state.picCaptcha || !that.state.mobCaptcha) {
@@ -103,14 +103,14 @@ class Main extends Component {
                 Tool.alert('请输入正确的图形验证码！')
                 return
             }
-            that.setState({canGoNext: false})
+            that.setState({busy: false})
             that.props.getData(process.env.RESTFUL_DOMAIN + '/users/checkMobileCaptcha', {
-                mobile: that.props.routeParams.mobile,
+                mobile: that.state.phone,
                 captcha: that.state.mobCaptcha,
-                business: 2
+                business: 4
             }, (res) => {
                 setTimeout(() => {
-                    that.setState({canGoNext: true})
+                    that.setState({busy: true})
                 }, 500);
                 if (res && res.ret === -1) {
                     Tool.alert(res.msg)
@@ -151,7 +151,7 @@ class Main extends Component {
                 <div>
                 <form className='form_style'>
                     <div className='input_container'>
-                    <input id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' {...opts} />
+                    <input id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' {...opts} className="readonly"/>
                     </div>
                     <div className='input_container pic'>
                     <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} required autoFocus/>
