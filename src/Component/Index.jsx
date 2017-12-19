@@ -124,7 +124,7 @@ class Main extends Component {
               <li>
                 <span></span>
                 <p>已还金额(元)</p>
-                <p>{this.state.returnedAmount.toFixed(2)}</p>
+                <p>{this.state.returnedAmount < 0 ? '0.00' : this.state.returnedAmount.toFixed(2)}</p>
               </li>
               <li>
                 <span></span>

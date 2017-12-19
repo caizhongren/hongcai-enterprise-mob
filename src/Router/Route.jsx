@@ -10,7 +10,6 @@ class Roots extends Component {
       this.state = {
         isLogged: false,
       }
-      console.log(SessionService.isLogin())
     }
     render() {
         return (

@@ -37,6 +37,20 @@ class Main extends Component {
         }
 
         this.getUserBalance = () => {
+          // 获取当期待还金额
+          this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/waitRepaymentAmount',{
+            repaymentDays: 28,
+          },(res) => {
+            this.setState({loading: false})
+            if (res.ret === -1) {
+              Tool.alert(res.msg);
+            }else{
+              this.setState({
+                unpaidAmount: res, // 账户余额
+              })
+            }
+          },'')
+          // 获取账户余额
           this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteAccount/getUserBalance',null,(res) => {
             this.setState({loading: false})
             if (res.ret === -1) {
@@ -142,7 +156,7 @@ class Main extends Component {
           <div className="userBalance">
             <p className="balance">{this.state.bankCode}账户余额 : <span>{this.state.userBalance.toFixed(2)}元</span></p>
             <p>当期待还金额 : <span>{this.state.unpaidAmount.toFixed(2)}元</span></p>
-            <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0' : this.state.unpaidAmount - this.state.userBalance }元</span></p>
+            <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0.00' : this.state.unpaidAmount - this.state.userBalance }元</span></p>
           </div>
           <div className="AmountInput">
             <img src={this.state.bankCardSrc} className="fl"/>
