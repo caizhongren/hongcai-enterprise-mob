@@ -7,6 +7,7 @@ import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
 import {RealNameMask} from '../common/realNameMask';
 import '../../Style/settings'
+import {SessionService} from '../../Config/sessionService'
 
 class Main extends Component {
     constructor(props) {
@@ -79,6 +80,7 @@ class Main extends Component {
             this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/destorySession',{},(res)=>{
                 if (res && res.ret === 1) {
                     browserHistory.push('/login')
+                    SessionService.destory()
                 } else {
                     Tool.alert(res.msg)
                 }

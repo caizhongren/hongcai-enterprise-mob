@@ -6,6 +6,7 @@ import {Tool} from '../Config/Tool';
 import {template, HongcaiHeader, HongcaiFooter, Loading} from './common/mixin';
 import '../Style/login.less'
 import {MD5} from '../Config/MD5'
+import {SessionService} from '../Config/sessionService'
 
 class Main extends Component {
     constructor(props) {
@@ -43,6 +44,7 @@ class Main extends Component {
               }else{
                 this.state.preventMountSubmit = true;
                 Tool.success('登录成功')
+                SessionService.loginSuccess(res)
                 let timer = setTimeout( () => {
                   browserHistory.push('/')
                   clearTimeout(timer);

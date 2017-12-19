@@ -1,9 +1,17 @@
 import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
+import {SessionService} from '../Config/sessionService'
 
 import index from '../Component/Index'; //销售录入
 
 class Roots extends Component {
+    constructor() {
+      super();
+      this.state = {
+        isLogged: false,
+      }
+      console.log(SessionService.isLogin())
+    }
     render() {
         return (
             <div>
@@ -11,8 +19,43 @@ class Roots extends Component {
             </div>
         );
     }
+    checkLogin = () => {
+      if (this.state.isLogged) {
+        return
+      }
+      if(!SessionService.isLogin()){
+        fetch(process.env.RESTFUL_DOMAIN + '/users/checkSession',{
+          mode: 'cors',
+          "Content-Type": "application/json",
+          credentials: 'same-origin'
+        })
+        .then(response => {
+          SessionService.checkLogin();
+          if (response.ok) {
+            response.json().then(res => {
+              let isLogged = res.mobile || res.email;
+              isLogged ? null : browserHistory.push('/login')
+              SessionService.loginSuccess(res);
+              this.setState({isLogged: isLogged ? true : false})
+            })
+          } else {
+            console.log("status", response.status);
+          }
+        })
+        .catch(error => console.log(error))
+      }
+    }
+  
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.location.pathname.indexOf('loginPassword') !== 1 && nextProps.location.pathname.indexOf('register') !== 1 && nextProps.location.pathname.indexOf('login') !== 1) {
+        this.checkLogin()
+      } 
+    }
     componentDidMount (props) {
-        document.title = this.props.routes[1].title === undefined ? '宏财企业平台' : this.props.routes[1].title
+      if (this.props.location.pathname.indexOf('loginPassword') !== 1 && this.props.location.pathname.indexOf('register') !== 1 && this.props.location.pathname.indexOf('login') !== 1) {
+        this.checkLogin()
+      } 
+      document.title = this.props.routes[1].title === undefined ? '宏财企业平台' : this.props.routes[1].title
     }
     componentWillUpdate (nextProps) {
         document.title = nextProps.routes[1].title === undefined ? '宏财企业平台' : nextProps.routes[1].title
