@@ -103,12 +103,12 @@ const RouteConfig = (
             <Route path="applyRecord" getComponent={applyRecord}  title='提现记录'/> //提现记录
             <Route path="register" getComponent={register} title='注册'/> //注册
             <Route path="login" getComponent={login}  title='登录'/> //注册
-            <Route path="resetMobile/:mobile" getComponent={resetMobile} title='更改绑定手机号'/>
+            <Route path="resetMobile" getComponent={resetMobile} title='更改绑定手机号'/>
             <Route path="bindMobile" getComponent={bindMobile} title='绑定新手机号'/>
-            <Route path="forgetPassword/:mobile" getComponent={forgetPassword} title='忘记密码'/>
+            <Route path="forgetPassword" getComponent={forgetPassword} title='忘记密码'/>
             <Route path="resetPassword" getComponent={resetPassword} title='重置密码'/>
             <Route path="modifyPassword" getComponent={modifyPassword} title='修改密码'/>
-            <Route path="loginPassword/:mobile" getComponent={loginPassword} title='登录密码'/> //注册
+            <Route path="loginPassword" getComponent={loginPassword} title='登录密码'/> //注册
             <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
             <Route path="realName" getComponent={realName}  title='开通银行资金存管账户'/>
             <Route path="yeepayCallback/:business/:yeepayStatus" getComponent={yeepayCallback}  title='跳转中···'/> 
@@ -118,7 +118,7 @@ const RouteConfig = (
             <Route path="userCenter/bankcardManagement" getComponent={bankcardManagement}  title='银行卡管理'/>
             <Route path="userCenter/securitySettings" getComponent={securitySettings}  title='账户设置'/>
             <Route path="userCenter/bankcardLimit" getComponent={bankcardLimit}  title='银行卡限额'/>
-            <Route path="project/projectDeatil/:projectNum/:projectId" getComponent={projectDeatil}  title='项目详情'/>
+            <Route path="project/projectDeatil" getComponent={projectDeatil}  title='项目详情'/>
             <Route path="project/projectList" getComponent={projectList}  title='借款项目'/>
             <Redirect from='*' to='/' title='宏财企业平台' />
         </Route>

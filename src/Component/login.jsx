@@ -37,7 +37,11 @@ class Main extends Component {
                         preventMountSubmit:true
                     })
                 }else{
-                  browserHistory.push('/loginPassword/' + this.state.phone)
+                    var path = {
+                        pathname:'/loginPassword',
+                        state: {phone: this.state.phone},
+                    }
+                  browserHistory.push(path)
                 }
             },'input', 'POST')
           }

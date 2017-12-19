@@ -35,9 +35,9 @@ class Main extends Component {
             }
             this.state.preventMountSubmit == false;
             this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/resetMobilePassword',{
-                mobile: this.props.location.query.mobile,
-                password:MD5(this.state.password),
-                captcha:this.props.location.query.captcha,
+                mobile: this.state.phone,
+                password: MD5(this.state.password),
+                captcha: this.state.captcha,
                 guestId: Tool.guestId(32,16)
             },(res) => {
                 if (res.ret === -1) {
@@ -61,7 +61,8 @@ class Main extends Component {
         
     }
     componentDidMount() {
-    //   let params = this.props.location.query;
+        this.state.phone = this.props.location.state.phone || '';
+        this.state.captcha = this.props.location.state.captcha || '';
     }
 
     shouldComponentUpdate(nextProps, nextState) {

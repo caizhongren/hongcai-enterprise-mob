@@ -127,7 +127,7 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
-        this.state.phone = this.props.routeParams.mobile || '';
+        this.state.phone = this.props.location.state.phone || '';
         document.getElementById('phone').value = this.state.phone
         this.refreshCode()
     }

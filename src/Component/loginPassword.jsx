@@ -57,13 +57,16 @@ class Main extends Component {
         }
 
         this.goForgetPassword = () => {
-          browserHistory.push('/forgetPassword/' + this.state.phone)
+          let path = {
+            pathname:'/forgetPassword',
+            state: {phone: this.state.phone},
+          }
+          browserHistory.push(path)
         }        
     }
 
     componentDidMount() {
-      let params = this.props.routeParams;
-      this.state.phone = params.mobile||'';
+      this.state.phone = this.props.location.state.phone || '';
     }
 
     shouldComponentUpdate(nextProps, nextState) {

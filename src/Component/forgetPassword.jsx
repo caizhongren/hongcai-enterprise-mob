@@ -105,7 +105,7 @@ class Main extends Component {
             }
             that.setState({canGoNext: false})
             that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/checkMobileCaptcha', {
-                mobile: that.props.routeParams.mobile,
+                mobile: that.state.phone,
                 captcha: that.state.mobCaptcha,
                 business: 1
             }, (res) => {
@@ -116,7 +116,11 @@ class Main extends Component {
                     Tool.alert(res.msg)
                 } else {
                     setTimeout(() => {
-                        browserHistory.push('/resetPassword?mobile=' + that.props.routeParams.mobile + '&captcha=' + that.state.mobCaptcha)
+                        let path = {
+                            pathname:'/resetPassword',
+                            state: {phone: that.state.phone, captcha: that.state.mobCaptcha},
+                        }
+                        browserHistory.push(path)
                     }, 500);
                 }
             })
@@ -127,7 +131,7 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
-        this.state.phone = this.props.routeParams.mobile || '';
+        this.state.phone = this.props.location.state.phone || '';
         document.getElementById('phone').value = this.state.phone
         this.refreshCode()
     }
@@ -151,7 +155,7 @@ class Main extends Component {
                 <div>
                 <form className='form_style'>
                     <div className='input_container'>
-                    <input id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' {...opts} />
+                    <input className="readonly" id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' {...opts} />
                     </div>
                     <div className='input_container pic'>
                     <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} required autoFocus/>

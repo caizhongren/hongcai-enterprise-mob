@@ -42,7 +42,11 @@ class Main extends Component {
             if (!this.state.user.mobile) {
                 return;
             }
-            browserHistory.push('resetMobile/' + this.state.user.mobile)
+            let path = {
+                pathname:'/resetMobile',
+                state: {phone: this.state.user.mobile},
+            }
+            browserHistory.push(path)
         }
         this.toRealName = () => {
             if (this.state.haveTrusteeshipAccount) {
