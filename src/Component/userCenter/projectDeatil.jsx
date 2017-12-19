@@ -13,7 +13,6 @@ class Main extends Component {
       this.state = {
         payAmount: 0,  //应还金额
         preventMountSubmit:true,//防止重复提交
-        projectNum: '',
         projectBills: [],
         projects: {
           name: '',
@@ -27,7 +26,7 @@ class Main extends Component {
 
       this.getProjectDetail =(projectId) => {
         let that = this
-        that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + this.state.projectId+ '/detail',{},(res) => {
+        that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + projectId+ '/detail',{},(res) => {
           if (res && res.ret !== -1) {
             that.setState({loading: true})
             that.setState({
@@ -36,7 +35,7 @@ class Main extends Component {
                 LoanAmount: res.total, //借款金额
                 repaymentDate: res.repaymentDate,
                 loanState: res.status,
-                LoanTime: res.LoanTime
+                LoanTime: res.loanTime
               }
             })
           }else{
@@ -47,7 +46,7 @@ class Main extends Component {
           })
         },'')
 
-        that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + this.state.projectId+ '/info',{},(res) => {
+        that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + projectId+ '/info',{},(res) => {
           if (res && res.ret !== -1) {
             that.setState({loading: true})
             that.setState({
@@ -59,19 +58,17 @@ class Main extends Component {
           that.setState({
             preventMountSubmit:true,
           })
-        },'')
+        })
       }
 
-      this.getProjectBill = () => {
+      this.getProjectBill = (projectNum) => {
         let that = this
-        that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + that.state.projectNum+ '/projectBills',{},(res) => {
+        that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + projectNum+ '/projectBills',{},(res) => {
           if (res && res.ret !== -1) {
             that.setState({loading: true})
             let projectBills = that.state.projectBills.concat(res)
             that.setState({
               projectBills: res,
-            }, () => {
-              // that.getProjectDetail(res[0].projectId)
             })
           }else{
             Tool.alert(res.msg)
@@ -86,11 +83,10 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
-      let params = this.props.routeParams;
-      this.state.projectNum = params.projectNum||'';
-      this.state.projectId = params.projectId||'';
-      this.getProjectBill()
-      this.getProjectDetail()
+      // let projectNum = this.props.location.state.number ||'';
+      // let projectId = this.props.location.state.projectId ||'';
+      this.getProjectBill(this.props.location.state.number ||'')
+      this.getProjectDetail(this.props.location.state.projectId ||'')
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -100,7 +96,6 @@ class Main extends Component {
     componentWillUpdate(nextProps,nextState){
         if (this.props !== nextProps) {
             let {data} = nextProps.state;
-
         }
     }
    
@@ -128,7 +123,7 @@ class Main extends Component {
             </div>
             <div className="column3">
               项目放款：{this.state.projects.LoanAmount}元 <br/>
-              <span>开始计息</span><br/>
+              开始计息
             </div>
           </div>
           { this.state.projectBills.map((item , index) => {

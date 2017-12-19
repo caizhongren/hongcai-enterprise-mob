@@ -88,7 +88,11 @@ class Main extends Component {
             
         }
         this.toProjectDetai = (number, projectId) => {
-            browserHistory.push('/project/projectDetail/' + number + '/' + projectId)
+            let path = {
+                pathname:'/project/projectDeatil',
+                state: {number: number, projectId: projectId},
+            }
+            browserHistory.push(path)
         }
     }
 
@@ -133,7 +137,7 @@ class Main extends Component {
                                 </div>
                                 <div className="project-btns clear pass">
                                     <div className="btns-son">
-                                        <Link to="/project/projectDetail"><span className={`left ${Math.abs(project.project.repaymentDate - new Date().getTime()) >= ms ? 'one' : ''}`}>查看详情</span></Link>
+                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${Math.abs(project.project.repaymentDate - new Date().getTime()) >= ms ? 'one' : ''}`}>查看详情</span>
                                         {
                                             Math.abs(project.project.repaymentDate - new Date().getTime()) < ms ?
                                             <span onClick={this.toRealName} className="right" onClick={this.repayment.bind(this, project.project.id, project.project.repaymentAmount, projectBill.repaymentNo)}>立即还款({projectBill.repaymentNo}/{project.project.cycle})</span> : null
