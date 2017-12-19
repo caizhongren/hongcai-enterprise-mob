@@ -145,7 +145,7 @@ class Main extends Component {
                 } else {
                     Tool.success('注册成功')
                     setTimeout(() => {
-                        browserHistory.push('/login')
+                        browserHistory.push('/realName')
                     }, 1000);
                 }
             }, '', 'POST')

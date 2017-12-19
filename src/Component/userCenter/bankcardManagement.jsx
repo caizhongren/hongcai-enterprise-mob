@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool} from '../../Config/Tool';
+import {Tool, Utils} from '../../Config/Tool';
 import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
 import '../../Style/recharge.less'
@@ -91,14 +91,22 @@ class Main extends Component {
                         if (res.ret && res.ret === -1) {
                             Tool.alert(res.msg);
                         } else {
-                            PayUtils.redToTrusteeship('toBindBankCard', response)
+                            PayUtils.redToTrusteeship('toBindBankCard', res)
                         }
                     }, '')
                 } else {
                     this.setState({showRealNameMask: true})
                 }
             }
-        }   
+        }
+        this.resetMobile = () => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/bankcard/mobile', {
+                from: 5,
+                device: Utils.deviceCode()
+            }, (res) => {
+                PayUtils.redToTrusteeship('restMobile', res)
+            }, '', 'PUT')
+        }  
     }
 
     componentDidMount() {
@@ -119,7 +127,7 @@ class Main extends Component {
       return (
         <div className="component_container recharge bank_manage">
           {this.state.loading && <Loading />}
-          <p className="fee text-right">支持银行及限额</p>
+          <Link to='/userCenter/bankcardLimit'><p className="fee text-right">支持银行及限额</p></Link>
           {this.state.isAuth && this.state.haveCard ?                 
             <div>
                 <div className="AmountInput">
@@ -131,7 +139,7 @@ class Main extends Component {
                 </div>
                 <form className='form_style'>
                     <span>预留手机号</span>
-                    <span className="bind_mobile">{this.state.bindMobile}<span className="modify">修改</span></span>
+                    <span className="bind_mobile">{this.state.bindMobile}<span className="modify" onClick={this.resetMobile}>修改</span></span>
                 </form>
                 <div className="form_style text-center ft-blue" onClick={this.manageBankCard.bind(this,1)}>
                     解绑银行卡
