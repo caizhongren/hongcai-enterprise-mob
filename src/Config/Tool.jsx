@@ -33,6 +33,12 @@ Utils.deviceCode = () => {
 
     return deviceCode;
 },
+Utils.pasteMobile = (e) => {
+    e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
+}
+Utils.pastePic = (e) => {
+    e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/[\W]/g, ''))
+}
 Tool.paramType = data => {
     let paramArr = []; 
     let paramStr = ''; 

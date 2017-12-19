@@ -33,7 +33,7 @@ class Roots extends Component {
           if (response.ok) {
             response.json().then(res => {
               let isLogged = res.mobile || res.email;
-              isLogged ? null : browserHistory.push('/login')
+              isLogged ? null : browserHistory.replace('/login')
               SessionService.loginSuccess(res);
               this.setState({isLogged: isLogged ? true : false})
             })

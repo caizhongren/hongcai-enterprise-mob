@@ -3,7 +3,7 @@ import pureRender from 'pure-render-decorator';
 import {History, Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool, Count} from '../Config/Tool';
+import {Tool, Count, Utils} from '../Config/Tool';
 import {MD5} from '../Config/MD5'
 import {template, HongcaiHeader, HongcaiFooter} from './common/mixin';
 import '../Style/login'
@@ -32,7 +32,7 @@ class Main extends Component {
 
         this.changeValue = (type, event) => {
             if(type === 'phone'){
-              let value = event.target.value.replace(/\D/gi,'')
+              let value = event.target.value.replace(/\D/g,'')
               if (value.length === 11) {
                  this.checkIsUnique(value)
               }
@@ -45,12 +45,13 @@ class Main extends Component {
                 password: pwd
               })
             } else if (type === 'picCaptcha') {
+                let value = event.target.value.replace(/[/W]/g,'')
                 this.setState({
-                    picCaptcha: event.target.value
+                    picCaptcha: value
                 })
             } else {
                 this.setState({
-                    mobCaptcha: event.target.value
+                    mobCaptcha: event.target.value.replace(/\D/g,'')
                 })
             }
         }
@@ -124,7 +125,7 @@ class Main extends Component {
                 return
             }
             if (!passwordPattern.test(that.state.password)) {
-                Tool.alert('密码6-16位，需包含字母和数字')
+                Tool.alert('登录密码6-16位，需包含字母和数字')
                 return
             }
             that.setState({canRegister: false})
@@ -178,14 +179,14 @@ class Main extends Component {
             <div>
                <form className='form_style'>
                 <div className='input_container'>
-                  <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this,'phone')} required autoFocus/>
+                  <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this,'phone')} onPaste={Utils.pasteMobile.bind(this)} required autoFocus/>
                 </div>
                 <div className='input_container pic'>
-                  <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} required />
+                  <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onInput={this.changeValue.bind(this,'picCaptcha')} onPaste={Utils.pastePic.bind(this)} required />
                 </div>
                 <span id="captcha_img" className="fr" onClick={this.refreshCode}><img  id="_img" src={this.state.imgSrc} alt=""/></span>                
                 <div className='input_container message'>
-                  <input type="tel" maxLength='6' value={this.state.mobCaptcha} placeholder='请输入短信验证码' onChange={this.changeValue.bind(this,'mobCaptcha')} required />
+                  <input type="tel" maxLength='6' value={this.state.mobCaptcha} placeholder='请输入短信验证码' onChange={this.changeValue.bind(this,'mobCaptcha')} onPaste={Utils.pasteMobile.bind(this)} required />
                 </div>
                 <span id="get_captcha" className="fr" onClick={this.sendMobCaptcha}>获取短信验证码</span>                
                 <div className='input_container'>
@@ -200,10 +201,6 @@ class Main extends Component {
           <HongcaiFooter />
         </div>
       )
-    }
-    
-    componentWillUnmount() {
-        cancelAnimationFrame(this.state.requestID);
     }
 }
 
