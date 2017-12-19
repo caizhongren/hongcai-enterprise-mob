@@ -20,7 +20,9 @@ class Main extends Component {
             phone:value
         })
       }
-
+      this.beforepasteHandler = (e) => {
+        e.clipboardData.setData('text', e.clipboardData.getData('text').replace(/\D/g, ''))
+      }
       this.postPhone = () => {
         let mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/;
           if (this.state.phone.length < 11) {
@@ -72,7 +74,7 @@ class Main extends Component {
           <div>
               <form className='form_style'>
               <div className='input_container'>
-                <input type="text" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} required/>
+                <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} onPaste={this.beforepasteHandler} required/>
               </div>
             </form>
             <div className={`btu_next ${this.state.phone.length === 11 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPhone}>下一步</div>

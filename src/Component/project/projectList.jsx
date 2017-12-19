@@ -62,17 +62,16 @@ class Main extends Component {
                 }
             }, 'changeType')
         }
-
         this.getNextPage = () => { //加载下一页
             this.setState({currentPage: this.state.currentPage + 1})
             this.state.activeTab === 0 ? this.chooseStatus(this.state.currentPage + 1, 3, 9) : this.chooseStatus(this.state.currentPage + 1, 3,10)
         }
         this.repayment = function(projectId, repaymentAmount, repaymentNo) { // 还款
-            this.setState({loading: false})
             if (repaymentAmount > this.state.balance) {
               Tool.alert('账户余额不足，请先充值');
               return;
             }
+            this.setState({loading: false})
             this.props.getData(process.env.WEB_DEFAULT_DOMAIN+ '/enterpriseYeepay/repayment', {
                 projectId: projectId,
                 repaymentNo: repaymentNo,
@@ -133,14 +132,14 @@ class Main extends Component {
                                 </div>
                                 <div className="list_item">
                                     <p>本期还款(元)：<span>{projectBill.repaymentAmount}</span></p>
-                                    <p>还款日期：<span>{dates(project.project.repaymentDate,'.')}</span></p>
+                                    <p>还款日期：<span>{dates(projectBill.repaymentTime,'.')}</span></p>
                                 </div>
                                 <div className="project-btns clear pass">
                                     <div className="btns-son">
-                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${Math.abs(project.project.repaymentDate - new Date().getTime()) >= ms ? 'one' : ''}`}>查看详情</span>
+                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${(projectBill.repaymentTime - new Date().getTime()) < ms && (projectBill.repaymentTime - new Date().getTime()) > 0 ? 'one' : ''}`}>查看详情</span>
                                         {
-                                            Math.abs(project.project.repaymentDate - new Date().getTime()) < ms ?
-                                            <span onClick={this.toRealName} className="right" onClick={this.repayment.bind(this, project.project.id, project.project.repaymentAmount, projectBill.repaymentNo)}>立即还款({projectBill.repaymentNo}/{project.project.cycle})</span> : null
+                                            (projectBill.repaymentTime - new Date().getTime()) >= ms || (projectBill.repaymentTime - new Date().getTime()) <= 0 ?
+                                            <span onClick={this.toRealName} className="right" onClick={this.repayment.bind(this, project.project.id, projectBill.repaymentAmount, projectBill.repaymentNo)}>立即还款({projectBill.repaymentNo}/{project.project.cycle})</span> : null
                                         }
                                     </div>
                                 </div>

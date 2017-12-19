@@ -25,8 +25,8 @@ class Main extends Component {
                 browserHistory.replace('/')
                 msg = '认证成功！'
             } else if (this.state.business == 'RESET_MOBILE'){
-                browserHistory.replace('/userCenter/securitySettings')
-                msg = '修改成功！'
+                browserHistory.replace('/userCenter/bankcardManagement')
+                msg = '预留手机号修改成功！'
             } else if (this.state.business === 'RECHARGE'){
                 browserHistory.replace('/')
                 msg = '充值成功！'

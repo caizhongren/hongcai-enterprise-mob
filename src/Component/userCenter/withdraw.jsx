@@ -58,14 +58,14 @@ class Main extends Component {
         }
 
         this.withdraw = () => {
-            if (!this.state.preventMountSubmit || this.state.userBalance - 2 < 0 || !this.state.withdrawAmount || this.state.withdrawAmount === 0) {
+            if (!this.state.preventMountSubmit || this.state.userBalance - 2 < 0 || !this.state.withdrawAmount || this.state.withdrawAmount == 0) {
                 return
             }
             if (this.state.withdrawAmount < 0.01) {
                 Tool.alert('提现金额必须大于等于0.01元！')
                 return;
             } else if (this.state.withdrawAmount > this.state.userBalance - 2) {
-                Tool.alert('最高提现金额：' + (this.state.withdrawAmount - 2).toFixed(2) + '元')
+                Tool.alert('最大提现金额：' + (this.state.withdrawAmount - 2).toFixed(2) + '元')
                 return;
             }
             this.setState({

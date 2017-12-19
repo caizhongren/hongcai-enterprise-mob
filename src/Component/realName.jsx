@@ -42,7 +42,7 @@ export class RealName extends Component {
                 return
             }
             if (!idPattern.test(this.state.idCard)) {
-                Tool.alert('请输入合规的身份证号！')
+                Tool.alert('请输入正确的身份证号!')
                 return
             }
             this.setState({preventMountSubmit: false})

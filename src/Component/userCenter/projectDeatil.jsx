@@ -83,8 +83,6 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
-      // let projectNum = this.props.location.state.number ||'';
-      // let projectId = this.props.location.state.projectId ||'';
       this.getProjectBill(this.props.location.state.number ||'')
       this.getProjectDetail(this.props.location.state.projectId ||'')
     }
