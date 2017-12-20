@@ -53,7 +53,7 @@ class Main extends Component {
                     })
               }else{
                     this.state.preventMountSubmit = true;
-                    Tool.success('密码修改成功！')
+                    Tool.alert('密码修改成功！')
                     let timer = setTimeout( () => {
                         browserHistory.push('/userCenter/securitySettings')
                         clearTimeout(timer);
