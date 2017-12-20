@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import {SessionService} from '../Config/sessionService'
 
-import index from '../Component/Index'; //销售录入
+import index from '../Component/Index';
 
 class Roots extends Component {
     constructor() {
@@ -34,7 +34,7 @@ class Roots extends Component {
             response.json().then(res => {
               let isLogged = res.mobile || res.email;
               isLogged ? null : browserHistory.replace('/login')
-              SessionService.loginSuccess(res);
+              // SessionService.loginSuccess(res);
               this.setState({isLogged: isLogged ? true : false})
             })
           } else {
@@ -46,12 +46,12 @@ class Roots extends Component {
     }
   
     componentWillReceiveProps(nextProps) {
-      if (nextProps.location.pathname.indexOf('loginPassword') !== 1 && nextProps.location.pathname.indexOf('register') !== 1 && nextProps.location.pathname.indexOf('login') !== 1) {
+      if (nextProps.location.pathname.indexOf('loginPassword') !== 1 && nextProps.location.pathname.indexOf('register') !== 1 && nextProps.location.pathname.indexOf('login') !== 1 && nextProps.location.pathname.indexOf('forgetPassword') !== 1) {
         this.checkLogin()
       } 
     }
     componentDidMount (props) {
-      if (this.props.location.pathname.indexOf('loginPassword') !== 1 && this.props.location.pathname.indexOf('register') !== 1 && this.props.location.pathname.indexOf('login') !== 1) {
+      if (this.props.location.pathname.indexOf('loginPassword') !== 1 && this.props.location.pathname.indexOf('register') !== 1 && this.props.location.pathname.indexOf('login') !== 1 && this.props.location.pathname.indexOf('forgetPassword') !== 1) {
         this.checkLogin()
       } 
       document.title = this.props.routes[1].title === undefined ? '宏财企业平台' : this.props.routes[1].title
@@ -63,13 +63,6 @@ class Roots extends Component {
 
 // const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
 
-
-const chooseProducts = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/chooseProducts').default)},'chooseProducts')}
-const helpCenter = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/helpCenter').default)},'helpCenter')}
-const saleRecord = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/saleRecord').default)},'saleRecord')}
-const allDeposit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/allDeposit').default)},'allDeposit')}
-const applyRecord = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/applyRecord').default)},'applyRecord')}
-const applyDeposit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/applyDeposit').default)},'applyDeposit')}
 const login = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/login').default)},'login')}
 const register = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/register').default)},'register')}
 const forgetPassword = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/forgetPassword').default)},'forget')}
@@ -87,7 +80,7 @@ const transactionRecord = (location, cb) => {require.ensure([], require => {cb(n
 const bankcardManagement = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardManagement').default)},'bankcardManagement')}
 const securitySettings = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/securitySettings').default)},'securitySettings')}
 const bankcardLimit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardLimit').default)},'bankcardLimit')}
-const projectDeatil = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/projectDeatil').default)},'projectDeatil')}
+const projectDeatil = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/project/projectDeatil').default)},'projectDeatil')}
 const projectList = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/project/projectList').default)},'projectList')}
 
 const RouteConfig = (
@@ -95,12 +88,6 @@ const RouteConfig = (
         <Route path="/" component={Roots}>
             <IndexRoute component={index} title='账户总览'/> //首页
             <Route path="index" component={index} title='账户总览' />
-            <Route path="helpCenter" getComponent={helpCenter}  title='帮助中心'/>//帮助中心
-            <Route path="saleRecord" getComponent={saleRecord}  title='销售记录'/>//销售记录
-            <Route path="chooseProducts" getComponent={chooseProducts}  title='选择商品'/>//选择商品
-            <Route path="allDeposit" getComponent={allDeposit}  title='余额'/>//余额
-            <Route path="applyDeposit" getComponent={applyDeposit}  title='申请提现'/>//申请提现
-            <Route path="applyRecord" getComponent={applyRecord}  title='提现记录'/> //提现记录
             <Route path="register" getComponent={register} title='注册'/> //注册
             <Route path="login" getComponent={login}  title='登录'/> //注册
             <Route path="resetMobile" getComponent={resetMobile} title='更改绑定手机号'/>
