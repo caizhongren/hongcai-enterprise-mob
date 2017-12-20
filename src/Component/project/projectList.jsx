@@ -120,18 +120,18 @@ class Main extends Component {
                        return project.projectBills.map((projectBill, index) =>{
                         
                             return projectBill.status === 0 ? <li key={index} className="project_list clear">
-                                <p className="list_item_title">最近还款项目：<span>{project.project.name}</span></p>
+                                <p className="list_item_title">最近还款项目: <span>{project.project.name}</span></p>
                                 <div className="list_item">
-                                    <p>借款金额(元)：<span>{project.project.total}</span></p>
-                                    <p>年化利率(%)：<span>{project.project.annualEarnings}</span></p>
+                                    <p>借款金额(元): <span>{number(project.project.total)}</span></p>
+                                    <p>年化利率(%): <span>{project.project.annualEarnings}</span></p>
                                 </div>
                                 <div className="list_item">
-                                    <p>已还金额(元)：<span>{project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount < 1 ? 0 : number(project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount)}</span></p>
-                                    <p>已还期数：<span>{projectBill.repaymentNo - 1}/{project.project.cycle}</span><span className="ft_s">期</span></p>
+                                    <p>已还金额(元): <span>{project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount < 1 ? 0 : number(project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount)}</span></p>
+                                    <p>已还期数: <span>{projectBill.repaymentNo - 1}/{project.project.cycle}</span><span className="ft_s">期</span></p>
                                 </div>
                                 <div className="list_item">
-                                    <p>本期还款(元)：<span>{projectBill.repaymentAmount}</span></p>
-                                    <p>还款日期：<span>{dates(projectBill.repaymentTime,'.')}</span></p>
+                                    <p>本期还款(元): <span>{number(projectBill.repaymentAmount)}</span></p>
+                                    <p>还款日期: <span>{dates(projectBill.repaymentTime,'.')}</span></p>
                                 </div>
                                 <div className="project-btns clear pass">
                                     <div className="btns-son">
@@ -147,14 +147,14 @@ class Main extends Component {
                     }) :
                     this.state.data.map((project , index) => {
                         return <li key={index} className="project_list clear pass">
-                                <p className="list_item_title">借款项目：<span>{project.project.name}</span></p>
+                                <p className="list_item_title">借款项目: <span>{project.project.name}</span></p>
                                 <div className="list_item">
-                                    <p>借款金额(元)： <span>{project.project.total}</span></p>
-                                    <p>年化利率(%)：<span>{project.project.annualEarnings}</span></p>
+                                    <p>借款金额(元): <span>{number(project.project.total)}</span></p>
+                                    <p>年化利率(%): <span>{project.project.annualEarnings}</span></p>
                                 </div>
                                 <div className="list_item">
-                                    <p>已还金额(元)： <span>{number(project.projectInfo.projectBackTotal)}</span></p>
-                                    <p>本息两清日：<span>{dates(project.project.repaymentDate, '.')}</span></p>
+                                    <p>已还金额(元): <span>{number(project.projectInfo.projectBackTotal)}</span></p>
+                                    <p>本息两清日: <span>{dates(project.project.repaymentDate, '.')}</span></p>
                                 </div>
                                 <div className="project-btns clear">
                                     <div className="btns-son">
