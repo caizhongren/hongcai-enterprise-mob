@@ -22,7 +22,7 @@ class Main extends Component {
         }
         this.changeValue = (type, event) => {
             if (type === 'picCaptcha') {
-                let value = event.target.value.replace(/[/W]/g,'')
+                let value = event.target.value.replace(/[^\w\.\/]/ig,'')
                 if (value.length > 3) {
                     this.checkPicCaptcha(value)
                 }

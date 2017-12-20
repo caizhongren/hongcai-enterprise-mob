@@ -45,7 +45,7 @@ class Main extends Component {
                 password: pwd
               })
             } else if (type === 'picCaptcha') {
-                let value = event.target.value.replace(/[/W]/g,'')
+                let value = event.target.value.replace(/[^\w\.\/]/ig,'')
                 this.setState({
                     picCaptcha: value
                 })

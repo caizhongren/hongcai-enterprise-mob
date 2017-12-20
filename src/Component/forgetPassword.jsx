@@ -27,7 +27,7 @@ class Main extends Component {
                     this.checkPicCaptcha(event.target.value)
                 }
                 this.setState({
-                    picCaptcha: event.target.value.replace(/[\W]/g, '')
+                    picCaptcha: event.target.value.replace(/[^\w\.\/]/ig,'')
                 })
             } else {
                 this.setState({
