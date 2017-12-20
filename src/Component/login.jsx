@@ -67,14 +67,13 @@ class Main extends Component {
     }
    
     render() {
-      // const {increase} = this.props;
       return (
-        <div className="component_container login">
+        <div className="login">
           <HongcaiHeader />
-          <div>
+          <div className="padding-b-11">
               <form className='form_style'>
               <div className='input_container'>
-                <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} onPaste={this.beforepasteHandler} required/>
+                <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this)} onPaste={this.beforepasteHandler} required autoFocus/>
                 <input type="text" className="hide"/>
               </div>
             </form>
