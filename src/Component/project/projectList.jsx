@@ -16,7 +16,7 @@ class Main extends Component {
         this.state = {
             loading: Boolean,
             data:[],  //分销商列表数组
-            activeTab: 0,
+            activeTab: String,
             choosedClass:'team_choosed', //当前选中的类别，以此设置class名
             currentPage:1, //当前所在页数
             totalPage: 1,//总共的页数
@@ -38,14 +38,11 @@ class Main extends Component {
             }
         },'')
     
-        this.chooseStatus = (page, pageSize, status) => { //筛选类型
+        this.chooseStatus = (page, pageSize, status, tab) => { //筛选类型
             this.setState({loading: false})
-            if (this.state.activeTab === 0 && status === 10) {
-                this.setState({activeTab: 1, projectStatus: status})
-            } else if (this.state.activeTab === 1 && status === 9) {
-                this.setState({activeTab: 0, projectStatus: status})
-            }
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status}, (res) => {
+            this.setState({activeTab: tab})
+            browserHistory.replace('/project/projectList?tab=' + tab)
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status, token:'825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'}, (res) => {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
                     let dataList = this.state.data.concat(res.data)
@@ -64,7 +61,7 @@ class Main extends Component {
         }
         this.getNextPage = () => { //加载下一页
             this.setState({currentPage: this.state.currentPage + 1})
-            this.state.activeTab === 0 ? this.chooseStatus(this.state.currentPage + 1, 3, 9) : this.chooseStatus(this.state.currentPage + 1, 3,10)
+            this.state.activeTab === '0' ? this.chooseStatus(this.state.currentPage + 1, 3, 9, '0') : this.chooseStatus(this.state.currentPage + 1, 3,10, '1')
         }
         this.repayment = function(projectId, repaymentAmount, repaymentNo) { // 还款
             if (repaymentAmount > this.state.balance) {
@@ -90,6 +87,7 @@ class Main extends Component {
             let path = {
                 pathname:'/project/projectDeatil',
                 state: {number: number, projectId: projectId},
+                query: {tab: this.props.location.query.tab}
             }
             browserHistory.push(path)
         }
@@ -100,8 +98,8 @@ class Main extends Component {
             this.setState({data: [], currentPage: 1})
         }
     }
-    componentDidMount () {
-        this.chooseStatus(1, 4, 9)
+    componentDidMount (props) {
+        this.props.location.query.tab == '1' ? this.chooseStatus(1, 3, 10, '1') : this.chooseStatus(1, 4, 9, '0')
     }
     render() {
         let ms = 28 * 24 * 60 * 60 * 1000
@@ -110,13 +108,13 @@ class Main extends Component {
                 {!this.state.loading && <Loading />}
                 <nav className='team_nav'>
                    <ul className='clear'>
-                       <li className={this.state.activeTab === 0 ? this.state.choosedClass:null} onClick={this.chooseStatus.bind(this,1, 4,9)}><p>待还款</p></li>
-                       <li className={this.state.activeTab === 1 ? this.state.choosedClass:null} onClick={this.chooseStatus.bind(this,1, 3, 10)}><p>已结清</p></li>
+                       <li className={!this.state.activeTab || this.state.activeTab === '0' ? this.state.choosedClass:null} onClick={this.chooseStatus.bind(this, 1, 4, 9, '0')}><p>待还款</p></li>
+                       <li className={this.state.activeTab === '1' ? this.state.choosedClass:null} onClick={this.chooseStatus.bind(this, 1, 3, 10, '1')}><p>已结清</p></li>
                    </ul>
                </nav>
                {
                    this.state.data && this.state.data.length > 0 ?
-                   this.state.activeTab === 0 ?
+                   this.state.activeTab === '0' ?
                    this.state.data.map((project , index) => {
                        return project.projectBills.map((projectBill, index) =>{
                         
@@ -154,7 +152,7 @@ class Main extends Component {
                                     <p>年化利率(%)：<span>{project.project.annualEarnings}</span></p>
                                 </div>
                                 <div className="list_item">
-                                    <p>已还金额(元)： <span>{(project.projectInfo.projectBackProfit).toFixed(2)}</span></p>
+                                    <p>已还金额(元)： <span>{(project.projectInfo.projectBackTotal).toFixed(2)}</span></p>
                                     <p>本息两清日：<span>{dates(project.project.repaymentDate, '.')}</span></p>
                                 </div>
                                 <div className="project-btns clear">
