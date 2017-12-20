@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool} from '../../Config/Tool';
+import {Tool,Utils} from '../../Config/Tool';
 import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
 import '../../Style/recharge.less'
@@ -75,7 +75,7 @@ class Main extends Component {
             this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/withdraw',{
                 'amount': this.state.withdrawAmount,
                 'from': 5,
-                'device': 1
+                'device': Utils.deviceCode()
             },(res) => {
                 if (res && res.ret !== -1) {
                     PayUtils.redToTrusteeship('toWithdraw', res)
