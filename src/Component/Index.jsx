@@ -76,12 +76,10 @@ class Main extends Component {
     }
 
     componentWillMount() {
-        let params = this.props.location.query;
     }
     componentDidMount() {
       this.getEnterpriseUserInfo();
       this.userSecurityInfo();
-      this.setState({height: window.innerHeight + 'px'})
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -91,13 +89,13 @@ class Main extends Component {
     componentWillUpdate(nextProps,nextState){
         if (this.props !== nextProps) {
             let {data} = nextProps.state;
-
         }
     }
    
     render() {
+      let height = window.innerHeight + 'px';
       return (
-        <div className="main" style={{height: this.state.height}}>
+        <div className="main" style={{height: height}}>
           {this.state.showRealNameMask ? <RealNameMask getData={this.props.getData} closeRealNameMask={this.closeRealNameMask} showRealNameMask={this.state.showRealNameMask}/> : null }
           {this.state.loading && <Loading />}
           <Link className="setting" to='/userCenter/securitySettings'></Link>
