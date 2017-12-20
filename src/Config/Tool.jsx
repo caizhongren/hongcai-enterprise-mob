@@ -132,52 +132,6 @@ Tool.getStyle =  (obj,attr) => {
 } 
 
 
-Tool.nextPage = (dom,currentPage,totalPage,callback,shouldUpdata) => { //分页
-    let updata = shouldUpdata;
-    let page = currentPage;
-    let height = 0;
-    let windowHeight = window.screen.height;
-    let setTop = 0;
-    let Bottom = 0;
-    let oldScrollTop = 0;
-    let timer = null;
-    dom.addEventListener('touchstart',() => {
-        height = dom.offsetHeight;
-        setTop = dom.offsetTop;
-        Bottom = parseInt(Tool.getStyle(dom,'marginBottom'));
-    },false)
-    dom.addEventListener('touchmove',() => {
-       loadMore();
-    },false)
-    dom.addEventListener('touchend',() => {
-       oldScrollTop = document.body.scrollTop
-        moveEnd()
-    },false)
-    
-    let requestID;
-    const moveEnd = () => {
-        requestID = requestAnimationFrame(() => {
-            if (document.body.scrollTop != oldScrollTop) {
-                oldScrollTop = document.body.scrollTop;
-                moveEnd()
-            }else{
-                loadMore();
-            }
-        })
-    }
-
-    const loadMore = () => {
-        if ((page < totalPage)&&(updata==true)) {
-            if (document.body.scrollTop+windowHeight >= height+setTop+Bottom) {
-                cancelAnimationFrame(requestID)
-                page++;
-                updata = false;
-                callback(page);
-            }
-        }
-    }
-
-}
 Tool.guestId = (len, radix) => {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
     var uuid = []

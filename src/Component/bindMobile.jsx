@@ -19,7 +19,8 @@ class Main extends Component {
             canGoNext: true,
             isUnique: 0, //图形验证码是否正确
             isUniqueMobile: 0, //手机号是否注册
-            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
+            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
+            Timer: null,
         }
         this.changeValue = (type, event) => {
           if (type === 'phone') {
@@ -111,9 +112,11 @@ class Main extends Component {
             }, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
-                    setTimeout(() => {
-                        that.setState({busy: false})
-                    }, 61000);
+                    that.setState({
+                        Timer: setTimeout(() => {
+                                that.setState({busy: false})
+                            }, 61000)
+                        })
                 } else {
                     Tool.alert(res.msg)
                     that.setState({busy: false})
@@ -174,7 +177,8 @@ class Main extends Component {
         
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
+        clearTimeout(this.state.Timer)
     }
     componentDidMount() {
         this.refreshCode()
@@ -212,10 +216,6 @@ class Main extends Component {
                 </div> 
             </div>
         )
-    }
-    
-    componentWillUnmount() {
-        cancelAnimationFrame(this.state.requestID);
     }
 }
 

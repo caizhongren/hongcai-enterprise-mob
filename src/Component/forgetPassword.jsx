@@ -19,7 +19,8 @@ class Main extends Component {
             busy: false,//防止重复提交
             canGoNext: true,//防止重复提交
             isUnique: 0,
-            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
+            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
+            Timer: null,
         }
         this.changeValue = (type, event) => {
             if (type === 'picCaptcha') {
@@ -84,9 +85,11 @@ class Main extends Component {
             that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 1, guestId: guestId}, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
-                    setTimeout(() => {
-                        that.setState({busy: false})
-                    }, 61000);
+                    that.setState({
+                        Timer: setTimeout(() => {
+                            that.setState({busy: false})
+                        }, 61000)
+                    })
                 } else {
                     Tool.alert(res.msg)
                     that.setState({busy: false})
@@ -130,7 +133,8 @@ class Main extends Component {
         
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
+        clearTimeout(this.state.Timer)
     }
     componentDidMount() {
         this.state.phone = this.props.location.state.phone || '';
@@ -172,10 +176,6 @@ class Main extends Component {
                 </div> 
             </div>
         )
-    }
-    
-    componentWillUnmount() {
-        cancelAnimationFrame(this.state.requestID);
     }
 }
 

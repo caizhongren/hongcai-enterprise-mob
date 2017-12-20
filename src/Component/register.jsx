@@ -24,7 +24,8 @@ class Main extends Component {
             pwdHide: true,
             isUnique: 0,
             mobilePattern: /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/,
-            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha'
+            codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
+            Timer: null,
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -106,9 +107,11 @@ class Main extends Component {
             that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 0, guestId: guestId}, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
-                    setTimeout(() => {
-                        that.setState({busy: false})
-                    }, 61000);
+                    that.setState({
+                        Timer: setTimeout(() => {
+                            that.setState({busy: false})
+                        }, 61000)
+                    })
                 } else {
                     Tool.alert(res.msg)
                     that.setState({busy: false})
@@ -154,8 +157,8 @@ class Main extends Component {
         
     }
 
-    componentWillMount() {
-        // let params = this.props.location.query;
+    componentWillUnmount() {
+        clearTimeout(this.state.Timer)
     }
     componentDidMount() {
         this.refreshCode()

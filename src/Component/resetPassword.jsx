@@ -94,10 +94,6 @@ class Main extends Component {
         </div>
       )
     }
-    
-    componentWillUnmount() {
-        cancelAnimationFrame(this.state.requestID);
-    }
 }
 
 export default template({
