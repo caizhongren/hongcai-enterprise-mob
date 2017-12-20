@@ -76,7 +76,6 @@ class Main extends Component {
             types: type,
           },(res) => {
             if (res && res.ret !== -1) {
-              this.setState({loading: false})
               let dealList = this.state.dealList.concat(res.data)
               this.setState({
                 dealList: dealList,
@@ -94,8 +93,8 @@ class Main extends Component {
 
         this.loadMore = (page) => {
           this.setState({
-          page: (this.state.page + 1),
-        })
+            page: (this.state.page + 1),
+          })
           this.getDealList(this.state.page + 1, this.state.pageSize, this.state.type) 
         }
 
@@ -115,10 +114,6 @@ class Main extends Component {
     }
 
     componentDidMount () {
-      this.setState({loading: true})
-      setTimeout(() => {
-        this.setState({loading: false})
-      }, 5000)
       this.getAllTypes()
       this.getDealList(this.state.page, this.state.pageSize, this.state.type)
     }

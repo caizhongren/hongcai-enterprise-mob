@@ -42,7 +42,6 @@ class Main extends Component {
           this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/waitRepaymentAmount',{
             repaymentDays: 28,
           },(res) => {
-            this.setState({loading: false})
             if (res.ret === -1) {
               Tool.alert(res.msg);
             }else{
@@ -53,7 +52,6 @@ class Main extends Component {
           },'')
           // 获取账户余额
           this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteAccount/getUserBalance',null,(res) => {
-            this.setState({loading: false})
             if (res.ret === -1) {
               Tool.alert(res.msg);
             }else{
@@ -125,7 +123,7 @@ class Main extends Component {
               preventMountSubmit:true,
               loading: false,
             })
-          },'input', 'POST')
+          },'', 'POST')
         }     
     }
 

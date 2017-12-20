@@ -22,7 +22,7 @@ class Main extends Component {
         returnedAmount: 0, // 已还金额
         unpaidAmount: 0, // 待还金额
         showRealNameMask: false, // 控制实名认证弹窗
-        loading: false,
+        loading: true,
       }
 
       this.getEnterpriseUserInfo = () => {
@@ -79,10 +79,6 @@ class Main extends Component {
         let params = this.props.location.query;
     }
     componentDidMount() {
-      this.setState({loading: true})
-      setTimeout(() => {
-        this.setState({loading: false})
-      }, 5000)
       this.getEnterpriseUserInfo();
       this.userSecurityInfo();
       this.setState({height: window.innerHeight + 'px'})

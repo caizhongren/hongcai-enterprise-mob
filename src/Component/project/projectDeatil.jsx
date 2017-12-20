@@ -28,7 +28,6 @@ class Main extends Component {
         let that = this
         that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + projectId+ '/detail',{},(res) => {
           if (res && res.ret !== -1) {
-            that.setState({loading: true})
             that.setState({
               projects: {
                 name: res.name,
@@ -43,12 +42,12 @@ class Main extends Component {
           }
           that.setState({
             preventMountSubmit:true,
+            loading: true
           })
         },'')
 
         that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + projectId+ '/info',{},(res) => {
           if (res && res.ret !== -1) {
-            that.setState({loading: true})
             that.setState({
               payAmount: res.projectBackTotal, 
             })
@@ -57,6 +56,7 @@ class Main extends Component {
           }
           that.setState({
             preventMountSubmit:true,
+            loading: true
           })
         })
       }
@@ -65,7 +65,6 @@ class Main extends Component {
         let that = this
         that.props.getData(process.env.RESTFUL_DOMAIN + '/projects/' + projectNum+ '/projectBills',{},(res) => {
           if (res && res.ret !== -1) {
-            that.setState({loading: true})
             let projectBills = that.state.projectBills.concat(res)
             that.setState({
               projectBills: res,
@@ -75,6 +74,7 @@ class Main extends Component {
           }
           that.setState({
             preventMountSubmit:true,
+            loading: true
           })
         })
       }
