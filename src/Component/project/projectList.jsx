@@ -47,7 +47,7 @@ class Main extends Component {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
                     let dataList = this.state.data.concat(res.data)
-                    if (dataList.length <= 0) {
+                    if (dataList.length <= 2) {
                         document.getElementsByClassName('projects')[0].style.height = window.innerHeight + 'px'
                     }
                     this.setState({
@@ -105,7 +105,7 @@ class Main extends Component {
     render() {
         let ms = 28 * 24 * 60 * 60 * 1000
         return (
-            <div ref='Container' className="projects" style={{height: this.state.height}}>
+            <div ref='Container' className="projects">
                 {!this.state.loading && <Loading />}
                 <nav className='team_nav'>
                    <ul className='clear'>
