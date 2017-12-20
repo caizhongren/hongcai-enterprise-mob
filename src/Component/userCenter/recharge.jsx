@@ -155,8 +155,12 @@ class Main extends Component {
           {this.state.loading && <Loading />}
           <div className="userBalance">
             <p className="balance">{this.state.bankCode}账户余额 : <span>{this.state.userBalance.toFixed(2)}元</span></p>
-            <p>当期待还金额 : <span>{this.state.unpaidAmount.toFixed(2)}元</span></p>
-            <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0.00' : this.state.unpaidAmount - this.state.userBalance }元</span></p>
+            { this.state.unpaidAmount > 0 &&
+              <div>
+                <p>当期待还金额 : <span>{this.state.unpaidAmount.toFixed(2)}元</span></p>
+                <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0.00' : this.state.unpaidAmount - this.state.userBalance }元</span></p>
+              </div>
+            }
           </div>
           <div className="AmountInput">
             <img src={this.state.bankCardSrc} className="fl"/>
