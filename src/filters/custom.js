@@ -11,15 +11,6 @@ let dateTime = value => {
   (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds())
 }
 
-let date = value => {
-  // 时间格式 ‘yyyy-MM-dd’
-  if (!value) { return }
-  var now = new Date(value)
-  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
-  return now.getFullYear() + '-' +
-  month + '-' +
-  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
-}
 let dates = (value, type) => {
   // 时间格式 ‘yyyy.MM.dd’
   if (!value) { return }
@@ -27,34 +18,6 @@ let dates = (value, type) => {
   var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
   return now.getFullYear() + type +
   month + type +
-  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
-}
-
-let dateCharacter = value => {
-  // 时间格式 ‘yyyy年MM月dd日’
-  if (!value) { return }
-  var now = new Date(value)
-  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
-  return now.getFullYear() + '年' +
-  month + '月' +
-  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate()) + '日'
-}
-
-let monthDay = value => {
-  // 时间格式 ‘MM-dd’
-  if (!value) { return }
-  var now = new Date(value)
-  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
-  return month + '-' +
-  (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
-}
-
-let monthDotDay = value => {
-  // 时间格式 ‘MM-dd’
-  if (!value) { return }
-  var now = new Date(value)
-  var month = now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1
-  return month + '.' +
   (now.getDate() < 10 ? '0' + now.getDate() : now.getDate())
 }
 
@@ -91,10 +54,6 @@ let number = number => {
   }
 }
 
-export { date }
 export { number }
 export { dates }
 export {dateTime}
-export {monthDay}
-export {monthDotDay}
-export {dateCharacter}

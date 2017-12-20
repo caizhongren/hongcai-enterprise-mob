@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {History, Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool, Count} from '../Config/Tool';
+import {Tool, Count, Utils} from '../Config/Tool';
 import {MD5} from '../Config/MD5'
 import {template} from './common/mixin';
 import '../Style/login'
@@ -22,9 +22,10 @@ class Main extends Component {
         }
         this.changeValue = (type, event) => {
             if (type === 'picCaptcha') {
-                let value = event.target.value.replace(/[/W]/g,'')
-                if (value.length > 3) {
+                let value = event.target.value.replace(/[\W]/g, '')
+                if (value.length >= 4) {
                     this.checkPicCaptcha(value)
+                    value = event.target.value.slice(0, 4)
                 }
                 this.setState({
                     picCaptcha: value
@@ -156,11 +157,11 @@ class Main extends Component {
                     <input id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' {...opts} className="readonly"/>
                     </div>
                     <div className='input_container pic'>
-                    <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} required autoFocus/>
+                    <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} onPaste={Utils.pastePic.bind(this)} required autoFocus/>
                     </div>
                     <span id="captcha_img" className="fr" onClick={this.refreshCode}><img  id="_img" src={this.state.imgSrc} alt=""/></span>                
                     <div className='input_container message'>
-                    <input type="tel" maxLength='6' value={this.state.mobCaptcha} placeholder='请输入短信验证码' onChange={this.changeValue.bind(this,'mobCaptcha')} required />
+                    <input type="tel" maxLength='6' value={this.state.mobCaptcha} placeholder='请输入短信验证码' onChange={this.changeValue.bind(this,'mobCaptcha')} onPaste={Utils.pasteMobile.bind(this)} required />
                     </div>
                     <span id="get_captcha" className="fr" onClick={this.sendMobCaptcha}>获取短信验证码</span>
                 </form>

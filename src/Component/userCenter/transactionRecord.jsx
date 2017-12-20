@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import { template, Loading} from '../common/mixin';
+import { template, Loading, Footer} from '../common/mixin';
 import {Tool} from '../../Config/Tool'
-import {date} from '../../filters/custom'
+import {dates} from '../../filters/custom'
 import '../../Style/deal.less'
 
 
@@ -161,7 +161,7 @@ class Main extends Component {
                           <p className={`amount fr ${item.getAmount>0 ? 'ft-red' : 'ft-green'}`}>{item.getAmount>0 ? '+' + item.getAmount : '-' + item.payAmount}元</p>
                         </div>
                         <div className="dateBalance">
-                          <p className="fl">{date(item.createTime)}</p>
+                          <p className="fl">{dates(item.createTime, '-')}</p>
                           <p className="fr">余额 : {item.balance}元</p>
                         </div>
                       </li>
@@ -176,6 +176,7 @@ class Main extends Component {
                     <p>您还没有资金流水记录哦～</p>
                   </div>
               }
+              <Footer />
             </div>
         );
     }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {browserHistory, Link } from 'react-router';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../../Config/Tool';
+import {number} from '../../filters/custom'
 import {PayUtils} from '../../Config/payUtils';
 import {dates} from '../../filters/custom'
 import {Footer,template, Loading} from '../common/mixin';
@@ -125,7 +126,7 @@ class Main extends Component {
                                     <p>年化利率(%)：<span>{project.project.annualEarnings}</span></p>
                                 </div>
                                 <div className="list_item">
-                                    <p>已还金额(元)：<span>{project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount < 1 ? 0 : (project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount).toFixed(2)}</span></p>
+                                    <p>已还金额(元)：<span>{project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount < 1 ? 0 : number(project.projectInfo.projectBackTotal - projectBill.remainInterest - projectBill.remainPrincipal - projectBill.repaymentAmount)}</span></p>
                                     <p>已还期数：<span>{projectBill.repaymentNo - 1}/{project.project.cycle}</span><span className="ft_s">期</span></p>
                                 </div>
                                 <div className="list_item">
@@ -152,7 +153,7 @@ class Main extends Component {
                                     <p>年化利率(%)：<span>{project.project.annualEarnings}</span></p>
                                 </div>
                                 <div className="list_item">
-                                    <p>已还金额(元)： <span>{(project.projectInfo.projectBackTotal).toFixed(2)}</span></p>
+                                    <p>已还金额(元)： <span>{number(project.projectInfo.projectBackTotal)}</span></p>
                                     <p>本息两清日：<span>{dates(project.project.repaymentDate, '.')}</span></p>
                                 </div>
                                 <div className="project-btns clear">

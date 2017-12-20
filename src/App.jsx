@@ -6,16 +6,8 @@ import store from './Redux/Store/Store';
 import './Config/Config.js';//引入默认配置
 
 import './Style/common.less';
-import './Style/head.less';
 import './Style/footer.less';
 import './Style/index.less';
-import './Style/chooseProducts.less';
-import './Style/helpCenter.less';
-import './Style/saleRecord.less';
-import './Style/allDeposit.less';
-import './Style/applyDeposit.less';
-import './Style/applyRecord.less';
-
 
 
 store.subscribe(() => { //监听state变化
