@@ -27,13 +27,13 @@ class Main extends Component {
 
       this.getEnterpriseUserInfo = () => {
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/enterpriseUser/getEnterpriseUserInfo',{},(res) => {
-          this.setState({loading: false})
+          this.refs.myRef && this.setState({loading: false})
           if (res.ret === -1) {
             Tool.alert(res.msg);
           }else{
             let account = res.data.account;
             let enterpriseCapitalVo = res.data.enterpriseCapitalVo;
-            this.setState({
+            this.refs.myRef && this.setState({
               balance: account.balance, // 账户余额
               loanAmount: enterpriseCapitalVo.totalFundRaising, // 借款金额
               payableAmount: enterpriseCapitalVo.totalFundRaising + enterpriseCapitalVo.accruedInterest, //应还金额 = 已还金额 + 待还金额
@@ -46,21 +46,21 @@ class Main extends Component {
 
       this.userSecurityInfo = () => {
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/userSecurityInfo',{},(res) => {
-          this.setState({loading: false})
+          this.refs.myRef && this.setState({loading: false})
           if (res.ret === -1) {
             Tool.alert(res.msg);
           }else{
-            this.setState({
+            this.refs.myRef && this.setState({
               userAuth: res.data.userAuth
             })
           }
         },'')
       }
       this.toRealName = () => {
-        this.setState({showRealNameMask: true})
+        this.refs.myRef && this.setState({showRealNameMask: true})
       }
       this.closeRealNameMask = () => {
-        this.setState({showRealNameMask: false})
+        this.refs.myRef && this.setState({showRealNameMask: false})
       }
       this.toBankManagement = (page) => {
         if (this.state.userAuth && this.state.userAuth.authStatus === 2) {
@@ -70,7 +70,7 @@ class Main extends Component {
             browserHistory.push('/userCenter/bankcardManagement?amount='+this.state.unpaidAmount)
           }
         } else {
-          this.setState({showRealNameMask: true})
+          this.refs.myRef && this.setState({showRealNameMask: true})
         }
       }
     }
@@ -79,13 +79,13 @@ class Main extends Component {
         let params = this.props.location.query;
     }
     componentDidMount() {
-      this.setState({loading: true})
+      this.refs.myRef && this.setState({loading: true})
       setTimeout(() => {
-        this.setState({loading: false})
+        this.refs.myRef && this.setState({loading: false})
       }, 5000)
       this.getEnterpriseUserInfo();
       this.userSecurityInfo();
-      this.setState({height: window.innerHeight + 'px'})
+      this.refs.myRef && this.setState({height: window.innerHeight + 'px'})
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -95,13 +95,12 @@ class Main extends Component {
     componentWillUpdate(nextProps,nextState){
         if (this.props !== nextProps) {
             let {data} = nextProps.state;
-
         }
     }
    
     render() {
       return (
-        <div className="main" style={{height: this.state.height}}>
+        <div className="main" style={{height: this.state.height}} ref="myRef">
           {this.state.showRealNameMask ? <RealNameMask getData={this.props.getData} closeRealNameMask={this.closeRealNameMask} showRealNameMask={this.state.showRealNameMask}/> : null }
           {this.state.loading && <Loading />}
           <Link className="setting" to='/userCenter/securitySettings'></Link>
