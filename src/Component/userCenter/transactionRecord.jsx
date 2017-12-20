@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import pureRender from 'pure-render-decorator';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import { template, Loading} from '../common/mixin';
@@ -47,7 +46,7 @@ class Main extends Component {
           disableScroll: '',
           dealList: [],
           page: 1,
-          pageSize: 3,
+          pageSize: 10,
           totalPage: 1,
           type: '',
           loading: false,
@@ -57,7 +56,7 @@ class Main extends Component {
             dealList: [],
             selected: deal.type,
             page: 1,
-            pageSize: 3,
+            pageSize: 10,
             type: deal.no
           }, () => {
             this.getDealList(this.state.page, this.state.pageSize, deal.no);
