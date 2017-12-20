@@ -3,8 +3,9 @@ import {History, Link, browserHistory} from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../Config/Tool';
+import {number} from '../filters/custom'
 import {RealNameMask} from './common/realNameMask';
-import {Header, Footer, template, Loading} from './common/mixin';
+import {Footer, template, Loading} from './common/mixin';
 import '../Style/main.less'
 
 
@@ -108,28 +109,28 @@ class Main extends Component {
             <div className="account">
               <div className="balance">
                 <img src={require('../images/balance.png')} alt=""/>
-                账户余额(元): <span>{this.state.balance.toFixed(2)}</span>
+                账户余额(元): <span>{number(this.state.balance)}</span>
               </div>
               <div className="loanAmount">
                 <img src={require('../images/jiekuan.png')} alt=""/>
-                借款金额(元): <span>{this.state.loanAmount.toFixed(2)}</span>
+                借款金额(元): <span>{number(this.state.loanAmount)}</span>
               </div>
             </div>
             <ul className="statistics">
               <li>
                 <span></span>
                 <p>应还金额(元)</p>
-                <p>{this.state.payableAmount.toFixed(2)}</p>
+                <p>{number(this.state.payableAmount)}</p>
               </li>
               <li>
                 <span></span>
                 <p>已还金额(元)</p>
-                <p>{this.state.returnedAmount < 0 ? '0.00' : this.state.returnedAmount.toFixed(2)}</p>
+                <p>{this.state.returnedAmount < 0 ? '0.00' : number(this.state.returnedAmount)}</p>
               </li>
               <li>
                 <span></span>
                 <p>待还金额(元)</p>
-                <p>{this.state.unpaidAmount.toFixed(2)}</p>
+                <p>{number(this.state.unpaidAmount)}</p>
               </li>
             </ul>
             <div className="btns">

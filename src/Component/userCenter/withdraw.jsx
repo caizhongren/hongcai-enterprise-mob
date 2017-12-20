@@ -3,6 +3,7 @@ import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool,Utils} from '../../Config/Tool';
+import {number} from '../../filters/custom'
 import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
 import '../../Style/recharge.less'
@@ -65,7 +66,7 @@ class Main extends Component {
                 Tool.alert('提现金额必须大于等于0.01元！')
                 return;
             } else if (this.state.withdrawAmount > this.state.userBalance - 2) {
-                Tool.alert('最大提现金额：' + (this.state.withdrawAmount - 2).toFixed(2) + '元')
+                Tool.alert('最大提现金额：' + number(this.state.userBalance - 2) + '元')
                 return;
             }
             this.setState({
@@ -109,7 +110,7 @@ class Main extends Component {
         <div className="component_container recharge withdraw">
           {this.state.loading && <Loading />}
           <div className="userBalance">
-            <p className="balance">账户余额 : <span>{this.state.userBalance.toFixed(2)}元</span></p>
+            <p className="balance">账户余额 : <span>{number(this.state.userBalance)}元</span></p>
           </div>
           <div className="AmountInput">
             <img src={this.state.bankCardSrc} className="fl"/>
@@ -118,12 +119,12 @@ class Main extends Component {
               <li>**** **** **** {this.state.bankCardNo}</li>
             </ul>
           </div>
-          <div className="bankLimit">可提现金额：{this.state.userBalance - 2 < 0 ? 0 : (this.state.userBalance - 2).toFixed(2)}元
+          <div className="bankLimit">可提现金额：{this.state.userBalance - 2 < 0 ? 0 : number(this.state.userBalance - 2)}元
           </div>
           <form className='form_style'>
             <span>提现金额</span>
             <input type="text" className="hide"/>
-            <input className="rechargeAmount" type='text' value={this.state.withdrawAmount} placeholder={`该卡本次最高可提现：${this.state.userBalance - 2 < 0 ? 0 : (this.state.userBalance - 2).toFixed(2)}元`} onChange={this.changeValue.bind(this)} required/>
+            <input className="rechargeAmount" type='text' value={this.state.withdrawAmount} placeholder={`该卡本次最高可提现：${this.state.userBalance - 2 < 0 ? 0 : number(this.state.userBalance - 2)}元`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <p className="text-right fee">手续费：2元/笔</p>
           <div className="btnAndTips">

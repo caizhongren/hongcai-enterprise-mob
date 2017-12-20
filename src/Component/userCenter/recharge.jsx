@@ -3,6 +3,7 @@ import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool, Utils} from '../../Config/Tool';
+import {number} from '../../filters/custom'
 import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
 import '../../Style/recharge.less'
@@ -154,11 +155,11 @@ class Main extends Component {
         <div className="component_container recharge">
           {this.state.loading && <Loading />}
           <div className="userBalance">
-            <p className="balance">{this.state.bankCode}账户余额 : <span>{this.state.userBalance.toFixed(2)}元</span></p>
+            <p className="balance">{this.state.bankCode}账户余额 : <span>{number(this.state.userBalance)}元</span></p>
             { this.state.unpaidAmount > 0 &&
               <div>
-                <p>当期待还金额 : <span>{this.state.unpaidAmount.toFixed(2)}元</span></p>
-                <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0.00' : this.state.unpaidAmount - this.state.userBalance }元</span></p>
+                <p>当期待还金额 : <span>{number(this.state.unpaidAmount)}元</span></p>
+                <p>建议充值金额 : <span>{(this.state.unpaidAmount - this.state.userBalance < 0) ? '0.00' : number(this.state.unpaidAmount - this.state.userBalance) }元</span></p>
               </div>
             }
           </div>
