@@ -82,7 +82,7 @@ class Main extends Component {
             var that = this
             that.setState({busy: true})
             let guestId = Tool.guestId(32, 16)
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 1, guestId: guestId}, (res) => {
+            that.props.getData(process.env.RESTFUL_DOMAIN + '/users/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 1, guestId: guestId}, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
                     that.setState({
@@ -94,7 +94,7 @@ class Main extends Component {
                     Tool.alert(res.msg)
                     that.setState({busy: false})
                 }
-            })
+            },'', 'POST')
         }
         this.goNextPage = () => {
             let that = this
