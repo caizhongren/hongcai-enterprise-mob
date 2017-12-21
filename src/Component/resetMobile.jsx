@@ -134,9 +134,11 @@ class Main extends Component {
         clearTimeout(this.state.Timer)
     }
     componentDidMount() {
-        this.state.phone = this.props.location.state.phone || '';
-        document.getElementById('phone').value = this.state.phone
-        this.refreshCode()
+        this.props.location.state ? (
+            this.state.phone = this.props.location.state.phone || '',
+            document.getElementById('phone').value = this.state.phone,
+            this.refreshCode()
+        ) : Tool.alert('请先确认您要修改的手机号码')
     }
 
     shouldComponentUpdate(nextProps, nextState) {
