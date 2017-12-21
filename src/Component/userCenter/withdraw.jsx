@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool,Utils} from '../../Config/Tool';
+import {Tool,Utils, InputMaskHelper} from '../../Config/Tool';
 import {number} from '../../filters/custom'
 import { PayUtils } from '../../Config/payUtils';
 import {template, Loading, Footer} from '../common/mixin';
@@ -93,6 +93,8 @@ class Main extends Component {
 
     componentDidMount() {
       this.getUserBalance()
+      var handleEle = document.getElementsByClassName('withdraw')[0]
+      InputMaskHelper.windowChange(handleEle)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
