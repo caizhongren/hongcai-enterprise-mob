@@ -88,8 +88,7 @@ class Main extends Component {
         this.toProjectDetai = (number, projectId) => {
             let path = {
                 pathname:'/project/projectDeatil',
-                state: {number: number, projectId: projectId},
-                query: {tab: this.props.location.query.tab}
+                state: {number: number, projectId: projectId}
             }
             browserHistory.push(path)
         }
