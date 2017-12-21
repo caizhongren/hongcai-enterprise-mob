@@ -124,7 +124,7 @@ class Main extends Component {
           <form className='form_style'>
             <span>提现金额</span>
             <input type="text" className="hide"/>
-            <input className="rechargeAmount" type='text' value={this.state.withdrawAmount} placeholder={`该卡本次最高可提现：${this.state.userBalance - 2 < 0 ? 0 : number(this.state.userBalance - 2)}元`} onChange={this.changeValue.bind(this)} required/>
+            <input className="rechargeAmount" type='tel' value={this.state.withdrawAmount} placeholder={`该卡本次最高可提现：${this.state.userBalance - 2 < 0 ? 0 : number(this.state.userBalance - 2)}元`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <p className="text-right fee">手续费：2元/笔</p>
           <div className="btnAndTips">
