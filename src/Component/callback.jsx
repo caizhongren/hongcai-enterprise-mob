@@ -47,7 +47,7 @@ class Main extends Component {
                 msg = '还款成功！'
             } else if (this.state.business === 'RESET_PASSWORD') {
                 browserHistory.replace('userCenter/securitySettings')
-                msg = '修改成功！'
+                msg = '交易密码修改成功！'
             }
             Tool.success(msg)
         }

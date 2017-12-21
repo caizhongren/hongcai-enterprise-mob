@@ -136,7 +136,7 @@ class Main extends Component {
                 </div>
                 <div className="column3">
                   {item.status === 1 ? '已还金额' : '待还金额'}：{item.repaymentAmount}元 <br/>
-                  <span className={index === this.state.projectBills.length -1? 'ed' : ''}>{index === this.state.projectBills.length -1 ? '本息结清' : ''}</span><br/>
+                  <span className={index === this.state.projectBills.length -1? 'ed' : ''}>{index === this.state.projectBills.length -1 && item.status === 1 ? '本息结清' : ''}</span><br/>
                 </div>
               </div>
             )
