@@ -43,7 +43,7 @@ class Main extends Component {
             this.setState({loading: false})
             this.setState({activeTab: tab})
             browserHistory.replace('/project/projectList?tab=' + tab)
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status,token:'825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'}, (res) => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status}, (res) => {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
                     let dataList = this.state.data.concat(res.data)
