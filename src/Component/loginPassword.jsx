@@ -16,6 +16,7 @@ class Main extends Component {
             pwdHide: true,
             password: '',
             loading: false,
+            phone: ''
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -66,7 +67,10 @@ class Main extends Component {
     }
 
     componentDidMount() {
-      this.state.phone = this.props.location.state.phone || '';
+      !this.props.location.state ? (
+        Tool.alert('请先输入登录手机号码') ,
+        browserHistory.replace('/login')
+      ) : this.state.phone = this.props.location.state.phone;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -74,6 +78,7 @@ class Main extends Component {
     }
     
     componentWillUpdate(nextProps,nextState){
+
         if (this.props !== nextProps) {
             let {data} = nextProps.state;
 

@@ -19,6 +19,7 @@ class Roots extends Component {
         );
     }
     checkLogin = () => {
+      SessionService.checkSession()
       if (this.state.isLogged) {
         return
       }
@@ -46,12 +47,12 @@ class Roots extends Component {
     }
   
     componentWillReceiveProps(nextProps) {
-      if (nextProps.location.pathname.indexOf('loginPassword') !== 1 && nextProps.location.pathname.indexOf('register') !== 1 && nextProps.location.pathname.indexOf('login') !== 1 && nextProps.location.pathname.indexOf('forgetPassword') !== 1) {
+      if (nextProps.location.pathname.indexOf('register') !== 1 && nextProps.location.pathname.indexOf('login') !== 1 && nextProps.location.pathname.indexOf('forgetPassword') !== 1 && nextProps.location.pathname.indexOf('resetPassword') !== 1) {
         this.checkLogin()
       } 
     }
     componentDidMount (props) {
-      if (this.props.location.pathname.indexOf('loginPassword') !== 1 && this.props.location.pathname.indexOf('register') !== 1 && this.props.location.pathname.indexOf('login') !== 1 && this.props.location.pathname.indexOf('forgetPassword') !== 1) {
+      if (this.props.location.pathname.indexOf('register') !== 1 && this.props.location.pathname.indexOf('login') !== 1 && this.props.location.pathname.indexOf('forgetPassword') !== 1 && this.props.location.pathname.indexOf('resetPassword') !== 1) {
         this.checkLogin()
       } 
       document.title = this.props.routes[1].title === undefined ? '宏财企业平台' : this.props.routes[1].title

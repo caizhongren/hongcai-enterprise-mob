@@ -63,8 +63,10 @@ class Main extends Component {
         
     }
     componentDidMount() {
-        this.state.phone = this.props.location.state.phone || '';
-        this.state.captcha = this.props.location.state.captcha || '';
+        this.props.location.state ? (
+            this.state.phone = this.props.location.state.phone || '',
+            this.state.captcha = this.props.location.state.captcha || ''
+        ) : Tool.alert('请从忘记密码页面进入')
     }
 
     shouldComponentUpdate(nextProps, nextState) {

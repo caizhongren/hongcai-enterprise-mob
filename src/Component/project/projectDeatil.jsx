@@ -83,8 +83,10 @@ class Main extends Component {
     componentWillMount() {
     }
     componentDidMount() {
-      this.getProjectBill(this.props.location.state.number ||'')
-      this.getProjectDetail(this.props.location.state.projectId ||'')
+      this.props.location.state ? (
+        this.getProjectBill(this.props.location.state.number ||''),
+        this.getProjectDetail(this.props.location.state.projectId ||'')
+      ) : (Tool.alert('请先从列表页进入详情'), browserHistory.push('/project/projectList'))
     }
 
     shouldComponentUpdate(nextProps, nextState) {
