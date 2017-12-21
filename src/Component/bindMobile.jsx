@@ -142,10 +142,15 @@ class Main extends Component {
         }
         this.bindMobile = () => {
             let that = this
+            let mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/;
             if (!that.state.canGoNext) {
                 return
             }
             if (!that.state.picCaptcha || !that.state.mobCaptcha || !this.state.phone) {
+                return
+            }
+            if (!mobilePattern.test(this.state.phone)) {
+                Tool.alert('请输入正确的手机号！');
                 return
             }
             if (this.state.isUniqueMobile === 1) {
@@ -212,7 +217,7 @@ class Main extends Component {
                     </div>
                     <span id="get_captcha" className="fr" onClick={this.sendMobCaptcha}>获取短信验证码</span>
                 </form>
-                <div className={`btu_next ${!this.state.picCaptcha || this.state.mobCaptcha.length <6 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.bindMobile}>绑定新手机号</div>
+                <div className={`btu_next ${!this.state.picCaptcha || this.state.mobCaptcha.length <6 || this.state.phone.length < 11 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.bindMobile}>绑定新手机号</div>
                 </div> 
             </div>
         )
