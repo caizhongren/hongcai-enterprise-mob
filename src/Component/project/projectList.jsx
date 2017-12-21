@@ -43,7 +43,7 @@ class Main extends Component {
             this.setState({loading: false})
             this.setState({activeTab: tab})
             browserHistory.replace('/project/projectList?tab=' + tab)
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status}, (res) => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status,token:'825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'}, (res) => {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
                     let dataList = this.state.data.concat(res.data)
@@ -135,9 +135,9 @@ class Main extends Component {
                                 </div>
                                 <div className="project-btns clear pass">
                                     <div className="btns-son">
-                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${(projectBill.repaymentTime - new Date().getTime()) < ms && (projectBill.repaymentTime - new Date().getTime()) > 0 ? 'one' : ''}`}>查看详情</span>
+                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${(projectBill.repaymentTime - new Date().getTime()) >= ms? 'one' : ''}`}>查看详情</span>
                                         {
-                                            (projectBill.repaymentTime - new Date().getTime()) >= ms || (projectBill.repaymentTime - new Date().getTime()) <= 0 ?
+                                            (projectBill.repaymentTime - new Date().getTime()) < ms ?
                                             <span onClick={this.toRealName} className="right" onClick={this.repayment.bind(this, project.project.id, projectBill.repaymentAmount, projectBill.repaymentNo)}>立即还款({projectBill.repaymentNo}/{project.project.cycle})</span> : null
                                         }
                                     </div>
