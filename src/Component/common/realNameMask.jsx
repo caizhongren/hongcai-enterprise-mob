@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Link, IndexLink } from 'react-router';
 import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';
-import { Tool } from '../../Config/Tool';
+import { Tool, InputMaskHelper } from '../../Config/Tool';
 import { PayUtils } from '../../Config/payUtils';
 import template from './template';
 export {template}
@@ -16,7 +16,7 @@ export class RealNameMask extends Component {
           idCard: '',
           preventMountSubmit:true,//防止重复提交
         }
-  
+        
         this.changeValue = (type, event) => {
             if (type === 'name') {
                 this.setState({
@@ -62,17 +62,17 @@ export class RealNameMask extends Component {
                     Tool.alert(res.msg)
                 }
             },'input', 'POST')
-        } 
+        }
     }
     render () {
         return (
             <div className="mask-common" id="real-name">
-                <div className="real-wrraper">
+                <div className="real-wrraper" id="real_name_wrraper">
                     <div className="icon"></div>
                     <p className="title">身份认证</p>
                     <form action="">
                         <div className="input-wrraper">
-                            <input type="text" placeholder="请输入你的姓名" onChange={this.changeValue.bind(this,'name')} />
+                            <input type="text" placeholder="请输入你的姓名" onChange={this.changeValue.bind(this,'name')} autoFocus/>
                         </div>
                         <div className="input-wrraper">
                             <input type="tel" placeholder="请输入你的身份证号" onChange={this.changeValue.bind(this,'idCard')} />
@@ -87,5 +87,12 @@ export class RealNameMask extends Component {
                 </div>
             </div>
         )
+    }
+    componentDidMount () {
+        if (this.props.showRealNameMask) {
+            var handleEle = document.getElementById('real_name_wrraper')
+            console.log(document.getElementById('real_name_wrraper'))
+            InputMaskHelper.windowChange(handleEle)
+        }
     }
 }

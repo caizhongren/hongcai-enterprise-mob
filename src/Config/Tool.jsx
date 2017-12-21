@@ -4,6 +4,7 @@ import * as config from './Config';
 const {target} = config;
 export const Tool = {};
 export const Utils = {};
+export let InputMaskHelper
 export const Count = {
     second: 60,
     canGetMobileCapcha: true
@@ -131,6 +132,34 @@ Tool.getStyle =  (obj,attr) => {
     } 
 } 
 
+/**
+ * 安卓键盘弹出挡住输入框解决方法
+ */
+InputMaskHelper = (function (eleCls) {
+    return {
+      focus: function (ele) {
+        if (Tool.isAndroid()) {
+          ele.classList.add(eleCls)
+        }
+      },
+      blur: function (ele) {
+        if (Tool.isAndroid()) {
+          ele.classList.remove(eleCls)
+        }
+      },
+      windowChange: function (ele) {
+        // var winHeight = $(window).height()
+        var winHeight = window.innerHeight
+        window.addEventListener('resize', function () {
+          if (window.innerHeight < winHeight) {
+            setTimeout(InputMaskHelper.focus(ele), 0)
+          } else {
+            InputMaskHelper.blur(ele)
+          }
+        })
+      }
+    }
+  })('input-focus')
 
 Tool.guestId = (len, radix) => {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('')
