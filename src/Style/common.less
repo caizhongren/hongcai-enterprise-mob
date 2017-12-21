@@ -14,7 +14,14 @@ body,div,span,header,footer,nav,section,aside,article,ul, li, a, p, h1, h2, h3, 
         outline: none;
     }
 }
-
+div.input-focus, p.input-focus {
+  transform: translateY(-15rem);
+  -webkit-transition:all .2s ease-out;
+  -moz-transition:all .2s ease-out;
+  -o-transition:all .2s ease-out;
+  -ms-transition:all .2s ease-out;    
+  transition:all .2s ease-out;
+}
 .clear:after{
     content: '';
     display: block;
