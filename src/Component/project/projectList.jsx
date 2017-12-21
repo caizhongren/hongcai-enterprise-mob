@@ -67,6 +67,7 @@ class Main extends Component {
         this.repayment = function(projectId, repaymentAmount, repaymentNo) { // 还款
             if (repaymentAmount > this.state.balance) {
               Tool.alert('账户余额不足，请先充值');
+              browserHistory.push('/userCenter/recharge')
               return;
             }
             this.setState({loading: false})
