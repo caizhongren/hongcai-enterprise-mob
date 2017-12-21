@@ -150,7 +150,7 @@ class Main extends Component {
                     Tool.success('注册成功')
                     setTimeout(() => {
                         browserHistory.push('/realName')
-                    }, 1000);
+                    }, 500);
                 }
             }, '', 'POST')
         }

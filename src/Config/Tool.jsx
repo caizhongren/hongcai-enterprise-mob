@@ -159,12 +159,12 @@ Count.countDown = ($mobilecode) => {
         Count.canGetMobileCapcha = false
         $mobilecode.innerHTML = null
         $mobilecode.innerHTML = Count.second + 's'
-        // $mobilecode.className = ''
+        $mobilecode.style.fontSize = '.6rem'
         // 时间减一
         Count.second -= 1
         // 一秒后重复执行
         setTimeout(function () {
-          Count.countDown($mobilecode)
+          !Count.canGetMobileCapcha && Count.countDown($mobilecode)
         }, 1000)
         // 否则，按钮重置为初始状态,可点击
     } else {
@@ -172,5 +172,6 @@ Count.countDown = ($mobilecode) => {
         // $mobilecode.className += ' send'
         $mobilecode.innerHTML = '重新获取'
         Count.second = 60
+        $mobilecode.style.fontSize = '.48rem'
     }
 }
