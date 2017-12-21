@@ -23,7 +23,7 @@ class Main extends Component {
           dealType: [
             {
               'type': '全部',
-              'no': '',
+              'no': '0',
             },{
               'type': '放款',  //包含：项目正常回款、债权转让回款
               'no': '6'
@@ -48,18 +48,19 @@ class Main extends Component {
           page: 1,
           pageSize: 10,
           totalPage: 1,
-          type: '',
+          selecteType: '0',
           loading: false,
         }
         this.toggleSelect = (deal) => {
+          let type = deal.type === '其他' ? this.state.otherType : deal.no;
           this.setState({
             dealList: [],
             selected: deal.type,
             page: 1,
             pageSize: 10,
-            type: deal.no
+            selecteType: type,
           }, () => {
-            this.getDealList(this.state.page, this.state.pageSize, deal.no);
+            this.getDealList(this.state.page, this.state.pageSize, type);
             this.select();
           })
         }
@@ -70,11 +71,11 @@ class Main extends Component {
         }
         this.getDealList = (page, pageSize, type) => {
           this.setState({loading: true})
-          this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/deals',{
+          this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/deals', {
             page: page,
             pageSize: pageSize,
             types: type,
-          },(res) => {
+          } ,(res) => {
             if (res && res.ret !== -1) {
               let dealList = this.state.dealList.concat(res.data)
               this.setState({
@@ -95,7 +96,7 @@ class Main extends Component {
           this.setState({
             page: (this.state.page + 1),
           })
-          this.getDealList(this.state.page + 1, this.state.pageSize, this.state.type) 
+          this.getDealList(this.state.page + 1, this.state.pageSize, this.state.selecteType) 
         }
 
         this.getAllTypes = () => {
@@ -105,8 +106,7 @@ class Main extends Component {
               for(var key in res){
                 key == 1 || key == 2 || key == 6 || key == 7 ? null : otherTypes.push(key)
               }
-              console.log(otherTypes.toString())
-
+              this.setState({otherType: otherTypes.toString()})
             } else {
             }
           }, '')
@@ -115,7 +115,7 @@ class Main extends Component {
 
     componentDidMount () {
       this.getAllTypes()
-      this.getDealList(this.state.page, this.state.pageSize, this.state.type)
+      this.getDealList(this.state.page, this.state.pageSize, this.state.selecteType)
     }
     componentWillUpdate(nextProps, nextState) {
     }

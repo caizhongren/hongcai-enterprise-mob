@@ -65,7 +65,7 @@ class Main extends Component {
       this.toBankManagement = (page) => {
         if (this.state.userAuth && this.state.userAuth.authStatus === 2) {
           if (page === 'record') {
-            // browserHistory.push('/userCenter/transactionRecord')
+            // browserHistory.push('/userCenter/deal')
           } else {
             browserHistory.push('/userCenter/bankcardManagement?amount='+this.state.unpaidAmount)
           }
@@ -138,7 +138,7 @@ class Main extends Component {
             </div>
           </div>
           <div className="part2">
-            <Link to="/userCenter/transactionRecord"><p>资金流水</p></Link>
+            <Link to="/userCenter/deal"><p>资金流水</p></Link>
             <div onClick={this.toBankManagement}><p className="border-none">银行卡管理</p></div>
           </div>
           <Footer />

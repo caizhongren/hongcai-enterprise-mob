@@ -77,7 +77,7 @@ const yeepayCallback = (location, cb) => {require.ensure([], require => {cb(null
 const realName = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/realName').default)},'realNameAuth')}
 const recharge = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/recharge').default)},'recharge')}
 const withdraw = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/withdraw').default)},'withdraw')}
-const transactionRecord = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/transactionRecord').default)},'transactionRecord')}
+const deal = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/deal').default)},'deal')}
 const bankcardManagement = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardManagement').default)},'bankcardManagement')}
 const securitySettings = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/securitySettings').default)},'securitySettings')}
 const bankcardLimit = (location, cb) => {require.ensure([], require => {cb(null, require('../Component/userCenter/bankcardLimit').default)},'bankcardLimit')}
@@ -102,7 +102,7 @@ const RouteConfig = (
             <Route path="yeepayCallback/:business/:yeepayStatus" getComponent={yeepayCallback}  title='跳转中···'/> 
             <Route path="userCenter/recharge" getComponent={recharge}  title='充值'/>
             <Route path="userCenter/withdraw" getComponent={withdraw}  title='提现'/>
-            <Route path="userCenter/transactionRecord" getComponent={transactionRecord}  title='资金流水'/>
+            <Route path="userCenter/deal" getComponent={deal}  title='资金流水'/>
             <Route path="userCenter/bankcardManagement" getComponent={bankcardManagement}  title='银行卡管理'/>
             <Route path="userCenter/securitySettings" getComponent={securitySettings}  title='账户设置'/>
             <Route path="userCenter/bankcardLimit" getComponent={bankcardLimit}  title='银行卡限额'/>
