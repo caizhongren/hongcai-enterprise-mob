@@ -36,7 +36,7 @@ class Main extends Component {
         }
 
         this.postPwd = () => {
-          if (this.state.newPwd.length < 6) {
+          if (this.state.newPwd.length < 6 || this.state.oldPwd.length < 0) {
             return
           }
             let passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9])[\da-zA-Z~!@#$%^&*]{6,16}$/;
