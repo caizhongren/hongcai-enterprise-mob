@@ -3,7 +3,7 @@ import pureRender from 'pure-render-decorator';
 import {History, Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool, Count, Utils} from '../Config/Tool';
+import {Tool, Count, Utils, checkPwdUtil} from '../Config/Tool';
 import {MD5} from '../Config/MD5'
 import {template, HongcaiHeader, HongcaiFooter} from './common/mixin';
 import '../Style/login'
@@ -26,6 +26,7 @@ class Main extends Component {
             mobilePattern: /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/,
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
             Timer: null,
+            strength: 0,
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -43,7 +44,8 @@ class Main extends Component {
             } else if (type === 'password') {
               let pwd = event.target.value;
               this.setState({
-                password: pwd
+                password: pwd,
+                strength: checkPwdUtil(pwd)
               })
             } else if (type === 'picCaptcha') {
                 let value = event.target.value.replace(/[\W]/g, '')
@@ -196,7 +198,11 @@ class Main extends Component {
                     <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.password} placeholder='密码由6-16位数字、字母组合而成' onChange={this.changeValue.bind(this,'password')} required />
                     <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
                 </div>
-              </form>
+                {
+                    this.state.strength > 0 &&
+                    <div className="pwdStrength">密码强度: <span className={this.state.strength === 1 ? 'strength0' : this.state.strength === 2 ? 'strength1' : 'strength2'}>{this.state.strength === 1 ? '弱' : this.state.strength === 2 ? '中' : '强'}</span></div>
+                }
+                </form>
               <div className={`btu_next ${!this.state.mobilePattern.test(this.state.phone) || !this.state.picCaptcha || !this.state.mobCaptcha || this.state.password.length < 6 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.register}>注册</div>
               <p className="to_register display-bl">注册即表示您同意<Link className="ft-blue" to="/registerAgree">《宏财网注册协议》</Link></p>
               <Link to="/login" className="to_login display-inb">已有账号，<span className="under-line">去登录</span></Link>
