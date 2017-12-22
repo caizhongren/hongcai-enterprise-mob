@@ -182,7 +182,7 @@ class Main extends Component {
             <div className="padding-b-3p5">
                <form className='form_style'>
                 <div className='input_container'>
-                  <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this,'phone')} onPaste={Utils.pasteMobile.bind(this)} required autoFocus/>
+                  <input type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this,'phone')} onPaste={Utils.pasteMobile.bind(this)} required/>
                 </div>
                 <div className='input_container pic'>
                   <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onInput={this.changeValue.bind(this,'picCaptcha')} onPaste={Utils.pastePic.bind(this)} required />

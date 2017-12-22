@@ -116,19 +116,19 @@ class Main extends Component {
           </ul>
           <div className="creditRight repayment-plan">
           <div className="each-line">
-            <div className="column1"><span className={this.state.projects.loanState === 9 || this.state.projects.loanState === 10 ? 'ed' : ''}>预计</span>{dates(this.state.projects.LoanTime, '-')}</div>
+            <div className={`column1 ${this.state.projects.loanState === 9 || this.state.projects.loanState === 10 ? 'ft_999' : ''}`}><span className={this.state.projects.loanState === 9 || this.state.projects.loanState === 10 ? 'ed' : ''}>预计</span>{dates(this.state.projects.LoanTime, '-')}</div>
             <div className="column2">
               <span className={`circle ${this.state.projects.loanState === 9 || this.state.projects.loanState === 10 ? 'ed' : ''}`}></span>
               <span className={`vertical-line ${this.state.projects.loanState === 9 || this.state.projects.loanState === 10 ? 'ed' : ''}`}></span>
             </div>
-            <div className="column3">
+            <div className={`column3 ${this.state.projects.loanState === 9 || this.state.projects.loanState === 10 ? 'ft_999' : ''}`}>
               项目放款：{this.state.projects.LoanAmount}元 <br/>
               开始计息
             </div>
           </div>
           { this.state.projectBills.map((item , index) => {
             return (
-              <div className="each-line"  key={index}>
+              <div className={`each-line ${item.status === 1 ? 'ed': ''}`} key={index}>
                 <div className="column1"><span className={item.status === 1  ? 'ed' : ''}>预计</span>{dates(item.repaymentTime, '-')}</div>
                 <div className="column2">
                   <span className={`circle ${item.status === 1 ? 'ed' : ''}`}></span>

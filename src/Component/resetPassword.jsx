@@ -86,7 +86,7 @@ class Main extends Component {
           <div>
             <form className='form_style'>
               <div className='input_container'>
-                <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.password} placeholder='新密码由6-16位数字、字母组合而成' onChange={this.changeValue.bind(this)} required autoFocus/>
+                <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.password} placeholder='新密码由6-16位数字、字母组合而成' onChange={this.changeValue.bind(this)} required />
                 <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
                 <input type="text" className="hide"/>
               </div>
