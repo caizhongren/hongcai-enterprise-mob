@@ -20,7 +20,8 @@ class Main extends Component {
             haveCard: false,
             isAuth: false,
             unbindBankCardApply: false,
-            bindMobile: ''
+            bindMobile: '',
+            tTotalAssets: 0,
         }
         // 查询是否可解绑卡
         this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/unbindBankCardApply', null, (res) => {
@@ -66,6 +67,14 @@ class Main extends Component {
                     }
                 }
             },'')
+            this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/checkSession',null,(res) => {
+                if(res && res.ret !== -1) {
+                    this.setState({
+                        tTotalAssets: res.data.account.tTotalAssets
+                    })
+                } else {
+                }
+            },'')
         }
 
         this.manageBankCard = (type) => {
@@ -74,16 +83,16 @@ class Main extends Component {
                     Tool.alert('尊敬的用户，检测到您当前有借款尚未偿还，请联系客服进行人工解绑。客服热线：400-990-7626')
                     return
                 }
-                if (this.state.unbindBankCardApply === 1) {
-                    this.props.getData(process.env.WEB_DEFAULT_DOMAIN + 'yeepay/cgtUnbindBankCard', {from:5}, (res) => {
+                if (this.state.tTotalAssets > 2 && this.state.unbindBankCardApply !== 1) {
+                    Tool.alert('尊敬的用户，检测到您您的账户总资产大于2元，为了您的资金安全，请联系客服进行人工解绑。客服热线：400-990-7626')
+                } else {
+                    this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/yeepay/cgtUnbindBankCard', {from:5}, (res) => {
                         if (res.ret && res.ret === -1) {
                             Tool.alert(res.msg);
                         } else {
                             PayUtils.redToTrusteeship('toBindBankCard', res)
                         }
                     }, '')
-                } else {
-                    Tool.alert('尊敬的用户，检测到您您的账户总资产大于2元，为了您的资金安全，请联系客服进行人工解绑。客服热线：400-990-7626')
                 }
             } else { // 绑卡
                 if (this.state.isAuth) {
