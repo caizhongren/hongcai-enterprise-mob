@@ -93,14 +93,15 @@ class Main extends Component {
             return
           }
           if (this.state.userType !== 1) {
-            Tool.alert('该卡不支持快捷充值方式，请在电脑端登录www.biz.hongcai.com，使用网银充值。')
+            Tool.alert('该卡不支持快捷充值方式，请在电脑端登录biz.hongcai.com，使用网银充值。')
             return;
           } else if (this.state.rechargeAmount < 3) {
             Tool.alert('充值金额必须大于等于3元！')
             return;
           } else if (this.state.singleLimit > 0 && this.state.rechargeAmount > this.state.singleLimit) {
             let singLimit = this.state.singleLimit%10000 !== 0 ? this.state.singleLimit : this.state.singleLimit/10000
-            Tool.alert('该卡本次最多充值' + singLimit + '万元，建议您分多次充值，或在电脑端登录www.biz.hongcai.com，使用网银充值。')
+            let million = this.state.singleLimit%10000 !== 0 ? '' : '万'
+            Tool.alert('该卡本次最多充值' + singLimit + million + '元，建议您分多次充值，或在电脑端登录biz.hongcai.com，使用网银充值。')
             return;
           }
           this.setState({
