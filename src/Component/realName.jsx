@@ -18,12 +18,14 @@ export class RealName extends Component {
   
         this.changeValue = (type, event) => {
             if (type === 'name') {
+                let name = event.target.value.replace(/[^\u4E00-\u9FA5]/g,'')
                 this.setState({
-                    name: event.target.value
+                    name: name
                 })
             } else {
+                let idCard = event.target.value.replace(/\D/g,'')
                 this.setState({
-                    idCard: event.target.value
+                    idCard: idCard
                 })
             }
         }
@@ -70,10 +72,10 @@ export class RealName extends Component {
                     <p className="second_message text-center">请您开通海口联合农商银行资金存管账户</p>
                     <form action="">
                         <div className="input-wrraper">
-                            <input type="text" placeholder="请输入你的姓名" onChange={this.changeValue.bind(this,'name')} />
+                            <input type="text" placeholder="请输入你的姓名" value={this.state.name} onChange={this.changeValue.bind(this,'name')} autoFocus maxLength="8"/>
                         </div>
                         <div className="input-wrraper">
-                            <input type="tel" placeholder="请输入你的身份证号" onChange={this.changeValue.bind(this,'idCard')} maxLength="18"/>
+                            <input type="tel" placeholder="请输入你的身份证号" value={this.state.idCard} onChange={this.changeValue.bind(this,'idCard')} maxLength='18'/>
                         </div>
                     </form>
                     <div className="real-btns">
