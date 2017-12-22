@@ -21,7 +21,7 @@ class Main extends Component {
             canRegister: true,//防止重复提交
             disable: true,
             nextPart: true,
-            pwdHide: true,
+            pwdHide: false,
             isUnique: 0,
             mobilePattern: /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/,
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',

@@ -13,7 +13,7 @@ class Main extends Component {
         super(props);
         this.state = {
             preventMountSubmit:true,//防止重复提交
-            pwdHide: true,
+            pwdHide: false,
             password: '',
             phone: '',
             captcha: '',
@@ -49,7 +49,7 @@ class Main extends Component {
                     })
               }else{
                     this.state.preventMountSubmit = true;
-                    Tool.success('重置成功!')
+                    Tool.alert('密码重置成功，请牢记哦~!')
                     let timer = setTimeout( () => {
                         browserHistory.push('/login')
                         clearTimeout(timer);
