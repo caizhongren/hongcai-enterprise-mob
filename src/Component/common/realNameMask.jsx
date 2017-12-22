@@ -19,13 +19,14 @@ export class RealNameMask extends Component {
         
         this.changeValue = (type, event) => {
             if (type === 'name') {
+                let name = event.target.value.replace(/[^\u4E00-\u9FA5]/g,'')
                 this.setState({
-                    // name: event.target.value.replace(/[-~]/, '')
-                    name: event.target.value.replace(/[^(\u4E00-\u9FA5)]/, '')
+                    name: name
                 })
             } else {
+                let idCard = event.target.value.replace(/\D/g,'')
                 this.setState({
-                    idCard: event.target.value
+                    idCard: idCard
                 })
             }
         }
@@ -73,10 +74,10 @@ export class RealNameMask extends Component {
                     <p className="title">身份认证</p>
                     <form action="">
                         <div className="input-wrraper">
-                            <input type="text" placeholder="请输入你的姓名" onChange={this.changeValue.bind(this,'name')} />
+                            <input type="text" placeholder="请输入你的姓名" value={this.state.name} onChange={this.changeValue.bind(this,'name')} maxLength="8"/>
                         </div>
                         <div className="input-wrraper">
-                            <input type="tel" placeholder="请输入你的身份证号" onChange={this.changeValue.bind(this,'idCard')} maxLength='18'/>
+                            <input type="tel" placeholder="请输入你的身份证号" value={this.state.idCard} onChange={this.changeValue.bind(this,'idCard')} maxLength='18'/>
                         </div>
                     </form>
                     <div className="real-btns">

@@ -3,7 +3,7 @@ import pureRender from 'pure-render-decorator';
 import {browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import {Tool} from '../Config/Tool';
+import {Tool, checkPwdUtil} from '../Config/Tool';
 import {template} from './common/mixin';
 import '../Style/login.less'
 import {MD5} from '../Config/MD5'
@@ -13,10 +13,11 @@ class Main extends Component {
         super(props);
         this.state = {
             preventMountSubmit:true,//防止重复提交
-            pwdHide: true,
+            pwdHide: false,
             password: '',
             phone: '',
             captcha: '',
+            strength: 0,
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -25,7 +26,8 @@ class Main extends Component {
         this.changeValue = (event) => {
           let pwd = event.target.value;
           this.setState({
-            password:pwd
+            password:pwd,
+            strength: checkPwdUtil(pwd)
           })
         }
 
@@ -49,7 +51,7 @@ class Main extends Component {
                     })
               }else{
                     this.state.preventMountSubmit = true;
-                    Tool.success('重置成功!')
+                    Tool.alert('密码重置成功，请牢记哦~!')
                     let timer = setTimeout( () => {
                         browserHistory.push('/login')
                         clearTimeout(timer);
@@ -90,6 +92,10 @@ class Main extends Component {
                 <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
                 <input type="text" className="hide"/>
               </div>
+              {
+                this.state.strength > 0 &&
+                <div className="pwdStrength">密码强度: <span className={this.state.strength === 0 || this.state.strength === 1 ? 'strength0' : this.state.strength === 2 ? 'strength1' : 'strength2'}>{this.state.strength === 0 || this.state.strength === 1 ? '弱' : this.state.strength === 2 ? '中' : '强'}</span></div>
+              }
             </form>
             <div className={`btu_next ${this.state.password.length >= 6 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPwd}>完成</div>
           </div>

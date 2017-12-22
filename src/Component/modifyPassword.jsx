@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {browserHistory } from 'react-router';
 import { is, fromJS} from 'immutable';
-import {Tool} from '../Config/Tool';
+import {Tool, checkPwdUtil} from '../Config/Tool';
 import {template} from './common/mixin';
 import '../Style/login.less'
 import {MD5} from '../Config/MD5'
@@ -14,6 +14,7 @@ class Main extends Component {
             pwdHide: false,
             oldPwd: '',
             newPwd: '',
+            strength: 0,
         }
         this.changeEyes = () => {
           this.state.pwdHide ? this.setState({ pwdHide: false}) : this.setState({ pwdHide: true});
@@ -25,9 +26,11 @@ class Main extends Component {
               oldPwd: event.target.value
             })
           } else {
-            let newPwd = event.target.value.replace(/[\W]/g,'');
+            // let newPwd = event.target.value.replace(/[\W]/g,'');
+            let newPwd = event.target.value;
             this.setState({
-              newPwd: newPwd
+              newPwd: newPwd,
+              strength: checkPwdUtil(newPwd)
             })
           }
         }
@@ -92,6 +95,10 @@ class Main extends Component {
                 <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.newPwd} placeholder='请设置6-16位数字、字母组合新密码' onChange={this.changeValue.bind(this, 'newPwd')} required/>
                 <span className={`pwd_eyes ${this.state.pwdHide ? '' : 'pwd_eyes_flash'}`} onClick={this.changeEyes}></span>
               </div>
+              {
+                this.state.strength > 0 &&
+                <div className="pwdStrength">密码强度: <span className={this.state.strength === 0 || this.state.strength === 1 ? 'strength0' : this.state.strength === 2 ? 'strength1' : 'strength2'}>{this.state.strength === 0 || this.state.strength === 1 ? '弱' : this.state.strength === 2 ? '中' : '强'}</span></div>
+              }                
             </form>
             <div className={`btu_next ${this.state.oldPwd.length > 0 && this.state.newPwd.length >= 6 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPwd}>确定</div>
           </div>
