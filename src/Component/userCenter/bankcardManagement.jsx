@@ -27,6 +27,7 @@ class Main extends Component {
         this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/unbindBankCardApply', null, (res) => {
             if (res.ret && res.ret === -1) {
                 Tool.alert(res.msg);
+                res.code === -1000 ? browserHistory.replace('/login') : null
             } else {
                 this.setState({
                     unbindBankCardApply: res.status

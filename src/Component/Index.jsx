@@ -30,6 +30,7 @@ class Main extends Component {
           this.setState({loading: false})
           if (res.ret === -1) {
             Tool.alert(res.msg);
+            res.code === -1000 ? browserHistory.replace('/login') : null
           }else{
             let account = res.data.account;
             let enterpriseCapitalVo = res.data.enterpriseCapitalVo;

@@ -56,7 +56,8 @@ class Main extends Component {
                     })
                 }else{
                     document.getElementsByClassName('projects')[0].style.height = window.innerHeight + 'px'
-                    Tool.alert(res.data.msg)
+                    Tool.alert(res.msg)
+                    res.code === -1000 ? browserHistory.replace('/login') : null
                 }
             }, 'changeType')
         }

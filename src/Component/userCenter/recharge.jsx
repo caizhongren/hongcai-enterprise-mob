@@ -65,6 +65,7 @@ class Main extends Component {
           this.props.getData(process.env.RESTFUL_DOMAIN + '/bankcard/rechargeRemainLimit', null, (res) => {
             if (res.ret && res.ret === -1) {
               Tool.alert(res.msg);
+              res.code === -1000 ? browserHistory.replace('/login') : null
             } else {
               this.setState({
                 bankCardName: res.bankName,
@@ -185,7 +186,7 @@ class Main extends Component {
               <p className="contents">
                 1.充值资金将进入您的海口联合农商银行个人存管账户；<br/>
                 2.充值前请确认您的银行卡是否已经开通快捷支付等功能；<br/>
-                3.充值限额由银行、第三方支付平台及用户设定的银行卡快捷支付限额决定，取三者最小值，请多留意，以免造成充值不成功的情况；
+                3.充值限额由银行、第三方支付平台及用户设定的银行卡快捷支付限额决定，取三者最小值，请多留意，以免造成充值不成功的情况。如果充值金额较大，请在电脑端登录biz.hongcai.com，使用网银充值；<br/>
                 4.如果充值金额没有及时到账，请马上联系客服 400-990-7626。
               </p>
             </div>

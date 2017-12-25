@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import { template, Loading, Footer} from '../common/mixin';
@@ -84,6 +85,7 @@ class Main extends Component {
               })
             }else{
               Tool.alert(res.msg)
+              res.code === -1000 ? browserHistory.replace('/login') : null
             }
             this.setState({
               preventMountSubmit:true,
