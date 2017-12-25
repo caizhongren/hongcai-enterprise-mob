@@ -13,7 +13,7 @@ class Main extends Component {
             preventMountSubmit:true,//防止重复提交
             withdrawAmount: '',
             loading: false, 
-            unpaidAmount: Number(this.props.location.query),
+            unpaidAmount: Number(this.props.location.query.amount),
             bankCardName: '',
             bankCardNo: '0000',
             isVerifying: false,
