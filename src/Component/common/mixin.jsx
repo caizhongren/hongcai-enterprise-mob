@@ -117,7 +117,6 @@ export class Header extends Component {  //头部标题
     render(){
         return(
         <ul role="nav" className="footer">
-            {/* <li><IndexLink to="/" activeClassName="active"><img src={require('../../images/tabbar1.png')}/>账户总览</IndexLink></li> */}
             <li><IndexLink to="/" activeClassName="active">账户总览</IndexLink></li>
             <li><Link to="/project/projectList" activeClassName="active">借款项目</Link></li>
         </ul>
