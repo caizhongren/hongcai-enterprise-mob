@@ -28,8 +28,10 @@ module.exports = {
         loaders: [{
             test: /\.js$/,
             exclude: /^node_modules$/,
-            loader: 'babel-loader'
-        }, {
+            loader: 'babel-loader',
+            query: {compact: false}
+        },
+         {
             test: /\.css$/,
             exclude: /^node_modules$/,
             use: ExtractTextPlugin.extract({
