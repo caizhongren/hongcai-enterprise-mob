@@ -41,26 +41,26 @@ class Main extends Component {
                 return
             }
             this.state.preventMountSubmit == false;
-            this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/resetMobilePassword',{
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/passwords/forget',{
                 mobile: this.state.phone,
                 password: MD5(this.state.password),
                 captcha: this.state.captcha,
-                guestId: Tool.guestId(32,16)
+                userType: 1
             },(res) => {
+                this.setState({
+                    preventMountSubmit:true
+                })
                 if (res.ret === -1) {
                     Tool.alert(res.msg);
-                    this.setState({
-                        preventMountSubmit:true
-                    })
-              }else{
+                }else{
                     this.state.preventMountSubmit = true;
                     Tool.alert('密码重置成功，请牢记哦~!')
                     let timer = setTimeout( () => {
-                        browserHistory.push('/login')
+                        browserHistory.push('/')
                         clearTimeout(timer);
                     },2000)
                 }
-            },'input', 'POST')
+            },'input', 'PUT')
         }      
     }
 
