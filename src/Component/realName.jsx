@@ -18,15 +18,13 @@ export class RealName extends Component {
   
         this.changeValue = (type, event) => {
             if (type === 'name') {
-                // let name = event.target.value.replace(/[^\u4E00-\u9FA5]/g,'')
                 let name = event.target.value
                 this.setState({
                     name: name
                 })
             } else {
-                let idCard = event.target.value.replace(/\D/g,'')
                 this.setState({
-                    idCard: idCard
+                    idCard: event.target.value
                 })
             }
         }
