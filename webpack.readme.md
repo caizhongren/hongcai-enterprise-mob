@@ -1,10 +1,10 @@
-- ## 概念
-    [webpack](https://webpack.js.org/) 一款模块加载器兼打包工具，把各种资源（css、js、图片等等）都作为模块来处理和使用
+## 概念
+[webpack](https://webpack.js.org/) 一款模块加载器兼打包工具，把各种资源（css、js、图片等等）都作为模块来处理和使用
 
 
 
-- ## 配置[webpack](https://webpack.js.org/)前言
-   首先要安装 Node.js， Node.js 自带了软件包管理器 npm，Webpack 需要 Node.js v0.6 以上支持，建议使用最新版 Node.js。
+## 配置[webpack](https://webpack.js.org/)前言
+首先要安装 Node.js， Node.js 自带了软件包管理器 npm，Webpack 需要 Node.js v0.6 以上支持，建议使用最新版 Node.js。
 
 ```
     <!-- 全局安装webpack -->
@@ -27,10 +27,11 @@
 >目前我们的项目使用webpack3.10.0版本，以下按照3.1.0版本来介绍
 
 
-- ## 添加配置
-    在根目录新建一个 webpack.config.js 文件用来声明 Webpack 的配置：
+## 添加配置
 
- ### 1.定义需要的插件、地址
+在根目录新建一个 webpack.config.js 文件用来声明 Webpack 的配置：
+
+### 1.定义需要的插件、地址
 
 ```javascript
     <!-- 拿到path和webpack -->
@@ -91,8 +92,7 @@ output属性 告诉webpack在哪里发出它创建的包以及如何命名这些
 }
 
 ```
-
-- 以上配置，告诉webpack，我们要把他创建的包放在/build/dist/目录下，静态文件引入目录也是/build/dist/，入口文件及引用的资源打包后是‘入口文件名.js’，其他文件打包后是‘文件名.sh0h3.min.js’格式
+以上配置，告诉webpack，我们要把他创建的包放在'/build/dist/'目录下，静态文件引入目录也是'/build/dist/'，入口文件及引用的资源打包后是‘入口文件名.js’，其他文件打包后是‘文件名.sh0h3.min.js’格式
 
 了解更多output配置，查看 [https://webpack.github.io/docs/configuration.html](output)
 
@@ -130,26 +130,28 @@ loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做�
     }
 ```
 
-### 值得注意的是：
+#### 值得注意的是：
 
->1> include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低
+- 1）include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低
 
->2> [ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) 是一个单独打包css的插件，经过处理的css不会内联在页面上而是单独抽出来
+- 2）[ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) 是一个单独打包css的插件，经过处理的css不会内联在页面上而是单独抽出来
 
->3> webpack1 和 webpack2+ 关于module配置有些不同，loader=> rules, loader => use, 参数形式 => options{}对象形式，详细参见 [webpack1升级webpack2](https://www.jianshu.com/p/393b1e606edf)
+- 3）webpack1 和 webpack2+ 关于module配置有些不同，loader=> rules, loader => use, 参数形式 => options{}对象形式，详细参见 [webpack1升级webpack2](https://www.jianshu.com/p/393b1e606edf)
 
 
 
-### 5. plugins（参考：https://webpack.js.org/concepts/）
+### 5. plugins
+
+（参考：https://webpack.js.org/concepts/）
 
 loader用来转换某些类型文件，但是插件可以实现更多功能
 首先，在使用插件前require('')引入，其次，在plugins 数组中添加，并且需要new语法创建一个实例：
 
 ![plugins](https://raw.githubusercontent.com/fuqiang1/vue/develop/my-project/static/plugins.jpg)
 
-1. [postcss](https://github.com/postcss/postcss)
+#### 1. [postcss](https://github.com/postcss/postcss)
 
-[postcss](https://github.com/postcss/postcss)是一个用JS插件转换样式的工具
+[postcss](https://github.com/postcss/postcss)是一个用JS插件转换样式的工具
 webpack2+里不能直接在rules里添加,要用插件LoaderOptionsPlugin再加到plugins配置中：
 
 ```javascript
@@ -169,11 +171,13 @@ new webpack.LoaderOptionsPlugin({
 })
 ```
 
-[postcss](https://github.com/postcss/postcss)常用插件：
+##### [postcss](https://github.com/postcss/postcss) 常用插件：
 
-- [postcss-import](https://github.com/postcss/postcss-import)：要解析@import规则的路径
+##### 1）[postcss-import](https://github.com/postcss/postcss-import)：
 
-```css
+要解析@import规则的路径
+
+```less
     /* 例如：@import "cssrecipes-defaults"; @import "normalize.css"; */
     /* 将会得到： */
 
@@ -181,7 +185,9 @@ new webpack.LoaderOptionsPlugin({
     /* ... content of ../node_modules/normalize.css/normalize.css */
 ```
 
-- [postcss-sassy-mixins](https://github.com/andyjansson/postcss-sassy-mixins): 和sass关键字混合使用,例如:
+##### 2）[postcss-sassy-mixins](https://github.com/andyjansson/postcss-sassy-mixins):
+
+和sass关键字混合使用,例如:
 
 ```css
     @mixin border-radius($radius) {
@@ -199,7 +205,9 @@ new webpack.LoaderOptionsPlugin({
     }
 ```
 
-- [precss](https://github.com/jonathantneal/precss)：可以让你在你的CSS文件中使用类似Sass的标记，例如：
+##### 3）[precss](https://github.com/jonathantneal/precss)：
+
+可以让你在你的CSS文件中使用类似Sass的标记，例如：
 
 ```css
     /* before */
@@ -225,7 +233,9 @@ new webpack.LoaderOptionsPlugin({
     }
 ```
 
-- [autoprefixer](https://github.com/postcss/autoprefixer)：将供应商前缀添加到CSS:
+##### 4）[autoprefixer](https://github.com/postcss/autoprefixer)：
+
+将供应商前缀添加到CSS:
 
 ```css
     /* before */
@@ -251,15 +261,19 @@ new webpack.LoaderOptionsPlugin({
     }
 ```
 
-- [postcss-cssnext](http://cssnext.io/)：允许使用最新的css语法(已包含autoprefixer)，跟postcss中的autoprefixer重复，运行时报以下警告：（ TODO：如何消除这一警告 ）
+##### 5）[postcss-cssnext](http://cssnext.io/)：
+
+允许使用最新的css语法(已包含autoprefixer)，跟postcss中的autoprefixer重复，运行时报以下警告：（ TODO：如何消除这一警告 ）
 
-    ![warning](https://raw.githubusercontent.com/fuqiang1/vue/develop/my-project/static/warning.jpg)
+
+![warning](https://raw.githubusercontent.com/fuqiang1/vue/develop/my-project/static/warning.jpg)
 
 
 (了解postcss更多插件，查阅 [https://github.com/postcss/postcss](https://github.com/postcss/postcss))
 
 
-2. [DefinePlugin](https://doc.webpack-china.org/plugins/define-plugin/) 允许创建一个在编译时可以配置的全局常量
+#### 2. [DefinePlugin](https://doc.webpack-china.org/plugins/define-plugin/) 
+允许创建一个在编译时可以配置的全局常量
 
 ```javascript
 new webpack.DefinePlugin({
@@ -278,7 +292,9 @@ new webpack.DefinePlugin({
 // 以上变量可以通过 process.env.damain 或者 hello 全局获取使用
 ```
 
-3. [HotModuleReplacementPlugin](https://doc.webpack-china.org/plugins/hot-module-replacement-plugin/)启用热替换模块(Hot Module Replacement)，也被称为 HMR, 拓展用法参见 https://webpack.js.org/concepts/
+#### 3. [HotModuleReplacementPlugin](https://doc.webpack-china.org/plugins/hot-module-replacement-plugin/)
+
+启用热替换模块(Hot Module Replacement)，也被称为 HMR, 拓展用法参见[https://webpack.js.org/concepts/](https://webpack.js.org/concepts/)
 
 ```javascript
 new webpack.HotModuleReplacementPlugin({
@@ -293,8 +309,8 @@ new webpack.HotModuleReplacementPlugin({
 | requestTimeout | (number) | 下载 manifest 的延时（webpack 3.0.0 后的版本支持）|
 
 ### 6. [resolve](https://webpack.github.io/docs/configuration.html)
-    是一个影响模块解析的选项
-    reslove有很多其他属性，这里只说项目中使用的extensions，
+是一个影响模块解析的选项
+reslove有很多其他属性，这里只说项目中使用的extensions，
 它是用来解析模块的扩展数组，比如，想把'require(/styles/common)'解析为 common.less, 就应该在extensions:[]数组中添加‘.less’，简单说就是会自动补全文件名
 
 ```javascript
@@ -304,4 +320,4 @@ new webpack.HotModuleReplacementPlugin({
     }
 ```
 
-resolve的更多属性，阅读 https://webpack.github.io/docs/configuration.html
+resolve的更多属性，阅读[https://webpack.github.io/docs/configuration.html](https://webpack.github.io/docs/configuration.html)
