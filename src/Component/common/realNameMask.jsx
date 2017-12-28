@@ -76,7 +76,7 @@ export class RealNameMask extends Component {
                             <input type="text" placeholder="请输入您的姓名" value={this.state.name} onChange={this.changeValue.bind(this,'name')} maxLength="8"/>
                         </div>
                         <div className="input-wrraper">
-                            <input type="tel" placeholder="请输入您的身份证号" value={this.state.idCard} onChange={this.changeValue.bind(this,'idCard')} maxLength='18'/>
+                            <input type="text" placeholder="请输入您的身份证号" value={this.state.idCard} onChange={this.changeValue.bind(this,'idCard')} maxLength='18'/>
                         </div>
                     </form>
                     <div className="real-btns">
