@@ -1,10 +1,10 @@
 - ## 概念
-    >[webpack](https://webpack.js.org/) 一款模块加载器兼打包工具，把各种资源（css、js、图片等等）都作为模块来处理和使用
+    [webpack](https://webpack.js.org/) 一款模块加载器兼打包工具，把各种资源（css、js、图片等等）都作为模块来处理和使用
 
 
 
 - ## 配置[webpack](https://webpack.js.org/)前言
-   > 首先要安装 Node.js， Node.js 自带了软件包管理器 npm，Webpack 需要 Node.js v0.6 以上支持，建议使用最新版 Node.js。
+   首先要安装 Node.js， Node.js 自带了软件包管理器 npm，Webpack 需要 Node.js v0.6 以上支持，建议使用最新版 Node.js。
 ```
     <!-- 全局安装webpack -->
     $ npm install webpack -g
@@ -14,9 +14,7 @@
     # 确定已经有 package.json，没有就通过 npm init 创建
     # 安装 webpack 依赖
     $ npm install webpack --save-dev
-```
 
-```
     github 上表明webpck1版本已被废弃，鼓励升级到 webpck2
     # 查看 webpack 版本信息
     $ npm info webpack
@@ -26,29 +24,33 @@
 ```
 >目前我们的项目使用webpack3.10.0版本，以下按照3.1.0版本来介绍
 
+
 - ## 添加配置
-    >在根目录新建一个 webpack.config.js 文件用来声明 Webpack 的配置：
-- ### 1.定义需要的插件、地址
+    在根目录新建一个 webpack.config.js 文件用来声明 Webpack 的配置：
+ ### 1.定义需要的插件、地址
 ```
- <!-- 拿到path和webpack -->
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包插件
-var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html插件
+    <!-- 拿到path和webpack -->
+    var path = require('path');
+    var webpack = require('webpack');
+    var ExtractTextPlugin = require('extract-text-webpack-plugin'); //css单独打包插件
+    var HtmlWebpackPlugin = require('html-webpack-plugin'); //生成html插件
 
-<!-- 定义地址 -->
-var ROOT_PATH = path.resolve(__dirname); // 项目根目录
-var APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，以此类推
-var APP_FILE = path.resolve(APP_PATH, 'App.jsx'); //根目录文件app.jsx地址
-var BUILD_PATH = path.resolve(ROOT_PATH, '/build/dist'); //打包发布文件所存放的目录
+    <!-- 定义地址 -->
+    var ROOT_PATH = path.resolve(__dirname); // 项目根目录
+    var APP_PATH = path.resolve(ROOT_PATH, 'src'); //__dirname 中的src目录，以此类推
+    var APP_FILE = path.resolve(APP_PATH, 'App.jsx'); //根目录文件app.jsx地址
+    var BUILD_PATH = path.resolve(ROOT_PATH, '/build/dist'); //打包发布文件所存放的目录
 ```
-- ### 2.Entry
-    >入口点指示webpack应该使用哪个模块来开始构建其内部依赖关系图
 
-    >这里的[webpack hot middleware](https://github.com/glenjamin/webpack-hot-middleware)简单说是实现浏览器的无刷新更新（hot reload），详细参见:
 
-- 1). [手把手深入理解 webpack dev middleware 原理](https://segmentfault.com/a/1190000005614604)
-- 2). [Express结合Webpack的全栈自动刷新](http://acgtofe.com/posts/2016/02/full-live-reload-for-express-with-webpack)
+### 2.Entry
+入口点指示webpack应该使用哪个模块来开始构建其内部依赖关系图
+
+这里的[webpack hot middleware](https://github.com/glenjamin/webpack-hot-middleware)简单说是实现浏览器的无刷新更新（hot reload），详细参见:
+
+1). [手把手深入理解 webpack dev middleware 原理](https://segmentfault.com/a/1190000005614604)
+
+2). [Express结合Webpack的全栈自动刷新](http://acgtofe.com/posts/2016/02/full-live-reload-for-express-with-webpack)
 ```
     // 添加入口文件，(当前项目入口文件只有一个 App.jsx)
     entry: {
@@ -69,8 +71,10 @@ var BUILD_PATH = path.resolve(ROOT_PATH, '/build/dist'); //打包发布文件所
         ]
     }
 ```
-- ### 3. output
-    >output属性 告诉webpack在哪里发出它创建的包以及如何命名这些文件，常用配置:
+
+
+### 3. output
+output属性 告诉webpack在哪里发出它创建的包以及如何命名这些文件，常用配置:
 ```
 
 {
@@ -79,24 +83,30 @@ var BUILD_PATH = path.resolve(ROOT_PATH, '/build/dist'); //打包发布文件所
     filename: '[name].js'   入口文件及引用的资源编译后的文件名字,
     chunkFilename:'[name].[chunkhash:5].min.js'    除入口文件外的编译后带5位哈希值格式的文件名字
 }
+
+    以上配置，告诉webpack，我们要把他创建的包放在/build/dist/目录下，静态文件引入目录也是/build/dist/，入口文件及引用的资源打包后是‘入口文件名.js’，其他文件打包后是‘文件名.sh0h3.min.js’格式<br>
 ```
->以上配置，告诉webpack，我们要把他创建的包放在/build/dist/目录下，静态文件引入目录也是/build/dist/，入口文件及引用的资源打包后是‘入口文件名.js’，其他文件打包后是‘文件名.sh0h3.min.js’格式<br>
 了解更多output配置，查看 https://webpack.github.io/docs/configuration.html
+
+
+
 
 - ### 4. module and loaders
 
-    >Webpack 本身只能处理 JavaScript 模块，如果要处理其他类型的文件，就需要使用 loader 进行转换<br>
-    Loader 可以理解为是模块和资源的转换器，它本身是一个函数，接受源文件作为参数，返回转换的结果。这样，我们就可以通过 require 来加载任何类型的模块或文件，比如 CoffeeScript、 JSX、 LESS 或图片
+Webpack 本身只能处理 JavaScript 模块，如果要处理其他类型的文件，就需要使用 loader 进行转换
+Loader 可以理解为是模块和资源的转换器，它本身是一个函数，接受源文件作为参数，返回转换的结果。这样，我们就可以通过 require 来加载任何类型的模块或文件，比如 CoffeeScript、 JSX、 LESS 或图片
 
-    >loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做的转换功能，比如 json-loader
+loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做的转换功能，比如 json-loader
 
-    >在引用 loader 的时候可以使用全名 json-loader，或者使用短名 json，但是wepack2+只能使用全名。命名规则和搜索优先级顺序在 webpack 的 resolveLoader.moduleTemplates api 中定义。
+在引用 loader 的时候可以使用全名 json-loader，或者使用短名 json，但是wepack2+只能使用全名。命名规则和搜索优先级顺序在 webpack 的 resolveLoader.moduleTemplates api 中定义。
 
-    Default: ["*-webpack-loader", "*-web-loader", "*-loader", "*"]
+Default: ["*-webpack-loader", "*-web-loader", "*-loader", "*"]
 
-    >每个loader主要有两个功能：<br>
-    - 1）确定哪个或哪些文件应该由某个加载器转换（test属性）<br>
-    - 2）使用哪些loader转换器来转换这些文件（use或loader属性）
+每个loader主要有两个功能：
+
+- 1）确定哪个或哪些文件应该由某个加载器转换（test属性）
+
+- 2）使用哪些loader转换器来转换这些文件（use或loader属性）
 ```
     module: {
         rules: [{
@@ -110,24 +120,28 @@ var BUILD_PATH = path.resolve(ROOT_PATH, '/build/dist'); //打包发布文件所
         }]
     }
 ```
-- 值得注意的是： <br>
+- 值得注意的是：
+
     1> include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低<br>
     2> [ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) 是一个单独打包css的插件，经过处理的css不会内联在页面上而是单独抽出来<br>
     3> webpack1 和 webpack2+ 关于module配置有些不同，loader=> rules, loader => use, 参数形式 => options{}对象形式，详细参见 [webpack1升级webpack2](https://www.jianshu.com/p/393b1e606edf)<br>
 
-- #### 关于[postcss](https://github.com/postcss/postcss)
-    >[postcss](https://github.com/postcss/postcss)是一个用JS插件转换样式的工具<br>
-包括[postcss-cssnext](http://cssnext.io/)，[autoprefixer](https://github.com/postcss/autoprefixer)，[postcss-import](https://github.com/postcss/postcss-import)等，使用最新的CSS语法，自动添加浏览器前缀，内联样式转换为import引入css文件。<br>
+#### 关于[postcss](https://github.com/postcss/postcss)
+[postcss](https://github.com/postcss/postcss)是一个用JS插件转换样式的工具
+包括[postcss-cssnext](http://cssnext.io/)，[autoprefixer](https://github.com/postcss/autoprefixer)，[postcss-import](https://github.com/postcss/postcss-import)等，使用最新的CSS语法，自动添加浏览器前缀，内联样式转换为import引入css文件。
 （关于postcss配置，在下面 plugins 里单独介绍）
 
-- ### 5. plugins（参考：https://webpack.js.org/concepts/）
-    >loader用来转换某些类型文件，但是插件可以实现更多功能<br>
 
-    >首先，在使用插件前require('')引入，其次，在plugins 数组中添加，并且需要new语法创建一个实例：
+- ### 5. plugins（参考：https://webpack.js.org/concepts/）
+    loader用来转换某些类型文件，但是插件可以实现更多功能
+
+    首先，在使用插件前require('')引入，其次，在plugins 数组中添加，并且需要new语法创建一个实例：
 
 ![plugins](https://raw.githubusercontent.com/fuqiang1/vue/develop/my-project/static/plugins.jpg)<br>
 
-1. [postcss](https://github.com/postcss/postcss)，webpack2+里不能直接在rules里添加,要用插件LoaderOptionsPlugin再加到plugins配置中：
+1. [postcss](https://github.com/postcss/postcss)
+
+webpack2+里不能直接在rules里添加,要用插件LoaderOptionsPlugin再加到plugins配置中：
 ```
 new webpack.LoaderOptionsPlugin({
     postcss: {
@@ -253,11 +267,12 @@ multiStep| (boolean) | 设置为 true 时，插件会分成两步构建文件。
 fullBuildTimeout | (number) | 当 multiStep 启用时，表示两步构建之间的延时。
 requestTimeout | (number) | 下载 manifest 的延时（webpack 3.0.0 后的版本支持）
 
-- ### 6. [resolve](https://webpack.github.io/docs/configuration.html)
-    >是一个影响模块解析的选项
 
-- #### resolve.extensions
-    >reslove有很多其他属性，这里只说项目中使用的extensions<br>
+
+
+- ### 6. [resolve](https://webpack.github.io/docs/configuration.html)
+    是一个影响模块解析的选项
+    reslove有很多其他属性，这里只说项目中使用的extensions，
 它是用来解析模块的扩展数组，比如，想把'require(/styles/common)'解析为 common.less, 就应该在extensions:[]数组中添加‘.less’，简单说就是会自动补全文件名
 ```
  // js, jsx, less, scss, css后缀名自动补全
