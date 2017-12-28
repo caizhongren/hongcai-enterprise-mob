@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {History, Link, browserHistory } from 'react-router';
-import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool, Count, Utils} from '../Config/Tool';
 import {MD5} from '../Config/MD5'

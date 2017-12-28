@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import pureRender from 'pure-render-decorator';
 import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
-import *as action from '../../Redux/Action/Index';
+import * as action from '../../Redux/Action/Index';
 
 
 const Main = mySeting => {

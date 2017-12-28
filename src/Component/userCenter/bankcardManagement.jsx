@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {browserHistory, Link } from 'react-router';
-import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool, Utils} from '../../Config/Tool';
 import { PayUtils } from '../../Config/payUtils';

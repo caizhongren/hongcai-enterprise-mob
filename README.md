@@ -42,8 +42,8 @@ react + react-router + redux + immutable + less + ES6/7 + webpack + fetch
 |  |   ├─sessionService.js            // session 记录用户登录信息
 |  |   ├─Tool.js                      // 公用弹窗、错误提示、倒计时、密码强度工具
 |  |   └wx.jsx                        // 微信 js-sdk 文件
-|  ├─filters                          // 格式过滤器工具
-|  |   └custom.js                     // 自适应屏幕设置字体大小
+|  ├─filters
+|  |   └custom.js                     // 格式过滤器工具
 |  ├─Router                           // 路由配置
 |  |   └Router.jsx
 |  ├─style                            // 样式库
@@ -268,7 +268,7 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 #### 流程是这个样子的：
 
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/simple_redux.jpg)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/simple_redux.jpg)
 
 值得注意的是connect，Provider，mapStateToProps,mapDispatchToProps是react-redux提供的，redux本身和react没有半毛钱关系，它只是数据处理中心，没有和react产生任何耦合，是react-redux让它们联系在一起。
 
@@ -278,7 +278,7 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 
 #### 先上一张图
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/all_redux.png)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/all_redux.png)
 
 明显比第一张要复杂，其实两张图说的是同一件事。从上而下慢慢分析：
 
@@ -474,7 +474,7 @@ render(
 
 通常我们在顶层的ui组件打印props时可以看到一堆属性：
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/react_props.png)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/react_props.png)
 
 上图的顶层ui组件属性总共有18个，如果刚刚接触react，可能对这些属性怎么来的感到困惑，其实这些属性来自五个地方：
 

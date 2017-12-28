@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import pureRender from 'pure-render-decorator';
 import {browserHistory, Link } from 'react-router';
-import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import {Tool, checkPwdUtil} from '../Config/Tool';
 import {template} from './common/mixin';
