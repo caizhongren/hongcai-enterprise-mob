@@ -73,8 +73,8 @@ react + react-router + redux + immutable + less + ES6/7 + webpack + fetch
 |  ├─postcss-cssnext                  // 允许你使用未来的 CSS 特性（包括 autoprefixer）
 |  ├─cssnano                          // 是一个模块化的 CSS 压缩器
 |  └autoprefixer                      // 添加了 vendor 浏览器前缀，它使用 Can I Use 上面的数据
-├─service_hot.js                      // 服务器配置说明 [webpack-hot-middleware](热更新)、[webpack-dev-middleware](处理静态资源的中间件)
-├─service.js                          // 服务器配置说明 [webpack-dev-server](一个小型的Node.js Express服务器,它也是用webpack-dev-middleware来处理webpack编译后的输出)
+├─service_hot.js                      // Express启动文件、服务器配置说明 [webpack-hot-middleware](热更新)、[webpack-dev-middleware](处理静态资源的中间件)
+├─service.js                          // Express启动文件、服务器配置说明 [webpack-dev-server](一个小型的Node.js Express服务器,它也是用webpack-dev-middleware来处理webpack编译后的输出)
 ├─webpack.config.dev.js               // webpack 的配置文件 正常模式
 ├─webpack.config.dist.js              // webpack 的配置文件 线上环境
 ├─webpack.config.hot.js               // webpack 的配置文件 热替换模式

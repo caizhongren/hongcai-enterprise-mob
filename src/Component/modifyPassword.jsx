@@ -41,7 +41,7 @@ class Main extends Component {
           }
             let passwordPattern = /^(?=.*[a-zA-Z])(?=.*[0-9])[\da-zA-Z~!@#$%^&*]{6,16}$/;
             if (!passwordPattern.test(this.state.newPwd)) {
-                Tool.alert('登录密码由6-16位数字、字母组合而成')
+                Tool.alert('登录密码由6-16位数字、字母组合而成，请重新设置！')
                 return
             }
             this.state.preventMountSubmit == false;
@@ -89,7 +89,7 @@ class Main extends Component {
           <div>
             <form className='form_style'>
               <div className='input_container'>
-                <input className="password" type='password' value={this.state.oldPwd} placeholder='请输入原密码' onChange={this.changeValue.bind(this, 'oldPwd')} required />
+                <input className="password" type='password' value={this.state.oldPwd} placeholder='请输入原密码' maxLength='16' onChange={this.changeValue.bind(this, 'oldPwd')} required />
               </div>
               <div className='input_container'>
                 <input className="password" type={this.state.pwdHide ? 'password' : 'text'} minLength='6' maxLength='16' value={this.state.newPwd} placeholder='请设置6-16位数字、字母组合新密码' onChange={this.changeValue.bind(this, 'newPwd')} required/>
