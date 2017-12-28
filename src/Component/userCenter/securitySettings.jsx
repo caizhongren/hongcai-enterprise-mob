@@ -71,6 +71,9 @@ class Main extends Component {
                 this.setState({showRealNameMask:true})
                 return
             }
+            if (this.state.openAutoRepayment) {
+                return
+            } 
             this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/autoRepayment', {
                 from: 5
             }, (res)=> {
