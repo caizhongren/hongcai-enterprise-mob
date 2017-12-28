@@ -42,8 +42,8 @@ react + react-router + redux + immutable + less + ES6/7 + webpack + fetch
 |  |   ├─sessionService.js            // session 记录用户登录信息
 |  |   ├─Tool.js                      // 公用弹窗、错误提示、倒计时、密码强度工具
 |  |   └wx.jsx                        // 微信 js-sdk 文件
-|  ├─filters                          // 格式过滤器工具
-|  |   └custom.js                     // 自适应屏幕设置字体大小
+|  ├─filters
+|  |   └custom.js                     // 格式过滤器工具
 |  ├─Router                           // 路由配置
 |  |   └Router.jsx
 |  ├─style                            // 样式库
@@ -108,7 +108,7 @@ react的diff算法用在什么地方呢？当组件更新的时候，react会创
 
 对于列表的diff算法稍有不同，因为列表通常具有相同的结构，在对列表节点进行删除，插入，排序的时候，单个节点的整体操作远比一个个对比一个个替换要好得多，所以在创建列表的时候需要设置key值，这样react才能分清谁是谁。当然不写key值也可以，但这样通常会报出警告，通知我们加上key值以提高react的性能。
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/diff.png)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/diff.png)
 
 
 
@@ -118,9 +118,11 @@ react的diff算法用在什么地方呢？当组件更新的时候，react会创
 **组件的创造方法**
 
  **1、系统内部设计**
+
  > React.createClass() ——创造一个类，react系统内部设计了一套类系统，利用它来创造react组件。但这并不是必须的
 
  **2、ES6创建class**
+
  > 用es6的class类来创造组件,这也是Facebook官方推荐的写法。
 
  ```javascript
@@ -149,55 +151,66 @@ react的diff算法用在什么地方呢？当组件更新的时候，react会创
 ## 组件的生命周期
 
 ![](https://www.ibm.com/developerworks/cn/web/1509_dongyue_react/index5341.png)
-(https://github.com/bailicangdu/pxq/blob/master/src/images/react-lifecycle.png)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/react-lifecycle.png)
 
 **组件在初始化时会触发5个钩子函数：**
 
   **1、getDefaultProps()**
+
 > 设置默认的props，也可以用dufaultProps设置组件的默认属性。
 
 
   **2、getInitialState()**  
+
 > 在使用es6的class语法时是没有这个钩子函数的，可以直接在constructor中定义this.state。此时可以访问this.props。
 
 
  **3、componentWillMount()**
+
 > 组件初始化时调用，以后组件更新不调用，整个生命周期只调用一次，此时可以修改state。
 
 
  **4、 render()**
+
 >  react最重要的步骤，创建虚拟dom，进行diff算法，更新dom树都在此进行。此时就不能更改state了。
 
 
  **5、componentDidMount()**
+
 > 组件渲染之后调用，可以通过this.getDOMNode()获取和操作dom节点，只调用一次。
 
 
 **在更新时也会触发5个钩子函数：**
 
   **6、componentWillReceivePorps(nextProps)**
+
 > 组件初始化时不调用，组件接受新的props时调用。
 
 
   **7、shouldComponentUpdate(nextProps, nextState)**
+
 > react性能优化非常重要的一环。组件接受新的state或者props时调用，我们可以设置在此对比前后两个props和state是否相同，如果相同则返回false阻止更新，因为相同的属性状态一定会生成相同的dom树，这样就不需要创造新的dom树和旧的dom树进行diff算法对比，节省大量性能，尤其是在dom结构复杂的时候。不过调用this.forceUpdate会跳过此步骤。
 
 
   **8、componentWillUpdate(nextProps, nextState)**
+
 > 组件初始化时不调用，只有在组件将要更新时才调用，此时可以修改state
 
 
   **9、render()**
+
 > 创建虚拟dom，进行diff算法，更新dom树都在此进行。此时就不能更改state了。
 
 
   **10、componentDidUpdate()**
+
 > 组件初始化时不调用，组件更新完成后调用，此时可以获取dom节点。
 
 
 还有一个卸载钩子函数
 
   **11、componentWillUnmount()**
+
 > 组件将要卸载时调用，一些事件监听和定时器需要在此时清除。
 
 
@@ -268,7 +281,7 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 #### 流程是这个样子的：
 
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/simple_redux.jpg)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/simple_redux.jpg)
 
 值得注意的是connect，Provider，mapStateToProps,mapDispatchToProps是react-redux提供的，redux本身和react没有半毛钱关系，它只是数据处理中心，没有和react产生任何耦合，是react-redux让它们联系在一起。
 
@@ -278,7 +291,7 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 
 #### 先上一张图
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/all_redux.png)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/all_redux.png)
 
 明显比第一张要复杂，其实两张图说的是同一件事。从上而下慢慢分析：
 
@@ -290,28 +303,35 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 **store**是一个对象，它有四个主要的方法：
 
 **1、dispatch:**
+
 >  用于action的分发——在createStore中可以用middleware中间件对dispatch进行改造，比如当action传入dispatch会立即触发reducer，有些时候我们不希望它立即触发，而是等待异步操作完成之后再触发，这时候用redux-thunk对dispatch进行改造，以前只能传入一个对象，改造完成后可以传入一个函数，在这个函数里我们手动dispatch一个action对象，这个过程是可控的，就实现了异步。
 
 **2、subscribe：**
+
 > 监听state的变化——这个函数在store调用dispatch时会注册一个listener监听state变化，当我们需要知道state是否变化时可以调用，它返回一个函数，调用这个返回的函数可以注销监听。
 let unsubscribe = store.subscribe(() => {console.log('state发生了变化')})
 
 **3、getState：**
+
 > 获取store中的state——当我们用action触发reducer改变了state时，需要再拿到新的state里的数据，毕竟数据才是我们想要的。getState主要在两个地方需要用到，一是在dispatch拿到action后store需要用它来获取state里的数据，并把这个数据传给reducer，这个过程是自动执行的，二是在我们利用subscribe监听到state发生变化后调用它来获取新的state数据，如果做到这一步，说明我们已经成功了。
 
 **4、replaceReducer:**
+
 > 替换reducer，改变state修改的逻辑。
 
 store可以通过createStore()方法创建，接受三个参数，经过combineReducers合并的reducer和state的初始状态以及改变dispatch的中间件，后两个参数并不是必须的。store的主要作用是将action和reducer联系起来并改变state。
 
 
 **action:**
+
 >action是一个对象，其中type属性是必须的，同时可以传入一些数据。action可以用actionCreactor进行创造。dispatch就是把action对象发送出去。
 
 **reducer:**
+
 >reducer是一个函数，它接受一个state和一个action，根据action的type返回一个新的state。根据业务逻辑可以分为很多个reducer，然后通过combineReducers将它们合并，state树中有很多对象，每个state对象对应一个reducer，state对象的名字可以在合并时定义。
 
 像这个样子：
+
 ```javascript
 const reducer = combineReducers({
      a: doSomethingWithA,
@@ -319,7 +339,9 @@ const reducer = combineReducers({
      c: c
 })
 ```
+
 **combineReducers:**
+
 >其实它也是一个reducer，它接受整个state和一个action，然后将整个state拆分发送给对应的reducer进行处理，所有的reducer会收到相同的action，不过它们会根据action的type进行判断，有这个type就进行处理然后返回新的state，没有就返回默认值，然后这些分散的state又会整合在一起返回一个新的state树。
 
 接下来分析一下整体的流程，首先调用store.dispatch将action作为参数传入，同时用getState获取当前的状态树state并注册subscribe的listener监听state变化，再调用combineReducers并将获取的state和action传入。combineReducers会将传入的state和action传给所有reducer，并根据action的type返回新的state，触发state树的更新，我们调用subscribe监听到state发生变化后用getState获取新的state数据。
@@ -332,9 +354,11 @@ redux的state和react的state两者完全没有关系，除了名字一样。
 ## React-Redux
 
 如果只使用redux，那么流程是这样的：
+
 > component --> dispatch(action) --> reducer --> subscribe --> getState --> component
 
 用了react-redux之后流程是这样的：
+
 > component --> actionCreator(data) --> reducer --> component
 
 store的三大功能：dispatch，subscribe，getState都不需要手动来写了。react-redux帮我们做了这些，同时它提供了两个好基友Provider和connect。
@@ -346,6 +370,7 @@ __connect --connect(mapStateToProps, mapDispatchToProps, mergeProps, options)__ 
 所以它的完整写法是这样的：connect(mapStateToProps, mapDispatchToProps, mergeProps, options)(component)
 
 **mapStateToProps(state, [ownProps])：**
+
 >mapStateToProps 接受两个参数，store的state和自定义的props，并返回一个新的对象，这个对象会作为props的一部分传入ui组件。我们可以根据组件所需要的数据自定义返回一个对象。ownProps的变化也会触发mapStateToProps
 
 ```javascript
@@ -370,9 +395,11 @@ function mapDispatchToProps(dispatch) {
 mapDispatchToProps返回的对象其属性其实就是一个个actionCreator，因为已经和dispatch绑定，所以当调用actionCreator时会立即发送action，而不用手动dispatch。ownProps的变化也会触发mapDispatchToProps。
 
 **mergeProps(stateProps, dispatchProps, ownProps)：**
+
 > 将mapStateToProps() 与 mapDispatchToProps()返回的对象和组件自身的props合并成新的props并传入组件。默认返回 Object.assign({}, ownProps, stateProps, dispatchProps) 的结果。
 
 **options：**
+
 > pure = true 表示Connect容器组件将在shouldComponentUpdate中对store的state和ownProps进行浅对比，判断是否发生变化，优化性能。为false则不对比。
 
 其实connect函数并没有做什么，大部分的逻辑都是在它返回的wrapWithConnect函数内实现的，确切的说是在wrapWithConnect内定义的Connect组件里实现的。
@@ -396,6 +423,7 @@ mapDispatchToProps返回的对象其属性其实就是一个个actionCreator，�
 connect可以写的非常简洁，mapStateToProps，mapDispatchToProps只不过是传入的回调函数，connect函数在必要的时候会调用它们，名字不是固定的，甚至可以不写名字。
 
 简化版本：
+
 ```javascript
 connect(state => state, action)(Component);
 
@@ -404,11 +432,13 @@ connect(state => state, action)(Component);
 # immutable
 
 ## 什么是immutable
+
 immutable是不可被改变的意思，javascript中的对象一般是可变的，因为使用了引用赋值，新的对象简单的引用了原始对象，改变新的对象将影响到原始对象。这在较复杂的应用中，会是非常大的隐患，为解决这一问题，可以使用shallowCopy（浅拷贝）或deepCopy（深拷贝），但会造成内存和CPU的浪费，Immutable就可以很好的解决这一问题。
 
 Immutable data 一旦被创建，就不能再更改。对 Immutable 对象的任何修改或添加删除操作都会返回一个新的 Immutable 对象。Immutable 实现的原理是 Persistent Data Structure（持久化数据结构），也就是使用旧数据创建新数据时，要保证旧数据同时可用且不变。同时为了避免 deepCopy 把所有节点都复制一遍带来的性能损耗，Immutable 使用了 Structural Sharing（结构共享），即如果对象树中一个节点发生变化，只修改这个节点和受它影响的父节点，其它节点则进行共享。
 
 本项目中只使用了Immutable.is提供了简洁高效的判断数据是否变化的方法，只需 === 和 is 比较就能知道是否需要执行 render()，而这个操作几乎 0 成本，所以可以极大提高性能。修改后的 shouldComponentUpdate 是这样的：
+
 ```javascript
 shouldComponentUpdate(nextProps, nextState) {
     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
@@ -424,6 +454,7 @@ immutable 官方文档 http://facebook.github.io/immutable-js/docs/#/
 1、先引用 react.js，redux，react-router 等基本文件，建议用npm安装，直接在文件中引用。
 
 2、从 react.js，redux，react-router 中引入所需要的对象和方法。
+
 ```javascript
 import React, {Component, PropTypes} from 'react';
 import ReactDOM, {render} from 'react-dom';
@@ -431,9 +462,11 @@ import {Provider, connect} from 'react-redux';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from 'react-router';
 ```
+
 3、根据需求创建顶层ui组件，每个顶层ui组件对应一个页面。
 
 4、创建actionCreators和reducers，并用combineReducers将所有的reducer合并成一个大的reduer。利用createStore创建store并引入combineReducers和applyMiddleware。
+
 ```javascript
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import * as reducer from '../Reducer/Index';
@@ -456,7 +489,9 @@ export default store;
 7、将Router放入最顶层组件Provider，引入store作为Provider的属性。
 
 8、调用render渲染Provider组件且放入页面的标签中。
+
 ```javascript
+
 import {Provider} from 'react-redux';
 import route from './Router/Route';
 import store from './Redux/Store/Store';
@@ -474,7 +509,7 @@ render(
 
 通常我们在顶层的ui组件打印props时可以看到一堆属性：
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/react_props.png)
+![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/react_props.png)
 
 上图的顶层ui组件属性总共有18个，如果刚刚接触react，可能对这些属性怎么来的感到困惑，其实这些属性来自五个地方：
 

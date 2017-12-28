@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {browserHistory } from 'react-router';
-import { connect } from 'react-redux';
 import { is, fromJS} from 'immutable';
 import { template, Loading, Footer} from '../common/mixin';
 import {Tool} from '../../Config/Tool'

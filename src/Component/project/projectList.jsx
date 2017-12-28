@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import pureRender from 'pure-render-decorator';
-import { connect } from 'react-redux';
 import {browserHistory, Link } from 'react-router';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../../Config/Tool';
