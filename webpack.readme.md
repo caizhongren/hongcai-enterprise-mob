@@ -11,16 +11,16 @@
     $ npm install webpack -g
 
     <!-- 通常我们会将 Webpack 安装到项目的依赖中，这样就可以使用项目本地版本的 Webpack -->
-    # 进入项目目录
-    # 确定已经有 package.json，没有就通过 npm init 创建
-    # 安装 webpack 依赖
+    <!-- 进入项目目录 -->
+    <!-- 确定已经有 package.json，没有就通过 npm init 创建 -->
+    <!-- 安装 webpack 依赖 -->
     $ npm install webpack --save-dev
 
-    github 上表明webpck1版本已被废弃，鼓励升级到 webpck2
-    # 查看 webpack 版本信息
+    <!-- github 上表明webpck1版本已被废弃，鼓励升级到 webpck2 -->
+    <!-- 查看 webpack 版本信息 -->
     $ npm info webpack
 
-    # 安装指定版本的 webpack
+    <!-- 安装指定版本的 webpack -->
     $ npm install webpack@3.1.0 --save-dev
 ```
 
@@ -54,9 +54,9 @@
 
 这里的[webpack hot middleware](https://github.com/glenjamin/webpack-hot-middleware)简单说是实现浏览器的无刷新更新（hot reload），详细参见:
 
-1). [手把手深入理解 webpack dev middleware 原理](https://segmentfault.com/a/1190000005614604)
+a). [手把手深入理解 webpack dev middleware 原理](https://segmentfault.com/a/1190000005614604)
 
-2). [Express结合Webpack的全栈自动刷新](http://acgtofe.com/posts/2016/02/full-live-reload-for-express-with-webpack)
+b). [Express结合Webpack的全栈自动刷新](http://acgtofe.com/posts/2016/02/full-live-reload-for-express-with-webpack)
 
 ```javascript
     // 添加入口文件，(当前项目入口文件只有一个 App.jsx)
@@ -92,7 +92,7 @@ output属性 告诉webpack在哪里发出它创建的包以及如何命名这些
 }
 
 ```
-以上配置，告诉webpack，我们要把他创建的包放在'/build/dist/'目录下，静态文件引入目录也是'/build/dist/'，入口文件及引用的资源打包后是‘入口文件名.js’，其他文件打包后是‘文件名.sh0h3.min.js’格式
+以上配置，告诉webpack，我们要把他创建的包放在‘/build/dist/’目录下，静态文件引入目录也是‘/build/dist/’，入口文件及引用的资源打包后是‘入口文件名.js’，其他文件打包后是‘文件名.sh0h3.min.js’格式
 
 了解更多output配置，查看 [https://webpack.github.io/docs/configuration.html](output)
 
@@ -112,9 +112,9 @@ loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做�
 
 每个loader主要有两个功能：
 
-- 1）确定哪个或哪些文件应该由某个加载器转换（test属性）
+- a）确定哪个或哪些文件应该由某个加载器转换（test属性）
 
-- 2）使用哪些loader转换器来转换这些文件（use或loader属性）
+- b）使用哪些loader转换器来转换这些文件（use或loader属性）
 
 ```javascript
     module: {
@@ -132,11 +132,11 @@ loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做�
 
 #### 值得注意的是：
 
-- 1）include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低
+- a1）include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低
 
-- 2）[ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) 是一个单独打包css的插件，经过处理的css不会内联在页面上而是单独抽出来
+- b）[ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) 是一个单独打包css的插件，经过处理的css不会内联在页面上而是单独抽出来
 
-- 3）webpack1 和 webpack2+ 关于module配置有些不同，loader=> rules, loader => use, 参数形式 => options{}对象形式，详细参见 [webpack1升级webpack2](https://www.jianshu.com/p/393b1e606edf)
+- c）webpack1 和 webpack2+ 关于module配置有些不同，loader=> rules, loader => use, 参数形式 => options{}对象形式，详细参见 [webpack1升级webpack2](https://www.jianshu.com/p/393b1e606edf)
 
 
 
@@ -149,7 +149,7 @@ loader用来转换某些类型文件，但是插件可以实现更多功能
 
 ![plugins](https://raw.githubusercontent.com/fuqiang1/vue/develop/my-project/static/plugins.jpg)
 
-#### 1. [postcss](https://github.com/postcss/postcss)
+#### 1). [postcss](https://github.com/postcss/postcss)
 
 [postcss](https://github.com/postcss/postcss)是一个用JS插件转换样式的工具
 webpack2+里不能直接在rules里添加,要用插件LoaderOptionsPlugin再加到plugins配置中：
@@ -173,7 +173,7 @@ new webpack.LoaderOptionsPlugin({
 
 ##### [postcss](https://github.com/postcss/postcss) 常用插件：
 
-##### 1）[postcss-import](https://github.com/postcss/postcss-import)：
+##### a. [postcss-import](https://github.com/postcss/postcss-import)：
 
 要解析@import规则的路径
 
@@ -185,7 +185,7 @@ new webpack.LoaderOptionsPlugin({
     /* ... content of ../node_modules/normalize.css/normalize.css */
 ```
 
-##### 2）[postcss-sassy-mixins](https://github.com/andyjansson/postcss-sassy-mixins):
+##### b. [postcss-sassy-mixins](https://github.com/andyjansson/postcss-sassy-mixins):
 
 和sass关键字混合使用,例如:
 
@@ -205,7 +205,7 @@ new webpack.LoaderOptionsPlugin({
     }
 ```
 
-##### 3）[precss](https://github.com/jonathantneal/precss)：
+##### c. [precss](https://github.com/jonathantneal/precss)：
 
 可以让你在你的CSS文件中使用类似Sass的标记，例如：
 
@@ -233,7 +233,7 @@ new webpack.LoaderOptionsPlugin({
     }
 ```
 
-##### 4）[autoprefixer](https://github.com/postcss/autoprefixer)：
+##### d. [autoprefixer](https://github.com/postcss/autoprefixer)：
 
 将供应商前缀添加到CSS:
 
@@ -261,7 +261,7 @@ new webpack.LoaderOptionsPlugin({
     }
 ```
 
-##### 5）[postcss-cssnext](http://cssnext.io/)：
+##### e. [postcss-cssnext](http://cssnext.io/)：
 
 允许使用最新的css语法(已包含autoprefixer)，跟postcss中的autoprefixer重复，运行时报以下警告：（ TODO：如何消除这一警告 ）
 
@@ -272,7 +272,7 @@ new webpack.LoaderOptionsPlugin({
 (了解postcss更多插件，查阅 [https://github.com/postcss/postcss](https://github.com/postcss/postcss))
 
 
-#### 2. [DefinePlugin](https://doc.webpack-china.org/plugins/define-plugin/) 
+#### 2). [DefinePlugin](https://doc.webpack-china.org/plugins/define-plugin/) 
 允许创建一个在编译时可以配置的全局常量
 
 ```javascript
@@ -292,7 +292,7 @@ new webpack.DefinePlugin({
 // 以上变量可以通过 process.env.damain 或者 hello 全局获取使用
 ```
 
-#### 3. [HotModuleReplacementPlugin](https://doc.webpack-china.org/plugins/hot-module-replacement-plugin/)
+#### 3). [HotModuleReplacementPlugin](https://doc.webpack-china.org/plugins/hot-module-replacement-plugin/)
 
 启用热替换模块(Hot Module Replacement)，也被称为 HMR, 拓展用法参见[https://webpack.js.org/concepts/](https://webpack.js.org/concepts/)
 
