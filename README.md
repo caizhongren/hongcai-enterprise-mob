@@ -271,14 +271,16 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 # Redux
 
 
-首先，redux并不是必须的，它的作用相当于在顶层组件之上又加了一个组件，作用是进行逻辑运算、储存数据和实现组件尤其是顶层组件的通信。如果组件之间的交流不多，逻辑不复杂，只是单纯的进行视图的渲染，这时候用回调，context就行，没必要用redux，用了反而影响开发速度。但是如果组件交流特别频繁，逻辑很复杂，那redux的优势就特别明显了。我第一次做react项目的时候并没有用redux，所有的逻辑都是在组件内部实现，当时为了实现一个逻辑比较复杂的购物车，洋洋洒洒居然写了800多行代码，回头一看我自己都不知道写的是啥，画面太感人。
+首先，redux并不是必须的，它的作用相当于在顶层组件之上又加了一个组件，作用是进行逻辑运算、储存数据和实现组件尤其是顶层组件的通信。如果组件之间的交流不多，逻辑不复杂，只是单纯的进行视图的渲染，这时候用回调，context就行，没必要用redux，用了反而影响开发速度。但是如果组件交流特别频繁，逻辑很复杂，那redux的优势就特别明显了。
 
-先简单说一下redux和react是怎么配合的。react-redux提供了connect和Provider两个好基友，它们一个将组件与redux关联起来，一个将store传给组件。组件通过dispatch发出action，store根据action的type属性调用对应的reducer并传入state和这个action，reducer对state进行处理并返回一个新的state放入store，connect监听到store发生变化，调用setState更新组件，此时组件的props也就跟着变化。
+#### redux和react如何配合？
+
+react-redux提供了connect和Provider两个好基友，它们一个将组件与redux关联起来，一个将store传给组件。组件通过dispatch发出action，store根据action的type属性调用对应的reducer并传入state和这个action，reducer对state进行处理并返回一个新的state放入store，connect监听到store发生变化，调用setState更新组件，此时组件的props也就跟着变化。
 
 
 
 
-#### 流程是这个样子的：
+#### 流程图：
 
 
 ![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/simple_redux.jpg)
@@ -286,16 +288,16 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 值得注意的是connect，Provider，mapStateToProps,mapDispatchToProps是react-redux提供的，redux本身和react没有半毛钱关系，它只是数据处理中心，没有和react产生任何耦合，是react-redux让它们联系在一起。
 
 
-#### 接下来具体分析一下，redux以及react-redux到底是怎么实现的。
+#### 具体分析redux以及react-redux的实现
 
 
-#### 先上一张图
+#### 流程图
 
 ![](https://raw.githubusercontent.com/bailicangdu/react-pxq/master/src/images/all_redux.png)
 
 明显比第一张要复杂，其实两张图说的是同一件事。从上而下慢慢分析：
 
-### 先说说redux：
+### redux的组成：
 
 #### redux主要由三部分组成：store，reducer，action。
 
@@ -344,11 +346,11 @@ const reducer = combineReducers({
 
 >其实它也是一个reducer，它接受整个state和一个action，然后将整个state拆分发送给对应的reducer进行处理，所有的reducer会收到相同的action，不过它们会根据action的type进行判断，有这个type就进行处理然后返回新的state，没有就返回默认值，然后这些分散的state又会整合在一起返回一个新的state树。
 
-接下来分析一下整体的流程，首先调用store.dispatch将action作为参数传入，同时用getState获取当前的状态树state并注册subscribe的listener监听state变化，再调用combineReducers并将获取的state和action传入。combineReducers会将传入的state和action传给所有reducer，并根据action的type返回新的state，触发state树的更新，我们调用subscribe监听到state发生变化后用getState获取新的state数据。
+整体的流程分析：
 
-redux的state和react的state两者完全没有关系，除了名字一样。
+> 首先调用store.dispatch将action作为参数传入，同时用getState获取当前的状态树state并注册subscribe的listener监听state变化，再调用combineReducers并将获取的state和action传入。combineReducers会将传入的state和action传给所有reducer，并根据action的type返回新的state，触发state树的更新，我们调用subscribe监听到state发生变化后用getState获取新的state数据。
 
-**上面分析了redux的主要功能，那么react-redux到底做了什么？**
+注意：redux的state和react的state两者完全没有关系，除了名字一样。
 
 
 ## React-Redux
@@ -445,7 +447,7 @@ shouldComponentUpdate(nextProps, nextState) {
 }
 ```
 
-immutable 官方文档 http://facebook.github.io/immutable-js/docs/#/
+[immutable 官方文档](http://facebook.github.io/immutable-js/docs/#/)
 
 ## 项目搭建
 
