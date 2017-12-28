@@ -148,7 +148,8 @@ react的diff算法用在什么地方呢？当组件更新的时候，react会创
 
 ## 组件的生命周期
 
-![](https://github.com/bailicangdu/pxq/blob/master/src/images/react-lifecycle.png)
+![](https://www.ibm.com/developerworks/cn/web/1509_dongyue_react/index5341.png)
+(https://github.com/bailicangdu/pxq/blob/master/src/images/react-lifecycle.png)
 
 **组件在初始化时会触发5个钩子函数：**
 
