@@ -263,8 +263,8 @@ react推崇的是单向数据流，自上而下进行数据的传递，但是由
 
 兄弟关系的组件之间无法直接通信，它们只能利用同一层的上级作为中转站。而如果兄弟组件都是最高层的组件，为了能够让它们进行通信，必须在它们外层再套一层组件，这个外层的组件起着保存数据，传递信息的作用，这其实就是redux所做的事情。
 
-组件之间的信息还可以通过全局事件来传递。不同页面可以通过参数传递数据，下个页面可以用location.param来获取。其实react本身很简单，难的在于如何优雅高效的实现组件之间数据的交流。
-
+组件之间的信息还可以通过全局事件来传递。不同页面可以通过参数传递数据，下个页面可以用props.params/props.match.params(必传参数)和props.location.query(可选参数)来获取。其实react本身很简单，难的在于如何优雅高效的实现组件之间数据的交流。
+参考:[React 组件间通讯](http://taobaofed.org/blog/2016/11/17/react-components-communication/)
 
 
 
@@ -472,7 +472,7 @@ import { Router, Route, Redirect, IndexRoute, browserHistory, hashHistory } from
 ```javascript
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import * as reducer from '../Reducer/Index';
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'; //  用最简单的方式搭建异步 action 构造器
 
 //创建一个 Redux store 来以存放应用中所有的 state，应用中应有且仅有一个 store。
 
