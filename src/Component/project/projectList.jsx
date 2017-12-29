@@ -25,7 +25,8 @@ class Main extends Component {
             noData: require('../../images/project/no-data.png'),
             projectStatus: 9,
             balance: 100,
-            balanse: 0
+            balanse: 0,
+            serverTime: new Date().getTime()
         }
         // 查账户余额
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/enterpriseUser/getEnterpriseUserInfo',{},(res) => {
@@ -37,7 +38,13 @@ class Main extends Component {
                 })
             }
         },'')
-    
+        // 查询服务器时间
+        this.props.getData(process.env.RESTFUL_DOMAIN + '/systems/serverTime', {}, (res) => {
+            if (!res || res.ret === -1) {
+                return
+            }
+            this.setState({serverTime: res.time})
+        })
         this.chooseStatus = (page, pageSize, status, tab) => { //筛选类型
             this.setState({loading: false})
             this.setState({activeTab: tab})
@@ -135,9 +142,9 @@ class Main extends Component {
                                 </div>
                                 <div className="project-btns clear pass">
                                     <div className="btns-son">
-                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${(projectBill.repaymentTime - new Date().getTime()) >= ms? 'one' : ''}`}>查看详情</span>
+                                        <span onClick={this.toProjectDetai.bind(this, project.project.number, project.project.id)} className={`left ${(projectBill.repaymentTime - this.state.serverTime) >= ms? 'one' : ''}`}>查看详情</span>
                                         {
-                                            (projectBill.repaymentTime - new Date().getTime()) < ms ?
+                                            (projectBill.repaymentTime - this.state.serverTime) < ms ?
                                             <span onClick={this.toRealName} className="right" onClick={this.repayment.bind(this, project.project.id, projectBill.repaymentAmount, projectBill.repaymentNo)}>立即还款({projectBill.repaymentNo}/{project.project.cycle})</span> : null
                                         }
                                     </div>

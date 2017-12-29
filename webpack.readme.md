@@ -132,7 +132,7 @@ loader 一般以 xxx-loader 的方式命名，xxx 代表了这个 loader 要做�
 
 #### 值得注意的是：
 
-- a1）include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低
+- a）include & exclude属性 可以理解为白名单和黑名单，如果不设置，就会遍历所有文件，性能会降低
 
 - b）[ExtractTextPlugin](https://github.com/webpack-contrib/extract-text-webpack-plugin) 是一个单独打包css的插件，经过处理的css不会内联在页面上而是单独抽出来
 
@@ -177,7 +177,7 @@ new webpack.LoaderOptionsPlugin({
 
 要解析@import规则的路径
 
-```less
+```javascript
     /* 例如：@import "cssrecipes-defaults"; @import "normalize.css"; */
     /* 将会得到： */
 
@@ -190,18 +190,20 @@ new webpack.LoaderOptionsPlugin({
 和sass关键字混合使用,例如:
 
 ```css
+    /* before */
     @mixin border-radius($radius) {
-    -webkit-border-radius: $radius;
+        -webkit-border-radius: $radius;
         -moz-border-radius: $radius;
         -ms-border-radius: $radius;
-            border-radius: $radius;
+        border-radius: $radius;
     }
-    .box { @include border-radius(10px); }，即将转换为:
+    .box { @include border-radius(10px); }
+    /* after */
     .box {
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        border-radius: 10px;
     }
 ```
 
@@ -309,7 +311,7 @@ new webpack.HotModuleReplacementPlugin({
 | requestTimeout | (number) | 下载 manifest 的延时（webpack 3.0.0 后的版本支持）|
 
 ### 6. [resolve](https://webpack.github.io/docs/configuration.html)
-是一个影响模块解析的选项
+是一个影响模块解析的选项，
 reslove有很多其他属性，这里只说项目中使用的extensions，
 它是用来解析模块的扩展数组，比如，想把'require(/styles/common)'解析为 common.less, 就应该在extensions:[]数组中添加‘.less’，简单说就是会自动补全文件名
 
