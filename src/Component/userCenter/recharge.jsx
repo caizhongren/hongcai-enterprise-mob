@@ -176,7 +176,7 @@ class Main extends Component {
           <form className='form_style'>
             <span>充值金额</span>
             <input type="text" className="hide"/>
-            <input className="rechargeAmount" type='tel' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required/>
+            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <div className="btnAndTips">
             <div className={`rechargeBtn ${this.state.rechargeAmount.length >= 1 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.recharge}>立即充值</div>
