@@ -32,7 +32,7 @@ class Main extends Component {
             } else if (this.state.business === 'WITHDRAW'){
                 browserHistory.replace('/')
                 msg = '提现成功！'
-            } else if(this.state.business === 'UNBIND_CARD'){
+            } else if(this.state.business === 'UNBIND_BANKCARD'){
                 browserHistory.replace('/userCenter/bankcardManagement')
                 msg = '解绑成功！'
             } else if(this.state.business === 'BIND_BANK_CARD'){
