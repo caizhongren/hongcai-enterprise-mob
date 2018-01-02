@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {browserHistory, Link } from 'react-router';
 import { is, fromJS} from 'immutable';
 import {Tool} from '../../Config/Tool';

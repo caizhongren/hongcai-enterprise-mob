@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM, {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import route from './Router/Route'; //路由配置
@@ -9,11 +10,9 @@ import './Style/common.less';
 import './Style/footer.less';
 import './Style/index.less';
 
-
 store.subscribe(() => { //监听state变化
     //console.log(store.getState())
 });
-
 render(
     <Provider store={store}>
         {route}

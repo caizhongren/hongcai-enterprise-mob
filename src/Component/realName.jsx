@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import { Link, IndexLink, browserHistory } from 'react-router';
 import pureRender from 'pure-render-decorator';
 import { is, fromJS} from 'immutable';

@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {History, Link, browserHistory } from 'react-router';
 import { is, fromJS} from 'immutable';
 import {Tool, Count, Utils} from '../Config/Tool';
@@ -6,7 +6,6 @@ import {MD5} from '../Config/MD5'
 import {template} from './common/mixin';
 import '../Style/login'
 import '../Style/register'
-
 class Main extends Component {
     constructor() {
         super();

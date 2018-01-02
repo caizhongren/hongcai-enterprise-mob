@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import { is, fromJS} from 'immutable';
 import {template} from './common/mixin';
 import '../Style/login.less'

@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {browserHistory } from 'react-router';
 import { is, fromJS} from 'immutable';
 import { template, Loading, Footer} from '../common/mixin';

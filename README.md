@@ -458,7 +458,13 @@ shouldComponentUpdate(nextProps, nextState) {
 2、从 react.js，redux，react-router 中引入所需要的对象和方法。
 
 ```javascript
+// 注意： 从 React v15.5 开始 ，React.PropTypes 助手函数已被弃用，我们建议使用 prop-types 库 来定义contextTypes。
+// before:(已弃用)
 import React, {Component, PropTypes} from 'react';
+// after:
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
