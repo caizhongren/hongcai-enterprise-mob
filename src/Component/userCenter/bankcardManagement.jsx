@@ -23,7 +23,7 @@ class Main extends Component {
             tTotalAssets: 0,
         }
         // 查询是否可解绑卡
-        this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/unbindBankCardApply', null, (res) => {
+        this.state.isAuth && this.state.haveCard ? this.props.getData(process.env.RESTFUL_DOMAIN + '/users/0/unbindBankCardApply', null, (res) => {
             if (res.ret && res.ret === -1) {
                 Tool.alert(res.msg);
                 res.code === -1000 ? browserHistory.replace('/login') : null
@@ -32,7 +32,7 @@ class Main extends Component {
                     unbindBankCardApply: res.status
                 })
             }
-        }, '')
+        }, '') : null
         this.changeValue = (event) => {
           let amount = event.target.value.replace(/[^\d.]/g, "").
           //只允许一个小数点              
