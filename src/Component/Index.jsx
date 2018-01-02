@@ -22,9 +22,12 @@ class Main extends Component {
         unpaidAmount: 0, // 待还金额
         showRealNameMask: false, // 控制实名认证弹窗
         loading: true,
+        haveCard: false,
+        isAuth: false,
       }
 
       this.getEnterpriseUserInfo = () => {
+        // 查询用户借款信息
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/enterpriseUser/getEnterpriseUserInfo',{},(res) => {
           this.setState({loading: false})
           if (res.ret === -1) {
@@ -45,6 +48,7 @@ class Main extends Component {
       }
 
       this.userSecurityInfo = () => {
+        // 查询用户认证状态
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/userSecurityInfo',{},(res) => {
           this.setState({loading: false})
           if (res.ret === -1) {
@@ -53,6 +57,21 @@ class Main extends Component {
             this.setState({
               userAuth: res.data.userAuth
             })
+          }
+        },'')
+
+        // 查询用户绑卡状态
+        this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/bank/getUserBankCard',null,(res) => {
+          this.setState({loading: false})
+          if (res.ret === -1) {
+            Tool.alert(res.msg);
+          } else{
+            this.setState({isAuth: res.data.isAuth})
+            if (res.data.card) {
+              this.setState({haveCard: (res.data.card.status === 'VERIFIED')})
+            } else {
+              this.setState({haveCard: false})
+            }
           }
         },'')
       }
@@ -71,6 +90,14 @@ class Main extends Component {
           }
         } else {
           this.setState({showRealNameMask: true})
+        }
+      }
+      this.toRecharge = (page) => {
+        if (this.state.isAuth && this.state.haveCard) {
+          page === 'recharge' ? browserHistory.push('/userCenter/recharge') : browserHistory.push('/userCenter/withdraw')
+        } else {
+          Tool.alert('请先绑定银行卡！');
+          browserHistory.push('/userCenter/bankcardManagement');
         }
       }
     }
@@ -130,8 +157,8 @@ class Main extends Component {
             <div className="btns">
               { this.state.userAuth && this.state.userAuth.authStatus === 2 ? 
               <ul>
-                <Link to='/userCenter/recharge'><div className="fl">充值</div></Link>
-                <Link to='/userCenter/withdraw'><div className="fr">提现</div></Link>
+                <div className="fl" onClick={this.toRecharge.bind(this,'recharge')}>充值</div>
+                <div className="fr" onClick={this.toRecharge.bind(this,'withdraw')}>提现</div>
               </ul>
               : <div className="toRealNameAuth" onClick={this.toRealName}>开通银行资金存管</div>
               }

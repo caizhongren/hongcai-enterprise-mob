@@ -87,17 +87,17 @@ const projectList = (location, cb) => {require.ensure([], require => {cb(null, r
 const RouteConfig = (
     <Router history={browserHistory}>
         <Route path="/" component={Roots}>
-            <IndexRoute component={index} title='账户总览'/> //首页
+            <IndexRoute component={index} title='账户总览'/>
             <Route path="index" component={index} title='账户总览' />
-            <Route path="register" getComponent={register} title='注册'/> //注册
-            <Route path="login" getComponent={login}  title='登录'/> //注册
+            <Route path="register" getComponent={register} title='注册'/>
+            <Route path="login" getComponent={login}  title='登录'/>
             <Route path="resetMobile" getComponent={resetMobile} title='更改绑定手机号'/>
             <Route path="bindMobile" getComponent={bindMobile} title='绑定新手机号'/>
             <Route path="forgetPassword" getComponent={forgetPassword} title='忘记密码'/>
             <Route path="resetPassword" getComponent={resetPassword} title='重置密码'/>
             <Route path="modifyPassword" getComponent={modifyPassword} title='修改密码'/>
-            <Route path="loginPassword" getComponent={loginPassword} title='登录密码'/> //注册
-            <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/> //注册协议
+            <Route path="loginPassword" getComponent={loginPassword} title='登录密码'/>
+            <Route path="registerAgree" getComponent={registerAgree}  title='注册服务协议'/>
             <Route path="realName" getComponent={realName}  title='开通银行资金存管账户'/>
             <Route path="yeepayCallback/:business/:yeepayStatus" getComponent={yeepayCallback}  title='跳转中···'/> 
             <Route path="userCenter/recharge" getComponent={recharge}  title='充值'/>
