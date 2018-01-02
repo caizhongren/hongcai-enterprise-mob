@@ -21,7 +21,7 @@ class Main extends Component {
             bankCardNo: '0000',
             monthLimit: '不限',
             dayLimit: '',
-            singleLimit: 0,
+            singleRemain: 0,
             userType: 1,
         }
 
@@ -71,7 +71,7 @@ class Main extends Component {
                 bankCardNo: res.bankNo,
                 monthLimit: res.monthLimit,
                 dayLimit: res.dayLimit,
-                singleLimit: res.singleLimit,
+                singleRemain: res.singleRemain,
                 bankCardSrc: require('../../images/bankcardImg/' + res.bankCode + '.png')
               })
             }
@@ -98,9 +98,9 @@ class Main extends Component {
           } else if (this.state.rechargeAmount < 3) {
             Tool.alert('充值金额必须大于等于3元！')
             return;
-          } else if (this.state.singleLimit > 0 && this.state.rechargeAmount > this.state.singleLimit) {
-            let singLimit = this.state.singleLimit%10000 !== 0 ? this.state.singleLimit : this.state.singleLimit/10000
-            let million = this.state.singleLimit%10000 !== 0 ? '' : '万'
+          } else if (this.state.singleRemain > 0 && this.state.rechargeAmount > this.state.singleRemain) {
+            let singLimit = this.state.singleRemain%10000 !== 0 ? this.state.singleRemain : this.state.singleRemain/10000
+            let million = this.state.singleRemain%10000 !== 0 ? '' : '万'
             Tool.alert('该卡本次最多充值' + singLimit + million + '元，建议您分多次充值，或在电脑端登录biz.hongcai.com，使用网银充值。')
             return;
           }
@@ -151,7 +151,7 @@ class Main extends Component {
     render() {
       let dayLimit = this.state.dayLimit < 0 ? '不限' : this.state.dayLimit%10000 !== 0 ? this.state.dayLimit : this.state.dayLimit/10000 + '万'
       let monthLimit = this.state.monthLimit < 0 ? '不限' : this.state.monthLimit%10000 !== 0 ? this.state.monthLimit : this.state.monthLimit/10000 + '万'
-      let singleLimit = this.state.singleLimit < 0 ? `不限` : this.state.singleLimit%10000 !== 0 ? this.state.singleLimit : this.state.singleLimit/10000 + '万'
+      let singleRemain = this.state.singleRemain < 0 ? `不限` : this.state.singleRemain%10000 !== 0 ? this.state.singleRemain : this.state.singleRemain/10000 + '万'
       return (
         <div className="component_container recharge">
           {this.state.loading && <Loading />}
@@ -176,7 +176,7 @@ class Main extends Component {
           <form className='form_style'>
             <span>充值金额</span>
             <input type="text" className="hide"/>
-            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleLimit}`} onChange={this.changeValue.bind(this)} required/>
+            <input className="rechargeAmount" type='text' value={this.state.rechargeAmount} placeholder={`该卡本次最多充值 ${singleRemain}`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <div className="btnAndTips">
             <div className={`rechargeBtn ${this.state.rechargeAmount.length >= 1 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.recharge}>立即充值</div>
