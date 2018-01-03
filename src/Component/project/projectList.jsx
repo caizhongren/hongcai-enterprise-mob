@@ -16,7 +16,7 @@ class Main extends Component {
         this.state = {
             loading: Boolean,
             data:[],  //分销商列表数组
-            activeTab: String,
+            activeTab: '0',
             choosedClass:'team_choosed', //当前选中的类别，以此设置class名
             currentPage:1, //当前所在页数
             totalPage: 1,//总共的页数
@@ -63,7 +63,6 @@ class Main extends Component {
         })
         this.chooseStatus = (page, pageSize, status, tab) => { //筛选类型
             this.setState({loading: false})
-            this.setState({activeTab: tab})
             browserHistory.replace('/project/projectList?tab=' + tab)
             this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status}, (res) => {
                 this.setState({loading: true})
@@ -84,6 +83,13 @@ class Main extends Component {
                     res.code === -1000 ? browserHistory.replace('/login') : null
                 }
             }, 'changeType')
+        }
+        this.toggleTab = (tab) => {
+            if (this.state.activeTab == tab) {
+                return
+            }
+            this.setState({activeTab: tab})
+            tab == '1' ? this.chooseStatus(1, 3, 10, '1') : this.chooseStatus(1, 3, 9, '0')
         }
         this.getNextPage = () => { //加载下一页
             this.setState({currentPage: this.state.currentPage + 1})
@@ -130,7 +136,7 @@ class Main extends Component {
         }
     }
     componentDidMount (props) {
-        this.props.location.query.tab == '1' ? this.chooseStatus(1, 3, 10, '1') : this.chooseStatus(1, 4, 9, '0')
+        this.props.location.query.tab == '1' ? this.chooseStatus(1, 3, 10, '1') : this.chooseStatus(1, 3, 9, '0')
     }
     render() {
         let ms = 28 * 24 * 60 * 60 * 1000
@@ -139,8 +145,8 @@ class Main extends Component {
                 {!this.state.loading && <Loading />}
                 <nav className='team_nav'>
                    <ul className='clear'>
-                       <li className={!this.state.activeTab || this.state.activeTab === '0' ? this.state.choosedClass:null} onClick={this.chooseStatus.bind(this, 1, 4, 9, '0')}><p>待还款</p></li>
-                       <li className={this.state.activeTab === '1' ? this.state.choosedClass:null} onClick={this.chooseStatus.bind(this, 1, 3, 10, '1')}><p>已结清</p></li>
+                       <li className={!this.state.activeTab || this.state.activeTab === '0' ? this.state.choosedClass:null} onClick={this.toggleTab.bind(this, '0')}><p>待还款</p></li>
+                       <li className={this.state.activeTab === '1' ? this.state.choosedClass:null} onClick={this.toggleTab.bind(this, '1')}><p>已结清</p></li>
                    </ul>
                </nav>
                {
