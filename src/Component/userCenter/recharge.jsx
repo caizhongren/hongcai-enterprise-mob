@@ -98,7 +98,7 @@ class Main extends Component {
           } else if (this.state.rechargeAmount < 3) {
             Tool.alert('充值金额必须大于等于3元！')
             return;
-          } else if (this.state.singleRemain > 0 && this.state.rechargeAmount > this.state.singleRemain) {
+          } else if (this.state.singleRemain >= 0 && this.state.rechargeAmount > this.state.singleRemain) {
             let singLimit = this.state.singleRemain%10000 !== 0 ? this.state.singleRemain : this.state.singleRemain/10000
             let million = this.state.singleRemain%10000 !== 0 ? '' : '万'
             Tool.alert('该卡本次最多充值' + singLimit + million + '元，建议您分多次充值，或在电脑端登录biz.hongcai.com，使用网银充值。')
