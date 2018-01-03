@@ -71,6 +71,8 @@ class Main extends Component {
                     let dataList = this.state.data.concat(res.data)
                     if (dataList.length <= 2) {
                         document.getElementsByClassName('projects')[0].style.height = window.innerHeight + 'px'
+                    } else {
+                        document.getElementsByClassName('projects')[0].style.height = 'auto'
                     }
                     this.setState({
                         data: dataList,
