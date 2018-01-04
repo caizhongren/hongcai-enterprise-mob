@@ -42,7 +42,7 @@ class Main extends Component {
                 browserHistory.replace('/userCenter/securitySettings')
                 msg = '开通成功！'
             } else if (this.state.business === 'REPAYMENT'){
-                browserHistory.replace('/project/projectList')
+                browserHistory.replace('/project/projectList?tab=0')
                 msg = '还款成功！'
             } else if (this.state.business === 'RESET_PASSWORD') {
                 browserHistory.replace('userCenter/securitySettings')
