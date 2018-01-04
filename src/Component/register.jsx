@@ -21,7 +21,6 @@ class Main extends Component {
             disable: true,
             nextPart: true,
             pwdHide: false,
-            isUnique: 0,
             mobilePattern: /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/,
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
             Timer: null,
@@ -34,9 +33,6 @@ class Main extends Component {
         this.changeValue = (type, event) => {
             if(type === 'phone'){
               let value = event.target.value.replace(/\D/g,'')
-              if (value.length === 11) {
-                 this.checkIsUnique(value)
-              }
               this.setState({
                   phone:value
               })
@@ -65,23 +61,6 @@ class Main extends Component {
             let $code = document.getElementById('get_captcha')
             Count.countDown($code)
         }
-        this.checkIsUnique = (mobile) => {
-            var that = this
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/isUniqueMobile', {
-                mobile: mobile,
-                userType: 1
-            }, (res) => {
-                if (res.ret === 1) {
-                    if (res.data.isUnique === 0) { // 未注册
-                        that.setState({isUnique: 0})
-                    } else { // 已注册
-                        that.setState({isUnique: 1})
-                    }
-                } else {
-                    Tool('请重试')
-                }
-            }, '', 'POST')
-        } 
         this.sendMobCaptcha = () => {
             if (this.state.busy) {
                 return
@@ -99,13 +78,9 @@ class Main extends Component {
                 return
             }
             var that = this
-            if (that.state.isUnique === 1) {
-                Tool.alert('手机号已注册，请直接登录哦～')
-                return
-            }
             that.setState({busy: true})
             let guestId = Tool.guestId(32, 16)
-            that.props.getData(process.env.RESTFUL_DOMAIN + '/users/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 0, guestId: guestId}, (res) => {
+            that.props.getData(process.env.RESTFUL_DOMAIN + '/users/mobileCaptcha', {mobile: that.state.phone, picCaptcha: that.state.picCaptcha, business: 0, guestId: guestId, userType: 1, type: 1}, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
                     that.setState({

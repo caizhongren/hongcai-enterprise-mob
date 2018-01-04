@@ -16,16 +16,12 @@ class Main extends Component {
             busy: false,//防止重复提交
             canGoNext: true,
             isUnique: 0, //图形验证码是否正确
-            isUniqueMobile: 0, //手机号是否注册
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
             Timer: null,
         }
         this.changeValue = (type, event) => {
           if (type === 'phone') {
             let value = event.target.value.replace(/\D/gi,'')
-            if (value.length === 11) {
-                this.checkIsUnique(value)
-             }
             this.setState({
               phone: value
           })
@@ -82,10 +78,6 @@ class Main extends Component {
               Tool.alert('请输入正确的手机号！');
               return
             }
-            if (this.state.isUniqueMobile === 1) {
-                Tool.alert('手机号已注册，请直接登录哦～')
-                return;
-            }
             if (!this.state.picCaptcha) {
               Tool.alert('请输入图形验证码！')
               return
@@ -107,6 +99,7 @@ class Main extends Component {
                 business: 2, 
                 guestId: guestId,
                 userType: 1,
+                type: 1,
             }, (res) => {
                 if (res && res.ret !== -1) {
                     that.countDown()
@@ -121,23 +114,6 @@ class Main extends Component {
                 }
             },'', 'POST')
         }
-        this.checkIsUnique = (mobile) => {
-          var that = this
-          that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/isUniqueMobile', {
-              mobile: mobile,
-              userType: 1
-          }, (res) => {
-              if (res.ret === 1) {
-                  if (res.data.isUnique === 0) { // 未注册
-                      that.setState({isUniqueMobile: 0})
-                  } else { // 已注册
-                      that.setState({isUniqueMobile: 1})
-                  }
-              } else {
-                  Tool.alert('请重试')
-              }
-          }, '', 'POST')
-        }
         this.bindMobile = () => {
             let that = this
             let mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/;
@@ -150,10 +126,6 @@ class Main extends Component {
             if (!mobilePattern.test(this.state.phone)) {
                 Tool.alert('请输入正确的手机号！');
                 return
-            }
-            if (this.state.isUniqueMobile === 1) {
-                Tool.alert('手机号已注册，请直接登录哦～')
-                return;
             }
             if(that.state.picCaptcha.length !== 4 || that.state.isUnique === 0) {
                 Tool.alert('请输入正确的图形验证码！')
