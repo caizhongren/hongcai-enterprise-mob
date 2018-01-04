@@ -64,7 +64,7 @@ class Main extends Component {
         this.chooseStatus = (page, pageSize, status, tab) => { //筛选类型
             this.setState({loading: false})
             browserHistory.replace('/project/projectList?tab=' + tab)
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status}, (res) => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseProjects/projects',{page:page, pageSize: pageSize,status:status, token: '825c5090f81f003f8fdbbb6543d6894f1ae54ec43430a554'}, (res) => {
                 this.setState({loading: true})
                 if (res && res.ret !== -1) {
                     let dataList = this.state.data.concat(res.data)
@@ -85,7 +85,7 @@ class Main extends Component {
             }, 'changeType')
         }
         this.toggleTab = (tab) => {
-            if (this.state.activeTab == tab) {
+            if (this.props.location.query.tab == tab) {
                 return
             }
             this.setState({activeTab: tab})
@@ -93,7 +93,7 @@ class Main extends Component {
         }
         this.getNextPage = () => { //加载下一页
             this.setState({currentPage: this.state.currentPage + 1})
-            this.state.activeTab === '0' ? this.chooseStatus(this.state.currentPage + 1, 3, 9, '0') : this.chooseStatus(this.state.currentPage + 1, 3,10, '1')
+            this.props.location.query.tab === '0' ? this.chooseStatus(this.state.currentPage + 1, 3, 9, '0') : this.chooseStatus(this.state.currentPage + 1, 3,10, '1')
         }
         this.repayment = function(projectId, repaymentAmount, repaymentNo) { // 还款
             if (!this.state.isAuth || !this.state.haveCard) {
@@ -135,7 +135,8 @@ class Main extends Component {
             this.setState({data: [], currentPage: 1})
         }
     }
-    componentDidMount (props) {
+    componentWillMount (props) {
+        this.setState({activeTab:this.props.location.query.tab})
         this.props.location.query.tab == '1' ? this.chooseStatus(1, 3, 10, '1') : this.chooseStatus(1, 3, 9, '0')
     }
     render() {
@@ -151,7 +152,7 @@ class Main extends Component {
                </nav>
                {
                    this.state.data && this.state.data.length > 0 ?
-                   this.state.activeTab === '0' ?
+                   this.props.location.query.tab === '0' ?
                    this.state.data.map((project , index) => {
                        return project.projectBills.map((projectBill, index) =>{
                         
