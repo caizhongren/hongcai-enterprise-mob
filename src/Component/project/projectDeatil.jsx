@@ -128,7 +128,7 @@ class Main extends Component {
           { this.state.projectBills.map((item , index) => {
             return (
               <div className={`each-line ${item.status === 1 ? 'ed': ''}`} key={index}>
-                <div className="column1"><span className={item.status === 1  ? 'ed' : ''}>预计</span>{dates(item.repaymentTime, '-')}</div>
+                <div className="column1"><span className={item.status === 1  ? 'ed' : ''}>预计</span>{item.status === 1 ? dates(item.realRepaymentTime, '-') : dates(item.repaymentTime, '-')}</div>
                 <div className="column2">
                   <span className={`circle ${item.status === 1 ? 'ed' : ''}`}></span>
                   <span className={`vertical-line ${index === this.state.projectBills.length-1 ? 'hidden' : this.state.projectBills[index+1].status === 1 ? 'ed' : ''}`}></span>
