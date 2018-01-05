@@ -27,23 +27,7 @@ class Main extends Component {
             balance: 100,
             balanse: 0,
             serverTime: new Date().getTime(),
-            haveCard: false,
-            isAuth: false,
         }
-        // 查询用户绑卡状态
-        this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/bank/getUserBankCard',null,(res) => {
-            this.setState({loading: false})
-            if (res.ret === -1) {
-                Tool.alert(res.msg); 
-            } else{
-                this.setState({isAuth: res.data.isAuth})
-                if (res.data.card) {
-                    this.setState({haveCard: (res.data.card.status === 'VERIFIED')})
-                } else {
-                    this.setState({haveCard: false})
-                }
-            }
-        },'')
         // 查账户余额
         this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/enterpriseUser/getEnterpriseUserInfo',{},(res) => {
             if (res.ret === -1) {
@@ -96,11 +80,6 @@ class Main extends Component {
             this.props.location.query.tab === '0' ? this.chooseStatus(this.state.currentPage + 1, 3, 9, '0') : this.chooseStatus(this.state.currentPage + 1, 3,10, '1')
         }
         this.repayment = function(projectId, repaymentAmount, repaymentNo) { // 还款
-            if (!this.state.isAuth || !this.state.haveCard) {
-                Tool.alert('请先绑定银行卡！');
-                browserHistory.push('/userCenter/bankcardManagement');
-                return;
-            }
             if (repaymentAmount > this.state.balance) {
               Tool.alert('账户余额不足，请先充值');
               browserHistory.push('/userCenter/recharge')
