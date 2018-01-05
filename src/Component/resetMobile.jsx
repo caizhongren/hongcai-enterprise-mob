@@ -79,7 +79,7 @@ class Main extends Component {
             if (!that.state.canGoNext) {
                 return
             }
-            if (!that.state.picCaptcha || !that.state.mobCaptcha) {
+            if (!that.state.picCaptcha || !that.state.mobCaptcha || that.state.mobCaptcha.length < 6) {
                 return
             }
             if(that.state.picCaptcha.length !== 4) {
@@ -148,7 +148,7 @@ class Main extends Component {
                     </div>
                     <span id="get_captcha" className="fr" onClick={this.sendMobCaptcha}>获取短信验证码</span>
                 </form>
-                <div className={`btu_next ${!this.state.picCaptcha || this.state.mobCaptcha.length <6 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.goNextPage}>下一步</div>
+                <div className={`btu_next ${!this.state.picCaptcha || this.state.mobCaptcha.length < 6 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.goNextPage}>下一步</div>
                 </div> 
             </div>
         )

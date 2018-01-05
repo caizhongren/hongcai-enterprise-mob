@@ -98,7 +98,7 @@ class Main extends Component {
             if (!that.state.canGoNext) {
                 return
             }
-            if (!that.state.picCaptcha || !that.state.mobCaptcha || !this.state.phone) {
+            if (!this.state.phone || !that.state.picCaptcha || !that.state.mobCaptcha || that.state.phone.length < 11 || that.state.mobCaptcha.length < 6) {
                 return
             }
             if (!mobilePattern.test(this.state.phone)) {
@@ -165,7 +165,7 @@ class Main extends Component {
                     </div>
                     <span id="get_captcha" className="fr" onClick={this.sendMobCaptcha}>获取短信验证码</span>
                 </form>
-                <div className={`btu_next ${!this.state.picCaptcha || this.state.mobCaptcha.length <6 || this.state.phone.length < 11 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.bindMobile}>绑定新手机号</div>
+                <div className={`btu_next ${!this.state.picCaptcha || this.state.mobCaptcha.length < 6 || this.state.phone.length < 11 ? 'btn_blue_disabled':'btn_blue'}`} onClick={this.bindMobile}>绑定新手机号</div>
                 </div> 
             </div>
         )
