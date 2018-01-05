@@ -28,7 +28,6 @@ class Main extends Component {
           } else if (type === 'picCaptcha') {
             let value = event.target.value.replace(/[\W]/g, '')
               if (value.length >= 4) {
-                  this.checkPicCaptcha(value)
                   value = event.target.value.slice(0, 4)
               }
               this.setState({
@@ -48,23 +47,6 @@ class Main extends Component {
             let $code = document.getElementById('get_captcha')
             Count.countDown($code)
         }
-        this.checkPicCaptcha = (picCaptcha) => {  //
-            if (this.state.picCaptcha.length === 0) {
-                return
-            }
-            var that = this
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/checkPicCaptcha', {
-                captcha: picCaptcha
-            }, (res) => {
-                if (res.ret === -1) { // 图形验证码错误
-                    if (res.code === '-1245') {
-                        that.setState({isUnique: 0})
-                    }
-                } else { // 图形验证码正确
-                    that.setState({isUnique: 1})
-                }
-            }, '', 'POST')
-        } 
         this.sendMobCaptcha = () => {
           let mobilePattern = /^((13[0-9])|(15[^4,\D])|(18[0-9])|(17[03678])|(14[0-9]))\d{8}$/;
             if (this.state.busy) {
@@ -82,12 +64,8 @@ class Main extends Component {
               Tool.alert('请输入图形验证码！')
               return
             }
-            if(this.state.picCaptcha.length !== 4 || this.state.isUnique === 0) {
+            if(this.state.picCaptcha.length !== 4) {
                 Tool.alert('请输入正确的图形验证码！')
-                return
-            }
-            if (this.state.isUnique === 2) {
-                Tool.alert(this.state.msg)
                 return
             }
             var that = this
@@ -127,7 +105,7 @@ class Main extends Component {
                 Tool.alert('请输入正确的手机号！');
                 return
             }
-            if(that.state.picCaptcha.length !== 4 || that.state.isUnique === 0) {
+            if(that.state.picCaptcha.length !== 4) {
                 Tool.alert('请输入正确的图形验证码！')
                 return
             }

@@ -17,7 +17,6 @@ class Main extends Component {
             mobCaptcha: '', // 短信验证码
             busy: false,//防止重复提交
             canGoNext: true,//防止重复提交
-            isUnique: 0,
             codeSrc: process.env.WEB_DEFAULT_DOMAIN + '/siteUser/getPicCaptcha',
             Timer: null,
         }
@@ -25,7 +24,6 @@ class Main extends Component {
             if (type === 'picCaptcha') {
                 let value = event.target.value.replace(/[\W]/g, '')
                 if (value.length >= 4) {
-                    this.checkPicCaptcha(value)
                     value = event.target.value.slice(0, 4)
                 }
                 this.setState({
@@ -44,23 +42,6 @@ class Main extends Component {
         this.countDown = () => { // 倒计时效果
             let $code = document.getElementById('get_captcha')
             Count.countDown($code)
-        }
-        this.checkPicCaptcha = (picCaptcha) => {
-            if (this.state.picCaptcha.length === 0) {
-                return
-            }
-            var that = this
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/checkPicCaptcha', {
-                captcha: picCaptcha
-            }, (res) => {
-                if (res.ret === -1) { // 图形验证码错误
-                    if (res.code === '-1245') {
-                        that.setState({isUnique: 0})
-                    }
-                } else { // 图形验证码正确
-                    that.setState({isUnique: 1})
-                }
-            }, '', 'POST')
         } 
         this.sendMobCaptcha = () => {
             if (this.state.busy) {
@@ -70,12 +51,8 @@ class Main extends Component {
                 Tool.alert('请输入图形验证码！')
                 return
             }
-            if(this.state.picCaptcha.length !== 4 || this.state.isUnique === 0) {
+            if(this.state.picCaptcha.length !== 4) {
                 Tool.alert('请输入正确的图形验证码！')
-                return
-            }
-            if (this.state.isUnique === 2) {
-                Tool.alert(this.state.msg)
                 return
             }
             var that = this
@@ -103,15 +80,15 @@ class Main extends Component {
             if (!that.state.picCaptcha || !that.state.mobCaptcha) {
                 return
             }
-            if(that.state.picCaptcha.length !== 4 || that.state.isUnique === 0) {
+            if(that.state.picCaptcha.length !== 4) {
                 Tool.alert('请输入正确的图形验证码！')
                 return
             }
             that.setState({canGoNext: false})
-            that.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteUser/checkMobileCaptcha', {
-                mobile: that.state.phone,
-                captcha: that.state.mobCaptcha,
-                business: 1
+            that.props.getData(process.env.RESTFUL_DOMAIN + '/captchas/' + that.state.phone +'/check', {
+                mobile: this.state.phone,
+                captcha: this.state.mobCaptcha,
+                business: 1,
             }, (res) => {
                 setTimeout(() => {
                     that.setState({canGoNext: true})
@@ -127,7 +104,7 @@ class Main extends Component {
                         browserHistory.push(path)
                     }, 500);
                 }
-            })
+            }, '', 'POST')
         }
         
     }
