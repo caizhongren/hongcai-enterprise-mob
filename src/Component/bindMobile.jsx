@@ -26,17 +26,14 @@ class Main extends Component {
               phone: value
           })
           } else if (type === 'picCaptcha') {
-            let value = event.target.value.replace(/[\W]/g, '')
-              if (value.length >= 4) {
-                  value = event.target.value.slice(0, 4)
-              }
-              this.setState({
-                  picCaptcha: value
-              })
+            let value = event.target.value.replace(/\D/g, '')
+            this.setState({
+                picCaptcha: value
+            })
           } else {
-              this.setState({
-                  mobCaptcha: event.target.value.replace(/\D/g,'')
-              })
+            this.setState({
+                mobCaptcha: event.target.value.replace(/\D/g,'')
+            })
           }
         }
         this.refreshCode = () => {
@@ -157,7 +154,7 @@ class Main extends Component {
                     <input id="phone" type="tel" maxLength='11' value={this.state.phone} placeholder='请输入手机号' onChange={this.changeValue.bind(this,'phone')} onPaste={Utils.pasteMobile.bind(this)} required />
                     </div>
                     <div className='input_container pic'>
-                    <input type="text" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} onPaste={Utils.pastePic.bind(this)} required />
+                    <input type="tel" maxLength='4' value={this.state.picCaptcha} placeholder='请输入图形验证码' onChange={this.changeValue.bind(this,'picCaptcha')} onPaste={Utils.pastePic.bind(this)} required />
                     </div>
                     <span id="captcha_img" className="fr" onClick={this.refreshCode}><img  id="_img" src={this.state.imgSrc} alt=""/></span>                
                     <div className='input_container message'>
