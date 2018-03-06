@@ -124,13 +124,13 @@ class Main extends Component {
                         <span className="fr">{this.state.haveTrusteeshipAccount? '已开通':'去开通'}</span>
                     </div>
                 </div> 
-                <div className="form_style clear">
+                {/* <div className="form_style clear">
                     <span className="fl">登录密码</span>
                     <div className="fr">
                         <img  className="fr" src={icon} alt="" width="10%"/> 
                         <Link to="/modifyPassword"><span className="fr">修改</span></Link>
                     </div>
-                </div> 
+                </div>  */}
                 <div className="form_style clear">
                     <span className="fl">交易密码</span>
                     <div className="fr">

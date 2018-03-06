@@ -17,7 +17,8 @@ class Main extends Component {
             userBalance: 0, 
             unpaidAmount: 0,
             bankCardName: '',
-            bankCardNo: '0000'
+            bankCardNo: '0000',
+            maxWithdrawAmount: 0
         }
 
         this.changeValue = (event) => {
@@ -32,6 +33,18 @@ class Main extends Component {
         }
 
         this.getUserBalance = () => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/getMaxWithdrawAmount',null,(res) => {
+                this.setState({loading: false})
+                if (res.ret === -1) {
+                    Tool.alert(res.msg);
+                    res.code === -1000 ? browserHistory.replace('/login') : null
+                }else{
+                    this.setState({
+                        maxWithdrawAmount: res, // 查询企业最大可提现金额
+                    })
+                }
+            },'')
+
             this.props.getData(process.env.WEB_DEFAULT_DOMAIN + '/siteAccount/getUserBalance',null,(res) => {
                 this.setState({loading: false})
                 if (res.ret === -1) {
@@ -55,18 +68,17 @@ class Main extends Component {
                     })
                 }
             }, '')
-
         }
 
         this.withdraw = () => {
-            if (!this.state.preventMountSubmit || this.state.userBalance - 2 < 0 || !this.state.withdrawAmount || this.state.withdrawAmount == 0) {
+            if (!this.state.preventMountSubmit || this.state.maxWithdrawAmount - 2 <= 0 || this.state.userBalance - 2 <= 0 || !this.state.withdrawAmount || this.state.withdrawAmount == 0) {
                 return
             }
             if (this.state.withdrawAmount < 0.01) {
                 Tool.alert('提现金额必须大于等于0.01元！')
                 return;
-            } else if (this.state.withdrawAmount > this.state.userBalance - 2) {
-                Tool.alert('最大提现金额：' + number(this.state.userBalance - 2) + '元')
+            } else if (this.state.withdrawAmount > Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2) {
+                Tool.alert('最大提现金额：' + number(Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2) + '元')
                 return;
             }
             this.setState({
@@ -121,16 +133,16 @@ class Main extends Component {
               <li>**** **** **** {this.state.bankCardNo}</li>
             </ul>
           </div>
-          <div className="bankLimit">可提现金额：{this.state.userBalance - 2 < 0 ? 0 : number(this.state.userBalance - 2)}元
+          <div className="bankLimit">可提现金额：{Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2 < 0 ? 0 : number(Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2)}元
           </div>
           <form className='form_style'>
             <span>提现金额</span>
             <input type="text" className="hide"/>
-            <input className="rechargeAmount" type='text' value={this.state.withdrawAmount} placeholder={`该卡本次最高可提现：${this.state.userBalance - 2 < 0 ? 0 : number(this.state.userBalance - 2)}元`} onChange={this.changeValue.bind(this)} required/>
+            <input className="rechargeAmount" type='text' value={this.state.withdrawAmount} placeholder={`该卡本次最高可提现：${Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2 < 0 ? 0 : number(Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2)}元`} onChange={this.changeValue.bind(this)} required/>
           </form>
           <p className="text-right fee">手续费：2元/笔</p>
           <div className="btnAndTips">
-            <div className={`rechargeBtn ${this.state.userBalance-2 > 0 && this.state.withdrawAmount && this.state.withdrawAmount > 0 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.withdraw}>申请提现</div>
+            <div className={`rechargeBtn ${Math.min(this.state.maxWithdrawAmount, this.state.userBalance) - 2 > 0 && this.state.withdrawAmount && this.state.withdrawAmount > 0 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.withdraw}>申请提现</div>
             <div className="tips">
               <p className="header">温馨提示 :</p>
               <p className="contents">
