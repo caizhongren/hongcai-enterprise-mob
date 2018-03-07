@@ -40,7 +40,7 @@ class Main extends Component {
                     res.code === -1000 ? browserHistory.replace('/login') : null
                 }else{
                     this.setState({
-                        maxWithdrawAmount: res, // 查询企业最大可提现金额
+                        maxWithdrawAmount: res.amount, // 查询企业最大可提现金额
                     })
                 }
             },'')
