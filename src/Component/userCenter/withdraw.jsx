@@ -33,7 +33,7 @@ class Main extends Component {
         }
 
         this.getUserBalance = () => {
-            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/getMaxWithdrawAmount',null,(res) => {
+            this.props.getData(process.env.RESTFUL_DOMAIN + '/enterpriseUsers/0/maxWithdrawAmount',null,(res) => {
                 this.setState({loading: false})
                 if (res.ret === -1) {
                     Tool.alert(res.msg);
