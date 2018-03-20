@@ -1,0 +1,117 @@
+.deal {
+  width: 100%;
+  max-width: 640px;
+  padding-bottom: 2.6rem;
+  .ft-666 {
+    color: #666;
+  }
+  .ft-39c {
+    color: #39c;
+  }
+  .ft-green {
+    color: #96c86b;
+  }
+  .ft-red {
+    color: #fc4145;
+  }
+  .dealType {
+    padding: 0 .6rem;
+    background: #f5f5f5;
+    color: #39c;
+    font-size: .7rem;
+    height: 2.2rem;
+    line-height: 2.2rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    .deal-angle-down, .deal-angle-up {
+      display: inline-block;
+      width: .8rem;
+      height: .8rem;
+      vertical-align: middle;
+    }
+    .deal-angle-down {
+      background: url('../images/userCenter/deal-angle-down.png') no-repeat;
+      background-size: contain;
+    }
+    .deal-angle-up {
+      background: url('../images/userCenter/deal-angle-up.png') no-repeat;
+      background-size: contain;
+    }
+  }
+  .mask-type {
+    position: fixed;
+    z-index: 999999;
+    background: rgba(0,0,0,.5);
+    width: 100%;
+    top: 2.2rem;
+    min-height: 800px;
+    max-width: 640px;
+  }
+  .allType {
+    clear: both;
+    margin-bottom: 0;
+    li {
+      width: 100%;
+      padding: .5rem 0;
+      text-align: center;
+      font-size: .6rem;
+      margin-bottom: 0;
+    } 
+    li:nth-child(odd){
+      background: #fff;
+    }
+    li:nth-child(even){
+      background: #f8f9fb;
+    }
+  }
+  .dealList {
+    margin-bottom: .5rem;
+    padding-top: 2.2rem;
+    width: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    li {
+      padding: .8rem .6rem;
+      font-size: .7rem;
+      color: #999;
+      .title {
+        overflow: hidden;
+        margin-bottom: .3rem;
+        p:nth-child(1) {
+          width: 70%;
+        }
+        .amount {
+          font-size: .65rem;
+        }
+      }
+      .dateBalance {
+        overflow: hidden;
+        font-size: .6rem;
+      }
+    }
+    li:nth-child(odd){
+      background: #fff;
+    }
+    li:nth-child(even){
+      background: #f8f9fb;
+    }
+  }
+  .noDeal {
+    text-align: center;
+    padding: 3.5rem 0;
+    color: #666;
+    font-size: .7rem;
+    p {
+      margin-top: .8rem;
+    }
+  }
+  .loadMore {
+    color: #666;
+    font-size: .62rem;
+    text-align: center;
+    padding: 1rem 0;
+  }
+}

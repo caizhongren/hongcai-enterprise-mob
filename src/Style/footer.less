@@ -1,0 +1,42 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  width: 100%;
+  font-size: .7rem;
+  height: 2.5rem;
+  line-height: 2.8rem;
+  border-top-left-radius: .8rem;
+  border-top-right-radius: .8rem;
+  li {
+    width: 50%;
+    float: left;
+    text-align: center;
+    a {
+      color: #666;
+      width: 100%;
+      display: inline-block;
+      padding-left: .5rem;
+    }
+  } 
+  li:nth-child(1) {
+    a{
+      background: url('../images/tabbar.png') no-repeat 1.5rem center;
+      background-size: 10%;
+    }
+    a.active{
+      background: url('../images/tabbar1.png') no-repeat 1.5rem center;
+      background-size: 10%;
+    }
+  }
+  li:nth-child(2) {
+    a {
+      background: url('../images/tabbar0.png') no-repeat 1.5rem center;
+      background-size: 12.25%;
+    }
+    a.active {
+      background: url('../images/tabbar2.png') no-repeat 1.5rem center;
+      background-size: 12.25%;
+    }
+  }
+}

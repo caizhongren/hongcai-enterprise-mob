@@ -1,0 +1,57 @@
+.weui-mask_transparent {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+  .weui-toast {
+    position: fixed;
+    z-index: 5000;
+    width: 8em;
+    min-height: 8em;
+    top: 35%;
+    left: 38%;
+    background: rgba(40, 40, 40, 0.75);
+    text-align: center;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: .5rem;
+  }
+  .weui-icon_toast.weui-loading {
+      margin: 16px 0 0;
+      width: 2rem;
+      height: 2rem;
+      vertical-align: baseline;
+  }
+  .weui-loading {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      -webkit-animation: weuiLoading 1s steps(12, end) infinite;
+      animation: weuiLoading 1s steps(12, end) infinite;
+      background: transparent url(../images/loading.svg) no-repeat;
+      background-size: 100%;
+  }
+  @-webkit-keyframes weuiLoading {
+    0% {
+      -webkit-transform: rotate3d(0, 0, 1, 0deg);
+              transform: rotate3d(0, 0, 1, 0deg);
+    }
+    100% {
+      -webkit-transform: rotate3d(0, 0, 1, 360deg);
+              transform: rotate3d(0, 0, 1, 360deg);
+    }
+  }
+  @keyframes weuiLoading {
+    0% {
+      -webkit-transform: rotate3d(0, 0, 1, 0deg);
+              transform: rotate3d(0, 0, 1, 0deg);
+    }
+    100% {
+      -webkit-transform: rotate3d(0, 0, 1, 360deg);
+              transform: rotate3d(0, 0, 1, 360deg);
+    }
+  }
