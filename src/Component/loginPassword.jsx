@@ -100,8 +100,8 @@ class Main extends Component {
             <div className={`btu_next ${this.state.password.length >= 6 ? 'btn_blue':'btn_blue_disabled'}`} onClick={this.postPwd}>登录</div>
             <div className="text-center">
               <Link to="/register" className="to_register display-inb">注册账号</Link>
-              <span className="line">|</span>
-              <p className="to_getPwd display-inb" onClick={this.goForgetPassword}>忘记密码</p>  
+              {/* <span className="line">|</span>
+              <p className="to_getPwd display-inb" onClick={this.goForgetPassword}>忘记密码</p>   */}
             </div>
           </div>
           <HongcaiFooter />
